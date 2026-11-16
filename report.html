@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הדוח מוכן · עוגן שמאים</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0f2740; --harbor:#1f5bff; --brass:#ffc400; --brass-soft:#fff1b8;
+  --plate:#ffcc00; --plate-edge:#1b1b1b; --il:#1e4fa3;
+  --fog:#f4f6f9; --paper:#fff; --line:#dde3ea; --muted:#5a6878; --ok:#1e7b4f; --bad:#b3261e;
+  --r:8px;
+  --plex:"IBM Plex Sans Hebrew",system-ui,sans-serif; --num:"Barlow Condensed","IBM Plex Sans Hebrew",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fog);color:var(--ink);font:400 17px/1.6 var(--plex)}
+:focus-visible{outline:3px solid var(--harbor);outline-offset:2px;border-radius:4px}
+.top{background:#fff;border-bottom:1px solid var(--line)}
+.top .in{max-width:720px;margin:0 auto;padding:0 16px;height:60px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px}
+.top a{color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.top svg{width:34px;height:34px;padding:5px;border-radius:9px;background:var(--ink);color:var(--brass)}
+main{max-width:720px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:clamp(28px,5vw,38px);line-height:1.15;margin:0 0 6px}
+.sub{color:var(--muted);margin:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;margin-top:18px}
+.card h2{font-size:19px;margin:0 0 14px}
+.plate{display:inline-flex;direction:ltr;background:var(--plate);border:2px solid var(--plate-edge);border-radius:6px;overflow:hidden;vertical-align:middle;height:40px}
+.plate i{width:22px;background:var(--il)}
+.plate b{font:700 28px/40px var(--num);padding:0 10px;letter-spacing:.03em;color:#111}
+.fee{display:grid;grid-template-columns:1fr auto;gap:6px 16px;margin:0}
+.fee dt{color:var(--muted)} .fee dd{margin:0;font:600 20px/1.3 var(--num);text-align:left;direction:ltr}
+.fee .total dt{color:var(--ink);font-weight:700}
+.fee .total{display:contents}
+.fee .total dt,.fee .total dd{border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
+.fee .total dd{font-size:28px}
+.label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.opt{font-weight:400;color:var(--muted);font-size:13px}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select{width:100%;font:400 16px/1.4 var(--plex);color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:10px 12px}
+input:focus,select:focus{outline:none;border-color:var(--harbor);box-shadow:0 0 0 3px rgba(43,90,134,.18)}
+.err{border-color:var(--bad)!important}
+.msg{color:var(--bad);font-size:14px;min-height:0;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.choice span{display:block;padding:10px 14px;border:1.5px solid var(--line);border-radius:var(--r);background:#fff;font-size:15px}
+.choice input:checked+span{border-color:var(--ink);background:var(--ink);color:#fff}
+.choice input:focus-visible+span{outline:3px solid var(--harbor);outline-offset:2px}
+.sendto{display:grid;gap:10px}
+.sendto .row{display:grid;grid-template-columns:180px 1fr;gap:10px;align-items:center}
+@media (max-width:560px){.sendto .row{grid-template-columns:1fr}}
+.cheque{border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:12px;background:#fbfcfd}
+.cheque h3{font-size:16px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+.quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.quick button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font:500 13px var(--plex);cursor:pointer;color:var(--ink)}
+.quick button:hover{border-color:var(--brass)}
+.due{margin-top:10px;padding:10px 12px;border-radius:var(--r);background:var(--brass-soft);color:#5a4300;border-inline-start:4px solid var(--brass);font-weight:600;font-size:15px}
+.due.today{background:#e6f2ec;color:var(--ok)}
+.split-note{font-size:14px;color:var(--muted);margin-top:8px}
+.split-note.bad{color:var(--bad);font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:var(--r);padding:13px 22px;font:600 16px/1 var(--plex);cursor:pointer;text-decoration:none}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-brass{background:var(--brass);color:var(--ink);box-shadow:0 5px 0 #c99a00}
+.btn-line{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-wa{background:#22b35e;color:#fff}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.mode-office{border-top:4px solid var(--brass)}
+.linkbox{display:flex;gap:8px;margin-top:12px}
+.linkbox input{direction:ltr;font-size:14px}
+.summary dl{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;margin:0}
+.summary dt{color:var(--muted)} .summary dd{margin:0;font-weight:500}
+.demo{font-size:13px;color:var(--muted);background:#eef1f4;border-radius:var(--r);padding:10px 12px;margin-top:16px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="6" r="3"/><path d="M16 9v19"/><path d="M10 14h12"/><path d="M5 19c0 5 5 9 11 9s11-4 11-9"/><path d="M5 19l-2 3M5 19l3 2M27 19l2 3M27 19l-3 2"/></g></svg>עוגן שמאים</a>
+</div></header>
+
+<main>
+<!-- ============ OFFICE MODE: create the "report ready" message ============ -->
+<section id="office" hidden>
+  <h1>הודעה ללקוח: הדוח מוכן</h1>
+  <p class="sub">ממלאים 4 פרטים, ושולחים ללקוח קישור. בקישור הוא בוחר למי להעביר את הדוח ואיך הוא משלם.</p>
+  <div class="card mode-office">
+    <div class="grid">
+      <div><label class="label" for="o_plate">מספר רישוי</label><input type="text" id="o_plate" inputmode="numeric" dir="ltr" style="text-align:right" placeholder="12-345-67"><div class="msg"></div></div>
+      <div><label class="label" for="o_name">שם הלקוח</label><input type="text" id="o_name"><div class="msg"></div></div>
+      <div><label class="label" for="o_date">תאריך התאונה</label><input type="date" id="o_date"><div class="msg"></div></div>
+      <div><label class="label" for="o_fee">שכר טרחה לפני מע"מ (₪)</label><input type="number" id="o_fee" inputmode="decimal" min="0" step="1" placeholder="1000"><div class="msg"></div></div>
+      <div><label class="label" for="o_phone">טלפון הלקוח <span class="opt">(לשליחה בוואטסאפ)</span></label><input type="tel" id="o_phone" dir="ltr" style="text-align:right" placeholder="050-0000000"></div>
+      <div><label class="label" for="o_vat">מע"מ (%)</label><input type="number" id="o_vat" value="18" min="0" max="30" step="0.5"></div>
+    </div>
+    <dl class="fee" style="margin-top:18px" id="o_fees"></dl>
+    <div class="actions">
+      <button class="btn btn-ink" id="o_make" type="button">יצירת הודעה ללקוח</button>
+    </div>
+    <div id="o_out" hidden>
+      <div class="linkbox"><input type="text" id="o_link" readonly aria-label="הקישור ללקוח"><button class="btn btn-line" type="button" id="o_copy">העתקה</button></div>
+      <div class="actions">
+        <a class="btn btn-wa" id="o_wa" target="_blank" rel="noopener">שליחה בוואטסאפ</a>
+        <a class="btn btn-line" id="o_mail">שליחה במייל</a>
+        <a class="btn btn-line" id="o_preview" target="_blank" rel="noopener">איך הלקוח רואה את זה</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENT MODE ============ -->
+<section id="client" hidden>
+  <h1>הדוח לרכב שלכם מוכן</h1>
+  <p class="sub" id="c_intro"></p>
+
+  <form id="cform" novalidate>
+    <div class="card">
+      <h2>שכר טרחה</h2>
+      <dl class="fee" id="c_fees"></dl>
+    </div>
+
+    <div class="card">
+      <h2>למי להעביר את הדוח?</h2>
+      <p class="sub" style="margin:-8px 0 12px;font-size:15px">אפשר לסמן יותר מאחד.</p>
+      <div class="sendto">
+        <div class="row"><label class="choice"><input type="checkbox" name="to" value="חברת הביטוח" checked><span>חברת הביטוח</span></label><input type="text" name="to_insurer" placeholder="שם החברה, למשל הראל" aria-label="שם חברת הביטוח"></div>
+        <div class="row"><label class="choice"><input type="checkbox" name="to" value="המוסך"><span>המוסך</span></label><input type="text" name="to_garage" placeholder="שם המוסך או מייל" aria-label="המוסך" disabled></div>
+        <div class="row"><label class="choice"><input type="checkbox" name="to" value="סוכן הביטוח"><span>סוכן הביטוח</span></label><input type="text" name="to_agent" placeholder="שם הסוכן או מייל" aria-label="סוכן הביטוח" disabled></div>
+        <div class="row"><label class="choice"><input type="checkbox" name="to" value="עורך דין"><span>עורך דין</span></label><input type="text" name="to_lawyer" placeholder="שם או מייל" aria-label="עורך דין" disabled></div>
+        <div class="row"><label class="choice"><input type="checkbox" name="to" value="אליי"><span>אליי</span></label><input type="email" name="to_me" placeholder="המייל שלכם" dir="ltr" style="text-align:right" aria-label="המייל שלכם" disabled></div>
+      </div>
+      <div class="msg" id="toMsg"></div>
+    </div>
+
+    <div class="card">
+      <h2>איך משלמים?</h2>
+      <div class="choices" id="payChoices">
+        <label class="choice"><input type="radio" name="pay" value="העברה בנקאית" checked><span>העברה בנקאית</span></label>
+        <label class="choice"><input type="radio" name="pay" value="כרטיס אשראי"><span>כרטיס אשראי (בטלפון)</span></label>
+        <label class="choice"><input type="radio" name="pay" value="מזומן"><span>מזומן</span></label>
+        <label class="choice"><input type="radio" name="pay" value="צ'ק"><span>צ'ק</span></label>
+      </div>
+      <p class="sub" id="payHint" style="margin-top:12px;font-size:15px"></p>
+
+      <div id="cheques" hidden>
+        <div class="grid" style="margin-top:14px">
+          <div><label class="label" for="nCheques">כמה צ'קים?</label>
+            <select id="nCheques"><option value="1">צ'ק אחד</option><option value="2">2 צ'קים</option><option value="3">3 צ'קים</option></select></div>
+        </div>
+        <div id="chequeList"></div>
+        <div class="split-note" id="splitNote"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>פרטים לקבלה</h2>
+      <div class="grid">
+        <div><label class="label" for="c_name">שם על הקבלה</label><input type="text" id="c_name" name="receipt_name"><div class="msg"></div></div>
+        <div><label class="label" for="c_phone">טלפון</label><input type="tel" id="c_phone" name="phone" dir="ltr" style="text-align:right"><div class="msg"></div></div>
+      </div>
+      <div class="actions"><button class="btn btn-brass" type="submit">אישור ושליחה למשרד</button></div>
+    </div>
+  </form>
+
+  <div class="card" id="c_done" hidden>
+    <h2>תודה, הפרטים נשלחו</h2>
+    <div class="summary" id="c_summary"></div>
+    <div class="actions">
+      <a class="btn btn-wa" id="c_wa" target="_blank" rel="noopener">שליחה למשרד בוואטסאפ</a>
+      <a class="btn btn-line" id="c_mail">שליחה במייל</a>
+    </div>
+    <p class="demo">גרסת הדגמה: בגרסה הסופית הפרטים יגיעו ישירות למערכת של המשרד. הצ'קים הדחויים ייכנסו לרשימת הצ'קים, עם תזכורת לפני תאריך הפירעון.</p>
+  </div>
+</section>
+</main>
+
+<script>
+(() => {
+  const OFFICE_WA = "972500000000";              // placeholder - the office WhatsApp number
+  const OFFICE_MAIL = "office@example.co.il";      // placeholder
+  const $ = id => document.getElementById(id);
+  const digits = s => (s || "").replace(/\D/g, "");
+  const fmtPlate = d => d.length === 7 ? `${d.slice(0,2)}-${d.slice(2,5)}-${d.slice(5)}` : d.length === 8 ? `${d.slice(0,3)}-${d.slice(3,5)}-${d.slice(5)}` : d;
+  const money = n => "₪" + Number(n).toLocaleString("he-IL", {minimumFractionDigits: 0, maximumFractionDigits: 2});
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  const heDate = s => { if (!s) return ""; const [y,m,d] = s.split("-"); return `${d}/${m}/${y}`; };
+  const today = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
+  const addDays = (n) => { const d = today(); d.setDate(d.getDate() + n); return d; };
+  const addMonths = (n) => { const d = today(); const day = d.getDate(); d.setMonth(d.getMonth() + n); if (d.getDate() < day) d.setDate(0); return d; };
+  const daysUntil = s => Math.round((new Date(s + "T00:00:00") - today()) / 86400000);
+  function fees(fee, vat) {
+    const f = Math.max(0, Number(fee) || 0), v = Math.round(f * (Number(vat) || 0)) / 100;
+    return {fee: f, vat: v, total: Math.round((f + v) * 100) / 100, rate: Number(vat) || 0};
+  }
+  function feeRows(el, x) {
+    el.innerHTML = `<dt>שכר טרחה</dt><dd>${money(x.fee)}</dd><dt>מע"מ ${x.rate}%</dt><dd>${money(x.vat)}</dd>
+      <div class="total"><dt>סה"כ לתשלום</dt><dd>${money(x.total)}</dd></div>`;
+  }
+
+  const P = new URLSearchParams(location.search);
+  const isClient = P.has("p") && P.has("f");
+
+  // ================= OFFICE MODE =================
+  if (!isClient) {
+    $("office").hidden = false;
+    const upd = () => feeRows($("o_fees"), fees($("o_fee").value, $("o_vat").value));
+    ["o_fee", "o_vat"].forEach(id => $(id).addEventListener("input", upd)); upd();
+    $("o_date").max = iso(today());
+    $("o_plate").addEventListener("blur", () => { const d = digits($("o_plate").value); if ([7,8].includes(d.length)) $("o_plate").value = fmtPlate(d); });
+    $("o_make").addEventListener("click", () => {
+      let ok = true;
+      const check = (id, bad, msg) => { const el = $(id); el.classList.toggle("err", bad); el.nextElementSibling.textContent = bad ? msg : ""; if (bad && ok) el.focus(); if (bad) ok = false; };
+      check("o_plate", ![7,8].includes(digits($("o_plate").value).length), "7 או 8 ספרות");
+      check("o_name", !$("o_name").value.trim(), "שדה חובה");
+      check("o_date", !$("o_date").value, "בחרו תאריך");
+      check("o_fee", !(Number($("o_fee").value) > 0), "הזינו סכום");
+      if (!ok) return;
+      const plate = fmtPlate(digits($("o_plate").value)), name = $("o_name").value.trim();
+      const q = new URLSearchParams({p: plate, n: name, d: $("o_date").value, f: $("o_fee").value, v: $("o_vat").value});
+      const link = new URL("report.html?" + q.toString(), location.href).href;
+      const x = fees($("o_fee").value, $("o_vat").value);
+      const text = `שלום ${name},\nדוח השמאי לרכב ${plate} (תאונה מ-${heDate($("o_date").value)}) מוכן.\nשכר טרחה: ${money(x.total)} כולל מע"מ.\nבקישור אפשר לבחור למי להעביר את הדוח ואיך לשלם:\n${link}\n\nעוגן שמאים`;
+      $("o_link").value = link;
+      const phone = digits($("o_phone").value).replace(/^0/, "972");
+      $("o_wa").href = `https://wa.me/${phone || ""}?text=${encodeURIComponent(text)}`;
+      $("o_mail").href = `mailto:?subject=${encodeURIComponent(`הדוח לרכב ${plate} מוכן`)}&body=${encodeURIComponent(text)}`;
+      $("o_preview").href = link;
+      $("o_out").hidden = false;
+    });
+    $("o_copy").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText($("o_link").value); $("o_copy").textContent = "הועתק"; }
+      catch (_) { $("o_link").select(); }
+    });
+    return;
+  }
+
+  // ================= CLIENT MODE =================
+  $("client").hidden = false;
+  const plate = P.get("p"), name = P.get("n") || "", accDate = P.get("d") || "";
+  const x = fees(P.get("f"), P.get("v") || 18);
+  $("c_intro").innerHTML = "";
+  const intro = $("c_intro");
+  const pl = document.createElement("span"); pl.className = "plate"; pl.innerHTML = "<i></i><b></b>"; pl.querySelector("b").textContent = plate;
+  intro.append(pl, document.createTextNode(`  ${name ? name + ", " : ""}דוח השמאי${accDate ? " לתאונה מ-" + heDate(accDate) : ""} מוכן. נשאר לבחור למי להעביר אותו ואיך לשלם.`));
+  feeRows($("c_fees"), x);
+  $("c_name").value = name;
+  document.title = `הדוח לרכב ${plate} מוכן · עוגן שמאים`;
+
+  // send-to rows: the text field is enabled only when its box is ticked
+  document.querySelectorAll(".sendto .row").forEach(row => {
+    const cb = row.querySelector("input[type=checkbox]"), tx = row.querySelector("input:not([type=checkbox])");
+    const sync = () => { tx.disabled = !cb.checked; if (cb.checked && !tx.value) tx.focus(); };
+    cb.addEventListener("change", sync); tx.disabled = !cb.checked;
+  });
+
+  // payment
+  const PAY_HINT = {
+    "העברה בנקאית": "פרטי החשבון יישלחו אליכם עם הקבלה.",
+    "כרטיס אשראי": "המשרד יתקשר לגבות בטלפון.",
+    "מזומן": "משלמים במשרד או בזמן מסירת הדוח.",
+    "צ'ק": "אפשר צ'ק להיום או צ'ק דחוי. מסמנים תאריך פירעון לכל צ'ק.",
+  };
+  const payValue = () => document.querySelector('input[name="pay"]:checked').value;
+  function onPay() {
+    $("payHint").textContent = PAY_HINT[payValue()];
+    $("cheques").hidden = payValue() !== "צ'ק";
+    if (!$("cheques").hidden && !$("chequeList").children.length) buildCheques();
+  }
+  document.querySelectorAll('input[name="pay"]').forEach(r => r.addEventListener("change", onPay));
+
+  function buildCheques() {
+    const n = Number($("nCheques").value), list = $("chequeList");
+    const prev = [...list.querySelectorAll(".cheque")].map(c => ({due: c.querySelector(".c_due").value, no: c.querySelector(".c_no").value, bank: c.querySelector(".c_bank").value}));
+    list.innerHTML = "";
+    const share = Math.floor(x.total / n * 100) / 100;
+    for (let i = 0; i < n; i++) {
+      const amount = i === n - 1 ? Math.round((x.total - share * (n - 1)) * 100) / 100 : share;
+      const due = prev[i]?.due || iso(i === 0 ? today() : addMonths(i));
+      const c = document.createElement("div");
+      c.className = "cheque";
+      c.innerHTML = `
+        <h3>${n > 1 ? `צ'ק ${i + 1}` : "פרטי הצ'ק"}</h3>
+        <div class="grid">
+          <div><label class="label">סכום (₪)</label><input type="number" class="c_amount" min="0" step="0.01" value="${amount}"></div>
+          <div><label class="label">תאריך פירעון</label><input type="date" class="c_due" value="${due}" min="${iso(today())}">
+            <div class="quick">
+              <button type="button" data-d="0">היום</button><button type="button" data-m="1">עוד חודש</button>
+              <button type="button" data-m="2">עוד חודשיים</button><button type="button" data-m="3">עוד 3 חודשים</button>
+            </div></div>
+          <div><label class="label">מספר צ'ק <span class="opt">(רשות)</span></label><input type="text" class="c_no" inputmode="numeric" value="${prev[i]?.no || ""}"></div>
+          <div><label class="label">בנק <span class="opt">(רשות)</span></label><input type="text" class="c_bank" placeholder="למשל: לאומי 10" value="${prev[i]?.bank || ""}"></div>
+        </div>
+        <div class="due" aria-live="polite"></div>`;
+      list.appendChild(c);
+      const dueIn = c.querySelector(".c_due"), dueOut = c.querySelector(".due");
+      const show = () => {
+        const days = daysUntil(dueIn.value);
+        if (!dueIn.value) { dueOut.textContent = "בחרו תאריך פירעון"; dueOut.className = "due"; return; }
+        dueOut.className = "due" + (days <= 0 ? " today" : "");
+        dueOut.textContent = days <= 0 ? `צ'ק להיום, ${heDate(dueIn.value)}` :
+          `צ'ק דחוי: ייפרע ב-${heDate(dueIn.value)}, בעוד ${days} ימים`;
+      };
+      dueIn.addEventListener("input", show);
+      c.querySelectorAll(".quick button").forEach(b => b.addEventListener("click", () => {
+        dueIn.value = iso(b.dataset.m ? addMonths(Number(b.dataset.m)) : addDays(0)); show();
+      }));
+      c.querySelector(".c_amount").addEventListener("input", splitCheck);
+      show();
+    }
+    splitCheck();
+  }
+  function splitCheck() {
+    const sum = [...document.querySelectorAll(".c_amount")].reduce((a, e) => a + (Number(e.value) || 0), 0);
+    const diff = Math.round((x.total - sum) * 100) / 100, note = $("splitNote");
+    note.className = "split-note" + (diff ? " bad" : "");
+    note.textContent = diff ? `סכום הצ'קים ${money(sum)}, חסרים ${money(diff)} עד ${money(x.total)}` : `סכום הצ'קים: ${money(sum)}, תואם לסה"כ.`;
+    return diff === 0;
+  }
+  $("nCheques").addEventListener("change", buildCheques);
+  onPay();
+
+  // submit
+  $("cform").addEventListener("submit", e => {
+    e.preventDefault();
+    let ok = true;
+    const to = [...document.querySelectorAll('input[name="to"]:checked')];
+    $("toMsg").textContent = to.length ? "" : "בחרו לפחות נמען אחד";
+    if (!to.length) ok = false;
+    const req = (el, bad, msg) => { el.classList.toggle("err", bad); const m = el.parentElement.querySelector(".msg"); if (m) m.textContent = bad ? msg : ""; if (bad && ok) el.focus(); if (bad) ok = false; };
+    req($("c_name"), !$("c_name").value.trim(), "שדה חובה");
+    req($("c_phone"), digits($("c_phone").value).length < 9, "מספר טלפון לא מלא");
+    const meBox = document.querySelector('input[name="to"][value="אליי"]');
+    if (meBox.checked) { const em = document.querySelector('input[name="to_me"]'); const bad = !/^\S+@\S+\.\S+$/.test(em.value); em.classList.toggle("err", bad); if (bad) { ok = false; em.focus(); } }
+    let cheques = [];
+    if (payValue() === "צ'ק") {
+      cheques = [...document.querySelectorAll(".cheque")].map(c => ({
+        amount: Number(c.querySelector(".c_amount").value) || 0, due: c.querySelector(".c_due").value,
+        no: c.querySelector(".c_no").value.trim(), bank: c.querySelector(".c_bank").value.trim()}));
+      cheques.forEach((c, i) => { if (!c.due) { ok = false; document.querySelectorAll(".c_due")[i].classList.add("err"); } });
+      if (!splitCheck()) ok = false;
+    }
+    if (!ok) return;
+
+    const sendTo = to.map(cb => { const t = cb.closest(".row").querySelector("input:not([type=checkbox])").value.trim(); return t ? `${cb.value} (${t})` : cb.value; });
+    const lines = [
+      `אישור לדוח שמאי - רישוי ${plate}`,
+      name && `לקוח: ${name}`, accDate && `תאריך תאונה: ${heDate(accDate)}`,
+      `שכר טרחה: ${money(x.fee)} + מע"מ ${money(x.vat)} = ${money(x.total)}`,
+      `להעביר את הדוח אל: ${sendTo.join(", ")}`,
+      `אמצעי תשלום: ${payValue()}`,
+      ...cheques.map((c, i) => `צ'ק ${i + 1}: ${money(c.amount)}, תאריך פירעון ${heDate(c.due)}${daysUntil(c.due) > 0 ? " (דחוי)" : ""}${c.no ? `, מס' ${c.no}` : ""}${c.bank ? `, ${c.bank}` : ""}`),
+      `שם על הקבלה: ${$("c_name").value.trim()}`, `טלפון: ${$("c_phone").value.trim()}`,
+    ].filter(Boolean);
+    const text = lines.join("\n");
+
+    const dl = document.createElement("dl");
+    const add = (k, v) => { const dt = document.createElement("dt"), dd = document.createElement("dd"); dt.textContent = k; dd.textContent = v; dl.append(dt, dd); };
+    add("רכב", plate); add("סה\"כ", money(x.total)); add("הדוח יועבר אל", sendTo.join(", ")); add("תשלום", payValue());
+    cheques.forEach((c, i) => add(cheques.length > 1 ? `צ'ק ${i + 1}` : "צ'ק", `${money(c.amount)}, פירעון ${heDate(c.due)}${daysUntil(c.due) > 0 ? ` (בעוד ${daysUntil(c.due)} ימים)` : ""}`));
+    $("c_summary").replaceChildren(dl);
+    $("c_wa").href = `https://wa.me/${OFFICE_WA}?text=${encodeURIComponent(text)}`;
+    $("c_mail").href = `mailto:${OFFICE_MAIL}?subject=${encodeURIComponent(`אישור לדוח - רישוי ${plate}`)}&body=${encodeURIComponent(text)}`;
+    $("cform").hidden = true; $("c_done").hidden = false;
+    $("c_done").querySelector("h2").setAttribute("tabindex", "-1"); $("c_done").querySelector("h2").focus();
+  });
+})();
+</script>
+</body>
+</html>
