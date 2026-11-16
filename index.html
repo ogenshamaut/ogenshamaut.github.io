@@ -280,7 +280,9 @@ details.more summary{font-size:16px}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink)}
 .consent input{width:22px;height:22px;margin-top:3px;flex:none;accent-color:var(--brass-strong)}
 .consent label{font-weight:400}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;opacity:0;pointer-events:none}
+.quick-form{position:relative}
+html,body{overflow-x:clip}
 .done-ic{width:64px;height:64px;display:block;margin:0 auto 8px}
 .drop-hint{margin:0}
 @media (max-width:560px){.drop-hint{display:none}.drop.compact{justify-content:center}}
