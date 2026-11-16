@@ -14,6 +14,7 @@
   --harbor:#1477b8;     /* links, focus */
   --brass:#0b9be0;      /* logo blue, saturated: the accent */
   --brass-soft:#d7f0fc;
+  --brass-strong:#0a6ea6;  /* blue for white text, 5:1 contrast */
   --plate:#ffcc00;      /* Israeli plate yellow */
   --plate-edge:#1b1b1b;
   --il:#1e4fa3;         /* plate country strip */
@@ -57,8 +58,8 @@ h2{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.01em}
 .btn-line:hover{background:#e1e6ec}
 .btn-wa{background:#22b35e;color:#fff}
 .top .btn{padding:9px 14px;font-size:15px}
-.top .btn-ink{background:var(--brass);color:#fff}
-.top .btn-ink:hover{background:#35aae3}
+.top .btn-ink{background:var(--brass-strong);color:#fff}
+.top .btn-ink:hover{background:#0b7fbf}
 @media (max-width:860px){.top nav{display:none}.top .call{margin-inline-start:auto}}
 
 /* ---------- hero ---------- */
@@ -76,8 +77,8 @@ h2{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.01em}
 .hero .plate-form label{color:var(--ink)}
 .hero .hint{color:var(--muted)}
 .hero .hint.bad{color:var(--bad)}
-.hero .btn-ink{background:var(--brass);color:#fff;box-shadow:0 6px 0 #146f9c}
-.hero .btn-ink:hover{background:#35aae3}
+.hero .btn-ink{background:var(--brass-strong);color:#fff;box-shadow:0 6px 0 #07507a}
+.hero .btn-ink:hover{background:#0b7fbf}
 .hero .btn-ink:active{transform:translateY(3px);box-shadow:0 3px 0 #146f9c}
 .hero-side{color:var(--ink);box-shadow:0 20px 50px rgba(19,24,31,.12);border-top:4px solid var(--brass)!important}
 .plate{position:relative;animation:plateIn .9s cubic-bezier(.2,.9,.25,1.25) .15s both;box-shadow:0 0 0 6px rgba(30,155,215,.16),0 16px 34px rgba(19,24,31,.22)!important}
@@ -136,7 +137,7 @@ section.block{padding:72px 0;border-top:1px solid var(--line)}
 .note{background:var(--paper);border-inline-start:4px solid var(--brass);padding:18px 20px;border-radius:var(--radius-s)}
 
 /* ---------- intake form ---------- */
-.intake{background:radial-gradient(900px 400px at 100% 0%,#ffffff22,transparent 60%),linear-gradient(160deg,#1e9bd7 0%,#1477b8 100%);color:#fff;padding:72px 0}
+.intake{background:radial-gradient(900px 400px at 100% 0%,#ffffff1f,transparent 60%),linear-gradient(160deg,#0a77b4 0%,#075c8c 100%);color:#fff;padding:72px 0}
 .intake h2{color:#fff}
 .intake .lede{color:#e3f3fb}
 .formbox{background:var(--paper);color:var(--ink);border-radius:var(--radius-m);margin-top:32px;display:grid;grid-template-columns:240px 1fr;min-height:560px;overflow:hidden}
@@ -192,7 +193,7 @@ fieldset.f{border:0;padding:0;margin:0}
 .carmap .zone:focus-visible{outline:none;stroke:var(--harbor);stroke-width:4}
 .carmap text{font:600 11px var(--plex);fill:var(--muted);pointer-events:none}
 .zones{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-.zones .tag{background:var(--brass);border:1.5px solid var(--brass);color:#fff;font-weight:600;padding:3px 10px;border-radius:999px;font-size:14px}
+.zones .tag{background:var(--brass-strong);border:1.5px solid var(--brass-strong);color:#fff;font-weight:600;padding:3px 10px;border-radius:999px;font-size:14px}
 .zones .empty{color:var(--muted);font-size:14px}
 @media (max-width:620px){.damage{grid-template-columns:1fr}.carmap{margin:0 auto;display:block}}
 
@@ -235,9 +236,9 @@ details.more summary{font-size:16px}
 .qf-foot{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px;align-items:flex-start}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--muted)}
 .consent input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--ink)}
-.btn-brass{background:var(--brass);color:#fff;box-shadow:0 6px 0 #146f9c}
-.btn-brass:hover{background:#35aae3}
-.btn-brass:active{transform:translateY(3px);box-shadow:0 3px 0 #146f9c}
+.btn-brass{background:var(--brass-strong);color:#fff;box-shadow:0 6px 0 #07507a}
+.btn-brass:hover{background:#0b7fbf}
+.btn-brass:active{transform:translateY(3px);box-shadow:0 3px 0 #07507a}
 .btn.big{padding:16px 34px;font-size:18px}
 .qf-foot .saved{font-size:13px;color:var(--muted)}
 @media (max-width:860px){.quick-form{padding:22px 16px}.btn.big{width:100%;justify-content:center}}
@@ -260,12 +261,34 @@ details.more summary{font-size:16px}
 #process{background:var(--ink);color:#fff;border-top:0}
 #process .lede,#process .steps span{color:#b8c3cf}
 #process .steps li{border-top-color:#2a333e}
-#process .steps li::before{background:var(--brass);color:#fff}
+#process .steps li::before{background:var(--brass);color:var(--ink)}
 #prepare{border-top:0}
 .checklist svg{color:var(--brass)}
-.note{border-inline-start-color:var(--brass)!important;background:#e7f5fd}</style>
+.note{border-inline-start-color:var(--brass)!important;background:#e7f5fd}/* ---------- friendly, accessible form ---------- */
+.quick-form{box-shadow:0 24px 60px rgba(0,0,0,.18)}
+.req-note{font-size:14px;color:var(--muted);margin:0 0 14px}
+.req{color:var(--bad)}
+.f input,.f select{min-height:50px;font-size:17px;border-radius:10px}
+.f input[dir=ltr]{text-align:right}
+.f label,.f .lbl{display:block;font-weight:600;font-size:16px;margin-bottom:6px}
+.hint-s{font-size:13px;color:var(--muted);margin-top:4px}
+.f .msg{font-size:14px;font-weight:600;margin-top:4px}
+.f.err .msg::before{content:"⚠ ";}
+.err-summary{background:#fdecea;border:2px solid var(--bad);color:#7a1a14;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-weight:600}
+.err-summary ul{margin:6px 0 0;padding-inline-start:20px;font-weight:400}
+.err-summary a{color:#7a1a14}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink)}
+.consent input{width:22px;height:22px;margin-top:3px;flex:none;accent-color:var(--brass-strong)}
+.consent label{font-weight:400}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.done-ic{width:64px;height:64px;display:block;margin:0 auto 8px}
+.drop-hint{margin:0}
+@media (max-width:560px){.drop-hint{display:none}.drop.compact{justify-content:center}}
+.skip{position:absolute;top:-60px;inset-inline-start:12px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;z-index:50}
+.skip:focus{top:10px}</style>
 </head>
 <body>
+<a class="skip" href="#intake">דילוג לטופס פתיחת תיק</a>
 
 <header class="top">
   <div class="wrap">
@@ -398,40 +421,64 @@ details.more summary{font-size:16px}
 <section class="intake" id="intake" aria-labelledby="intakeTitle">
   <div class="wrap">
     <h2 id="intakeTitle">פתיחת תיק שמאות</h2>
-    <p class="lede">4 פרטים ותמונות, וזה הכל. את השאר משלימים מול המשרד.</p>
+    <p class="lede">4 פרטים, פחות מדקה. את השאר נשלים איתכם בטלפון.</p>
 
     <form class="quick-form" id="intakeForm" novalidate>
       <div class="qf-body" id="qfBody">
+        <div class="err-summary" id="errSummary" role="alert" tabindex="-1" hidden></div>
+        <p class="req-note">שדות עם <span aria-hidden="true">*</span> הם שדות חובה.</p>
         <div class="fields">
-          <div class="f"><label for="plate">מספר רישוי</label><input id="plate" name="plate" inputmode="numeric" required dir="ltr" style="text-align:right" placeholder="12-345-67"><div class="msg"></div></div>
-          <div class="f"><label for="damage_date">תאריך התאונה</label><input type="date" id="damage_date" name="damage_date" required><div class="msg"></div></div>
-          <div class="f"><label for="insured_name">שם מלא</label><input id="insured_name" name="insured_name" required autocomplete="name"><div class="msg"></div></div>
-          <div class="f"><label for="insured_phone">טלפון</label><input id="insured_phone" name="insured_phone" type="tel" required autocomplete="tel" dir="ltr" style="text-align:right"><div class="msg"></div></div>
-          <div class="f"><label for="insurer">חברת הביטוח <span class="opt">(רשות)</span></label>
-            <select id="insurer" name="insurer">
-              <option value="">לא ידוע / אין</option>
-              <option>הראל</option><option>מגדל</option><option>הפניקס</option><option>כלל</option><option>מנורה מבטחים</option>
-              <option>איילון</option><option>ביטוח ישיר</option><option>AIG</option><option>הכשרה</option><option>ליברה</option>
-              <option>שומרה</option><option>9 מיליון</option><option>אחרת</option>
-            </select></div>
-          <div class="f"><label for="claim_number">מספר תביעה <span class="opt">(רשות)</span></label><input id="claim_number" name="claim_number" dir="ltr" style="text-align:right"></div>
-          <div class="f full"><label for="event_description">מה קרה <span class="opt">(רשות, משפט אחד מספיק)</span></label><input id="event_description" name="event_description" placeholder="למשל: פגעו בי מאחור ברמזור"></div>
+          <div class="f">
+            <label for="plate">מספר רישוי <span class="req" aria-hidden="true">*</span></label>
+            <input id="plate" name="plate" inputmode="numeric" autocomplete="off" required aria-required="true" aria-describedby="plate-hint plate-msg" dir="ltr" placeholder="12-345-67">
+            <div class="hint-s" id="plate-hint">7 או 8 ספרות</div>
+            <div class="msg" id="plate-msg"></div>
+          </div>
+          <div class="f">
+            <label for="damage_date">תאריך התאונה <span class="req" aria-hidden="true">*</span></label>
+            <input type="date" id="damage_date" name="damage_date" required aria-required="true" aria-describedby="date-msg">
+            <div class="msg" id="date-msg"></div>
+          </div>
+          <div class="f">
+            <label for="insured_name">שם מלא <span class="req" aria-hidden="true">*</span></label>
+            <input id="insured_name" name="insured_name" required aria-required="true" autocomplete="name" aria-describedby="name-msg">
+            <div class="msg" id="name-msg"></div>
+          </div>
+          <div class="f">
+            <label for="insured_phone">טלפון נייד <span class="req" aria-hidden="true">*</span></label>
+            <input id="insured_phone" name="insured_phone" type="tel" inputmode="tel" required aria-required="true" autocomplete="tel" aria-describedby="phone-msg" dir="ltr" placeholder="050-0000000">
+            <div class="msg" id="phone-msg"></div>
+          </div>
           <div class="f full">
-            <label>תמונות של הנזק <span class="opt">(רשות, אפשר לשלוח גם בוואטסאפ)</span></label>
+            <span class="lbl" id="photosLabel">תמונות של הנזק <span class="opt">(לא חובה, אפשר גם בוואטסאפ)</span></span>
             <div class="drop compact" id="drop">
-              <input type="file" id="photos" accept="image/*" multiple>
-              <button type="button" class="btn btn-line" id="pick">צירוף תמונות</button>
-              <span class="sub" style="margin:0">או גררו לכאן</span>
+              <input type="file" id="photos" accept="image/*" multiple aria-labelledby="photosLabel">
+              <button type="button" class="btn btn-line" id="pick" aria-describedby="photosLabel">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>
+                צירוף תמונות
+              </button>
+              <span class="sub drop-hint">או גררו לכאן</span>
             </div>
-            <div class="thumbs" id="thumbs"></div>
+            <div class="thumbs" id="thumbs" aria-live="polite"></div>
           </div>
         </div>
 
         <details class="more">
-          <summary>עוד פרטים <span class="opt">(רשות: מקום הנזק ברכב, נהג, צד ג', מוסך)</span></summary>
+          <summary>עוד פרטים <span class="opt">(לא חובה)</span></summary>
           <div class="fields" style="margin-top:16px">
+            <div class="f"><label for="insurer">חברת הביטוח</label>
+              <select id="insurer" name="insurer">
+                <option value="">לא ידוע / אין</option>
+                <option>הראל</option><option>מגדל</option><option>הפניקס</option><option>כלל</option><option>מנורה מבטחים</option>
+                <option>איילון</option><option>ביטוח ישיר</option><option>AIG</option><option>הכשרה</option><option>ליברה</option>
+                <option>שומרה</option><option>9 מיליון</option><option>אחרת</option>
+              </select></div>
+            <div class="f"><label for="claim_number">מספר תביעה</label><input id="claim_number" name="claim_number" dir="ltr"></div>
+            <div class="f full"><label for="event_description">מה קרה</label><input id="event_description" name="event_description" placeholder="למשל: פגעו בי מאחור ברמזור"></div>
+            <div class="f"><label for="insured_email">מייל</label><input id="insured_email" name="insured_email" type="email" autocomplete="email" dir="ltr" aria-describedby="email-msg"><div class="msg" id="email-msg"></div></div>
+            <div class="f"><label for="garage_name">מוסך</label><input id="garage_name" name="garage_name"></div>
             <div class="f full">
-              <label id="damageLabel">איפה הנזק ברכב</label>
+              <span class="lbl" id="damageLabel">איפה הנזק ברכב</span>
               <div class="damage">
                 <svg class="carmap" viewBox="0 0 220 420" role="group" aria-labelledby="damageLabel">
                   <path class="zone" data-zone="פגוש קדמי" d="M50 18 Q110 0 170 18 L176 48 L44 48 Z"/>
@@ -457,33 +504,34 @@ details.more summary{font-size:16px}
                 </div>
               </div>
             </div>
-            <div class="f"><label for="driver_name">שם הנהג, אם לא אתם</label><input id="driver_name" name="driver_name"></div>
-            <div class="f"><label for="garage_name">מוסך</label><input id="garage_name" name="garage_name"></div>
-            <div class="f"><label for="policy_number">מספר פוליסה</label><input id="policy_number" name="policy_number" dir="ltr" style="text-align:right"></div>
-            <div class="f"><label for="insured_email">מייל</label><input id="insured_email" name="insured_email" type="email" dir="ltr" style="text-align:right"><div class="msg"></div></div>
-            <div class="f"><label for="tp_plate">רישוי הרכב השני <span class="opt">(אם היה)</span></label><input id="tp_plate" name="third_party_plate" inputmode="numeric" dir="ltr" style="text-align:right"></div>
-            <div class="f"><label for="tp_phone">טלפון הנהג השני</label><input id="tp_phone" name="third_party_phone" type="tel" dir="ltr" style="text-align:right"></div>
+            <div class="f"><label for="tp_plate">רישוי הרכב השני <span class="opt">(אם היה)</span></label><input id="tp_plate" name="third_party_plate" inputmode="numeric" dir="ltr"></div>
+            <div class="f"><label for="tp_phone">טלפון הנהג השני</label><input id="tp_phone" name="third_party_phone" type="tel" dir="ltr"></div>
           </div>
         </details>
 
+        <!-- spam trap: real people never see or fill it -->
+        <div class="hp" aria-hidden="true"><label for="_honey">אל תמלאו שדה זה</label><input id="_honey" name="_honey" tabindex="-1" autocomplete="off"></div>
+
         <div class="qf-foot">
-          <label class="consent"><input type="checkbox" id="consent"> <span>מאשר/ת שהמשרד ישתמש בפרטים לטיפול בתיק ויעביר אותם לחברת הביטוח.</span></label>
+          <div class="consent">
+            <input type="checkbox" id="consent" aria-describedby="consentMsg">
+            <label for="consent">קראתי את <a href="legal.html#privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ואני מאשר/ת שהמשרד ישתמש בפרטים לטיפול בתיק ויעביר אותם לחברת הביטוח. <span class="req" aria-hidden="true">*</span></label>
+          </div>
           <div class="msg" id="consentMsg"></div>
-          <button type="submit" class="btn btn-brass big">שליחת הפרטים</button>
-          <span class="saved" id="savedNote"></span>
+          <button type="submit" class="btn btn-brass big">שליחת הפרטים למשרד</button>
+          <span class="saved" id="savedNote" aria-live="polite"></span>
         </div>
       </div>
 
       <div class="done-box" id="donePanel" hidden>
-        <h3>הפרטים נקלטו</h3>
+        <svg class="done-ic" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#e6f4ec"/><path d="M14 24.5l7 7 13-14" fill="none" stroke="#1e7b4f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>הפרטים נשלחו למשרד</h3>
         <p class="sub" style="margin:8px 0 0">מספר הפנייה שלכם:</p>
         <div class="ref" id="refNo"></div>
-        <p>המשרד יחזור אליכם לתיאום בדיקה. יש עוד תמונות? שלחו אותן בוואטסאפ עם מספר הרישוי.</p>
+        <p>נחזור אליכם לתיאום בדיקה. יש עוד תמונות? שלחו אותן בוואטסאפ עם מספר הרישוי.</p>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
           <a class="btn btn-wa" id="waSend" target="_blank" rel="noopener">שליחת תמונות בוואטסאפ</a>
-          <a class="btn btn-line" id="mailSend">שליחת הפרטים במייל</a>
         </div>
-        <p class="demo">הפרטים והתמונות נשלחו למשרד במייל.</p>
       </div>
     </form>
   </div>
@@ -515,7 +563,7 @@ details.more summary{font-size:16px}
       מייל: <a href="mailto:ogenshmai@gmail.com">ogenshmai@gmail.com</a><br>
       רח' בראשית 1, גבעתיים
     </div>
-    <div style="max-width:42ch"><small>הפרטים שנשלחים באתר משמשים לטיפול בתיק בלבד, ונשמרים במשרד בהתאם לחוק הגנת הפרטיות.</small></div>
+    <div style="max-width:42ch"><a href="legal.html#accessibility">הצהרת נגישות</a> | <a href="legal.html#privacy">מדיניות פרטיות</a><br><small>הפרטים שנשלחים באתר משמשים לטיפול בתיק בלבד, ונשמרים במשרד בהתאם לחוק הגנת הפרטיות.</small></div>
   </div>
 </footer>
 
@@ -555,22 +603,38 @@ details.more summary{font-size:16px}
     const m = f.querySelector(".msg"); if (m) m.textContent = msg || "";
     input.setAttribute("aria-invalid", msg ? "true" : "false");
   }
+  // Errors are shown next to each field and in a summary at the top that screen readers announce.
   function validate() {
-    let first = null;
+    const errors = [];
     form.querySelectorAll(".f input, .f select").forEach(el => {
       if (el.type === "file") return;
       const v = el.value.trim(); let msg = "";
-      if (el.required && !v) msg = "שדה חובה";
-      else if (el.name === "plate" && !validPlate(v)) msg = "7 או 8 ספרות";
-      else if (el.name === "insured_phone" && digits(v).length < 9) msg = "מספר טלפון לא מלא";
-      else if (el.type === "email" && v && !el.checkValidity()) msg = "כתובת מייל לא תקינה";
-      else if (el.type === "date" && v && new Date(v) > new Date()) msg = "התאריך עוד לא הגיע";
-      setErr(el, msg); if (msg && !first) first = el;
+      const name = (el.labels && el.labels[0] ? el.labels[0].textContent : el.name).replace("*", "").trim();
+      if (el.required && !v) msg = `צריך למלא ${name}`;
+      else if (el.name === "plate" && !validPlate(v)) msg = "מספר רישוי צריך להיות 7 או 8 ספרות";
+      else if (el.name === "insured_phone" && digits(v).length < 9) msg = "מספר הטלפון לא מלא";
+      else if (el.type === "email" && v && !el.checkValidity()) msg = "כתובת המייל לא תקינה";
+      else if (el.type === "date" && v && new Date(v) > new Date()) msg = "תאריך התאונה לא יכול להיות בעתיד";
+      setErr(el, msg); if (msg) errors.push([el, msg]);
     });
-    if (first) { if (first.closest("details")) first.closest("details").open = true; first.focus(); return false; }
-    if (!$("consent").checked) { $("consentMsg").textContent = "צריך לאשר כדי לשלוח"; $("consent").focus(); return false; }
-    $("consentMsg").textContent = ""; return true;
+    const consentOk = $("consent").checked;
+    $("consentMsg").textContent = consentOk ? "" : "צריך לאשר את מדיניות הפרטיות כדי לשלוח";
+    if (!consentOk) errors.push([$("consent"), "צריך לאשר את מדיניות הפרטיות"]);
+    const box = $("errSummary");
+    if (!errors.length) { box.hidden = true; return true; }
+    box.innerHTML = `לא נשלח. ${errors.length === 1 ? "צריך לתקן דבר אחד" : `צריך לתקן ${errors.length} דברים`}:<ul></ul>`;
+    errors.forEach(([el, msg]) => {
+      const li = document.createElement("li"), a = document.createElement("a");
+      a.href = "#" + el.id; a.textContent = msg;
+      a.addEventListener("click", ev => { ev.preventDefault(); if (el.closest("details")) el.closest("details").open = true; el.focus(); });
+      li.appendChild(a); box.querySelector("ul").appendChild(li);
+    });
+    box.hidden = false;
+    errors.forEach(([el]) => { if (el.closest("details")) el.closest("details").open = true; });
+    errors[0][0].focus();
+    return false;
   }
+  $("consent").addEventListener("change", () => { if ($("consent").checked) $("consentMsg").textContent = ""; });
   form.addEventListener("input", e => { if (e.target.closest(".f.err")) setErr(e.target, ""); });
   form.plate.addEventListener("blur", () => { const d = digits(form.plate.value); if ([7,8].includes(d.length)) form.plate.value = fmtPlate(d); });
 
@@ -646,6 +710,7 @@ details.more summary{font-size:16px}
     add("_subject", `פתיחת תיק - רישוי ${plate}`);
     add("_template", "table");
     add("_captcha", "false");
+    add("_honey", form._honey.value);
     add("_next", `${location.origin}${location.pathname}?sent=${encodeURIComponent(ref)}&p=${encodeURIComponent(plate)}#intake`);
     for (const [k, v] of fields) add(k, v);
     if (photos.length) {
@@ -663,7 +728,6 @@ details.more summary{font-size:16px}
   function showDone(ref, plate) {
     $("refNo").textContent = ref;
     $("waSend").href = `https://wa.me/${OFFICE_WA}?text=${encodeURIComponent(`רישוי ${plate} - תמונות לתיק ${ref}`)}`;
-    $("mailSend").href = `mailto:${OFFICE_MAIL}?subject=${encodeURIComponent(`תמונות לתיק - רישוי ${plate}`)}`;
     $("qfBody").hidden = true; $("donePanel").hidden = false;
     const h = $("donePanel").querySelector("h3"); h.setAttribute("tabindex", "-1"); h.focus();
   }
@@ -678,7 +742,7 @@ details.more summary{font-size:16px}
     btn.disabled = true; btn.textContent = files.length ? "מכין את התמונות ושולח..." : "שולח...";
     try { localStorage.removeItem(DRAFT_KEY); } catch (_) {}
     try { await postToOffice(fields, files, d.plate, ref); }
-    catch (_) { btn.disabled = false; btn.textContent = "שליחת הפרטים"; $("consentMsg").textContent = "השליחה נכשלה. נסו שוב, או התקשרו למשרד."; }
+    catch (_) { btn.disabled = false; btn.textContent = "שליחת הפרטים למשרד"; $("consentMsg").textContent = "השליחה נכשלה. נסו שוב, או התקשרו למשרד."; }
   });
   // Back from the mail service: show the confirmation.
   const back = new URLSearchParams(location.search);
