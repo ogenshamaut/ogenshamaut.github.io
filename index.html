@@ -139,11 +139,21 @@ section.block{padding:72px 0;border-top:1px solid var(--line)}
 
 /* ---------- Ogen price list teaser ---------- */
 .mehiron-sec{padding:64px 0;background:radial-gradient(1000px 460px at 100% 0%,#d9effc,transparent 62%),linear-gradient(180deg,#f7fbfe 0%,#eef6fb 100%);border-top:1px solid var(--line)}
-.mh-box{max-width:640px;margin:0 auto;text-align:center;padding:30px 26px;border-radius:26px;background:rgba(255,255,255,.82);backdrop-filter:blur(16px);border:1px solid #fff;box-shadow:0 1px 0 #fff inset,0 14px 34px rgba(16,40,70,.1)}
+.mt-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+@media (max-width:860px){.mt-grid{grid-template-columns:minmax(0,1fr);gap:28px}}
+.mt-title{position:relative;padding-bottom:14px}
+.mt-title::after{content:"";position:absolute;inset-inline-start:0;bottom:0;width:150px;height:6px;border-radius:6px;background:var(--brass)}
+.mt-list{margin:18px 0 0;padding:0;list-style:none}
+.mt-list li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:18px}
+.mt-list li::before{content:"✓";color:var(--ok);font-weight:700;margin-inline-end:12px;font-size:20px}
+.mt-box{background:rgba(255,255,255,.85);backdrop-filter:blur(14px);border:1px solid #fff;border-radius:24px;padding:28px;box-shadow:0 1px 0 #fff inset,0 14px 34px rgba(16,40,70,.1);display:flex;flex-direction:column;gap:14px}
+.mt-box label{font-weight:700;font-size:20px}
+.mt-alt{text-align:center;font-size:15px}
 .mh-plate{margin:22px auto 0;width:min(100%,420px);height:84px}
 .mh-plate input{font-size:52px}
 .mh-go{width:min(100%,420px);margin-top:14px;justify-content:center;padding:17px;font-size:19px;background:linear-gradient(180deg,#14a6ea,#0a7cc0)!important;color:#fff;box-shadow:0 8px 20px rgba(10,110,166,.35)!important;border-radius:14px}
 .mh-alt{font-size:15px}
+.mh-lede2{font-size:15px;color:var(--muted);margin:8px auto 0;max-width:56ch;line-height:1.7}
 .mh-gets{list-style:none;padding:0;margin:22px auto 0;max-width:760px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .mh-gets li{font-size:15px;font-weight:500;padding:8px 14px;border-radius:30px;background:#fff;border:1px solid #d6e9f5;box-shadow:0 2px 8px rgba(16,40,70,.05)}
 .mh-gets li::before{content:"✓";color:var(--ok);font-weight:700;margin-inline-end:7px}
@@ -458,26 +468,30 @@ html,body{overflow-x:clip}
 </section>
 
 <section class="mehiron-sec" id="mehiron" aria-labelledby="mehironTitle">
-  <div class="wrap">
-    <div class="mh-box">
-      <span class="tag"><i class="dot" aria-hidden="true"></i>חינם לשמאים</span>
-      <h2 id="mehironTitle">מחירון <em>עוגן</em></h2>
-      <p class="lede" style="margin-inline:auto">מכניסים מספר רכב, ומקבלים את כל המידע.</p>
-      <form id="mhForm" action="mehiron.html" method="get" novalidate>
-        <label class="sr" for="mhPlate">מספר הרכב</label>
-        <div class="plate mh-plate">
-          <div class="il" aria-hidden="true"><svg viewBox="0 0 22 16"><rect width="22" height="16" fill="#fff"/><rect y="2" width="22" height="2" fill="#1e4fa3"/><rect y="12" width="22" height="2" fill="#1e4fa3"/><path d="M11 5l2.6 4.5h-5.2zM11 11l-2.6-4.5h5.2z" fill="none" stroke="#1e4fa3" stroke-width=".9"/></svg>IL</div>
-          <input id="mhPlate" size="1" inputmode="numeric" autocomplete="off" placeholder="12-345-67" maxlength="10">
-        </div>
-        <button class="btn btn-ink mh-go" type="submit">בדוק מחיר</button>
-        <div class="hint" id="mhHint">7 או 8 ספרות, כמו על הלוחית</div>
-      </form>
-      <a class="mh-alt" href="mehiron.html#model">אין מספר רכב? בחירה לפי יצרן ודגם</a>
+  <div class="wrap mt-grid">
+    <div>
+      <span class="tag"><i class="dot" aria-hidden="true"></i>חדש · חינם לשמאים</span>
+      <h2 id="mehironTitle" class="mt-title">מחירון <em>עוגן</em></h2>
+      <p class="lede">מכניסים מספר רכב ומקבלים שווי מוערך, עם פירוט של כל שורה: גיל, קילומטראז', מספר ידיים, והאם הרכב היה בליסינג. הנתונים מגיעים ממאגרי משרד התחבורה ומתעדכנים כל יום.</p>
+      <ul class="mt-list">
+        <li>היסטוריית בעלויות וק"מ בטסט האחרון</li>
+        <li>מחיר יבואן לכל דגם וגרסה</li>
+        <li>ריקולים פתוחים, ואזהרה על שינוי מבנה והסבה לגז</li>
+        <li>כל פרטי הדגם: מנוע, הנעה, מערכות בטיחות ומשקל</li>
+        <li>ירידת ערך אחרי תאונה, לפי כל חלק שנפגע</li>
+        <li>הדפסה ושמירה כ-PDF לתיק</li>
+      </ul>
     </div>
-    <ul class="mh-gets" aria-label="מה מקבלים במחירון עוגן">
-      <li>שווי מוערך, עם פירוט החישוב</li><li>היסטוריית בעלויות וליסינג</li><li>ק"מ בטסט האחרון</li><li>מחיר יבואן כשהרכב היה חדש</li>
-      <li>ריקולים פתוחים</li><li>כל פרטי הדגם והמנוע</li><li>ירידת ערך לפי חלקים</li><li>דוח להדפסה ו-PDF</li>
-    </ul>
+    <form class="mt-box" id="mhForm" action="mehiron.html" method="get" novalidate>
+      <label for="mhPlate">בדיקת מחיר לפי מספר רכב</label>
+      <div class="plate mh-plate">
+        <div class="il" aria-hidden="true"><svg viewBox="0 0 22 16"><rect width="22" height="16" fill="#fff"/><rect y="2" width="22" height="2" fill="#1e4fa3"/><rect y="12" width="22" height="2" fill="#1e4fa3"/><path d="M11 5l2.6 4.5h-5.2zM11 11l-2.6-4.5h5.2z" fill="none" stroke="#1e4fa3" stroke-width=".9"/></svg>IL</div>
+        <input id="mhPlate" size="1" inputmode="numeric" autocomplete="off" placeholder="12-345-67" maxlength="10">
+      </div>
+      <button class="btn btn-ink mh-go" type="submit">בדוק מחיר</button>
+      <div class="hint" id="mhHint" style="text-align:center">7 או 8 ספרות, כמו על הלוחית</div>
+      <a class="mt-alt" href="mehiron.html#model">או חיפוש לפי יצרן ודגם</a>
+    </form>
   </div>
 </section>
 

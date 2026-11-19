@@ -52,6 +52,7 @@ h1,h2,h3,h4{margin:0;line-height:1.15}
 .hero h1{font-size:clamp(40px,6vw,64px);font-weight:700;letter-spacing:-.025em}
 .hero h1 em{font-style:normal;background:linear-gradient(180deg,#14a6ea,#0a6ea6);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .lede{font-size:clamp(18px,2.2vw,21px);color:var(--ink-2);margin:12px auto 0;max-width:36ch}
+.lede2{font-size:16px;color:var(--muted);margin:10px auto 0;max-width:62ch;line-height:1.7}
 .badge{display:inline-flex;align-items:center;gap:8px;font:600 14px/1 var(--plex);color:var(--brand-deep);background:rgba(255,255,255,.8);border:1px solid #cfe7f6;padding:8px 14px;border-radius:30px;margin-bottom:18px;box-shadow:0 4px 14px rgba(11,155,224,.12)}
 .badge i{width:8px;height:8px;border-radius:50%;background:#22b35e;box-shadow:0 0 0 4px #22b35e2e}
 .searchbox{margin:30px auto 0;max-width:640px;padding:26px;border-radius:26px;background:var(--glass);backdrop-filter:blur(16px);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.9)}
@@ -212,6 +213,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     <span class="badge"><i></i>חינם לשמאים</span>
     <h1>מחירון <em>עוגן</em></h1>
     <p class="lede">מכניסים מספר רכב, ומקבלים את כל המידע.</p>
+    <p class="lede2">מחירון רכב שקוף, לפי המאגרים הרשמיים של משרד התחבורה. במספר רכב אחד מקבלים את כל מה שצריך לשומה: שווי מוערך עם פירוט החישוב, היסטוריית בעלויות (כמה ידיים, ליסינג, השכרה), ק"מ בטסט האחרון, מחיר יבואן כשהרכב היה חדש, ריקולים פתוחים, שינוי מבנה והסבה לגז, וכל פרטי הדגם: מנוע, הנעה, מערכות בטיחות ומשקל.</p>
     <div class="searchbox">
       <form id="plateForm" novalidate>
         <label class="big" for="plateInput">מספר הרכב</label>
@@ -302,8 +304,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     if (d.source === "cancelled") c.push(["bad", "ירד מהכביש"]);
     if (d.source === "inactive") c.push(["warn", "לא פעיל"]);
     if (d.plate) {
-      c.push([d.hand === 1 ? "" : "info", `יד ${d.hand}`]);
-      if (d.km != null) c.push(["info", `${num(d.km)} ק"מ (הערכה)`]);
+      c.push(d.handKnown === false ? ["warn", "אין רישום ידיים במאגר"] : [d.hand === 1 ? "" : "info", `יד ${d.hand}`]);
+      c.push(d.km != null ? ["info", `${num(d.km)} ק"מ (הערכה)`] : ["warn", "אין ק\"מ במאגר: הזינו ידנית"]);
       c.push([d.prev === "private" ? "" : "warn", d.prev === "private" ? "בעלות פרטית" : `היה ב${KIND[d.prev]}`]);
       c.push([d.recall.length ? "bad" : "", d.recall.length ? `${d.recall.length} ריקול פתוח` : "אין ריקול פתוח"]);
       if (d.hist?.shinui_mivne_ind) c.push(["warn", "רשום שינוי מבנה"]);
@@ -324,7 +326,19 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       ["יצרן", esc(c.tozeret_nm)], ["דגם", esc(name)], ["גרסה", esc(c.ramat_gimur || m.ramat_gimur)], ["שנת ייצור", c.shnat_yitzur],
       ["עלה לכביש", d.plate ? esc(ym(d.road)) : ""], ["מנוע", m.nefah_manoa ? `${num(m.nefah_manoa)} סמ"ק${m.koah_sus ? ` · ${m.koah_sus} כ"ס` : ""}` : ""],
       ["דלק", esc(c.sug_delek_nm || m.delek_nm)], ["גיר", m.automatic_ind === 1 ? "אוטומטי" : m.automatic_ind === 0 ? "ידני" : ""],
-      ["סוג רכב", esc(m.merkav)], ["צבע", esc(c.tzeva_rechev)], ["בעלות היום", esc(c.baalut && d.plate ? c.baalut : "")],
+      ["סוג רכב", esc(m.merkav)], ["הנעה", esc(m.technologiat_hanaa_nm && m.technologiat_hanaa_nm !== "הנעה רגילה" ? m.technologiat_hanaa_nm : (m.hanaa_nm && !/לא ידוע/.test(m.hanaa_nm) ? m.hanaa_nm : ""))],
+      ["ארץ ייצור", esc(m.tozeret_eretz_nm)], ["דלתות / מושבים", m.mispar_dlatot ? `${m.mispar_dlatot} / ${m.mispar_moshavim || "?"}` : ""],
+      ["משקל כולל", m.mishkal_kolel ? `${num(m.mishkal_kolel)} ק"ג` : ""], ["כושר גרירה", m.kosher_grira_im_blamim ? `${num(m.kosher_grira_im_blamim)} ק"ג` : ""],
+      ["רמת אבזור בטיחותי", d.car.ramat_eivzur_betihuty != null ? String(d.car.ramat_eivzur_betihuty) : ""], ["מדד ירוק / קבוצת זיהום", m.madad_yarok ? `${m.madad_yarok} / ${m.kvutzat_zihum ?? c.kvutzat_zihum ?? "?"}` : ""],
+      ["מערכות בטיחות", (() => {
+        const sys = [["blima_otomatit_nesia_leahor", ""], ["maarechet_ezer_labalam_ind", "עזר לבלימה"], ["bakarat_stiya_menativ_ind", "התראת סטייה מנתיב"], ["nitur_merhak_milfanim_ind", "ניטור מרחק"],
+          ["bakarat_shyut_adaptivit_ind", "בקרת שיוט אדפטיבית"], ["zihuy_holchey_regel_ind", "זיהוי הולכי רגל"], ["zihuy_tamrurey_tnua_ind", "זיהוי תמרורים"], ["matzlemat_reverse_ind", "מצלמת רוורס"],
+          ["hayshaney_lahatz_avir_batzmigim_ind", "חיישני לחץ אוויר"], ["shlita_automatit_beorot_gvohim_ind", "אורות גבוהים אוטומטיים"], ["zihuy_beshetah_nistar_ind", "ניטור שטח מת"]];
+        const on = sys.filter(([k, t]) => t && +m[k] === 1).map(([, t]) => t);
+        return on.length ? on.join(" · ") : "";
+      })()],
+      ["אבזור", [m.mazgan_ind === 1 ? "מזגן" : "", m.halon_bagg_ind === 1 ? "חלון גג" : "", m.mispar_halonot_hashmal ? `${m.mispar_halonot_hashmal} חלונות חשמל` : "", m.galgaley_sagsoget_kala_ind === 1 ? "חישוקי סגסוגת" : ""].filter(Boolean).join(" · ")],
+      ["צבע", esc(c.tzeva_rechev)], ["בעלות היום", esc(c.baalut && d.plate ? c.baalut : "")],
       ["ק\"מ בטסט האחרון", d.testKm != null ? num(d.testKm) : ""], ["טסט אחרון", esc(c.mivchan_acharon_dt)], ["רישיון בתוקף עד", esc(c.tokef_dt)],
       ["צמיגים", esc(c.zmig_kidmi)], ["כריות אוויר", m.mispar_kariot_avir], ["קוד דגם", c.degem_cd ? `${esc(c.degem_nm)} · ${c.degem_cd}` : ""],
       ["מספר שלדה", c.misgeret ? `<span dir="ltr">${esc(c.misgeret)}</span>` : ""], ["רישום ראשון", esc(d.hist?.rishum_rishon_dt)],
@@ -377,8 +391,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
         <div>
           <div class="glass panel fade"><h2>פרטי הרכב</h2><p class="sub">מתוך רישומי משרד התחבורה</p>
             <dl class="kv">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl></div>
-          ${d.plate ? `<div class="glass panel fade"><h2>בעלים לאורך השנים</h2><p class="sub">${d.hand === 1 ? "יד ראשונה" : `${d.hand} בעלים`}</p>
-            ${d.owners.length ? `<ol class="owners">${d.owners.map((o, i) => `<li class="${M.kindOf(o.baalut) !== "private" ? "lease" : ""}"><span class="dot">${i + 1}</span><div><b>${esc(o.baalut)}</b><span>מ-${esc(ym(o.baalut_dt))}</span></div></li>`).join("")}</ol>` : `<p class="sub">אין רישום בעלויות במאגר.</p>`}</div>` : ""}
+          ${d.plate ? `<div class="glass panel fade"><h2>בעלים לאורך השנים</h2><p class="sub">${d.handKnown === false ? "לא ידוע" : d.hand === 1 ? "יד ראשונה" : `${d.hand} בעלים`}</p>
+            ${d.owners.length ? `<ol class="owners">${d.owners.map((o, i) => `<li class="${M.kindOf(o.baalut) !== "private" ? "lease" : ""}"><span class="dot">${i + 1}</span><div><b>${esc(o.baalut)}</b><span>מ-${esc(ym(o.baalut_dt))}</span></div></li>`).join("")}</ol>` : `<p class="sub">למשרד התחבורה אין רישום בעלויות לרכב הזה (קורה ברכבים ישנים). כדאי לבדוק ברישיון הרכב ולעדכן את היד למעלה.</p>`}</div>` : ""}
           ${d.recall?.length ? `<div class="glass panel fade"><h2>ריקול פתוח</h2><p class="sub">תיקון שהיצרן דורש ועוד לא בוצע ברכב</p>${d.recall.map((r) => `<p style="margin:0 0 10px"><b>${esc(r.SUG_TAKALA)}</b><br>${esc(r.TEUR_TAKALA)}</p>`).join("")}</div>` : ""}
           <div class="glass panel fade"><h2>להשוואה</h2><div class="links">
             <a href="https://carlistprice.mot.gov.il/" target="_blank" rel="noopener">מחירון העם <span>משרד התחבורה ↗</span></a>
@@ -406,6 +420,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       $(btn).setAttribute("aria-expanded", String(on)); $(btn).lastElementChild.textContent = on ? "－" : "＋";
     });
     toggler("editToggle", "editBox"); toggler("dvToggle", "dvBox");
+    // Missing mileage or owners in the registry: open the edit box so the appraiser fills it in.
+    if (d.plate && (d.km == null || d.handKnown === false)) $("editToggle").click();
     $("dvBox").addEventListener("click", (e) => {
       const b = e.target.closest("button"), g = b?.closest("[data-part]"); if (!g) return;
       g.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));

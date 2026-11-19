@@ -159,14 +159,17 @@
     const hand = Math.max(1, own.length);
     const past = own.slice(0, -1).map((o) => kindOf(o.baalut));
     const prev = ["rental", "leasing", "company"].find((k) => past.includes(k)) || (own.length <= 1 ? kindOf(car.baalut) : "private");
-    const testKm = hist?.kilometer_test_aharon ?? null;
+    // 0 km means "no test yet" (new cars), not a real reading.
+    const testKm = hist?.kilometer_test_aharon ? hist.kilometer_test_aharon : null;
     let km = testKm;
     const ageM = Math.max(0, monthsSince(road) ?? 0);
     if (testKm != null && car.mivchan_acharon_dt) {
       const since = Math.max(0, monthsSince(car.mivchan_acharon_dt) ?? 0);
       km = Math.round(testKm + since * testKm / Math.max(ageM - since, 1));
     }
-    return { plate: String(n), source, car, owners, hist, price, model, recall, count, road, hand, prev, testKm, km };
+    // Older cars are often missing from the ownership / test history tables.
+    const handKnown = own.length > 0;
+    return { plate: String(n), source, car, owners, hist, price, model, recall, count, road, hand, handKnown, prev, testKm, km };
   }
 
   window.OgenMehiron = { R, ds, P, DEF, LABELS, saveP, resetP, KIND, kindOf, valuate, ageFactor, loadCatalog, trims, lookupPlate,
