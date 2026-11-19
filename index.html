@@ -137,6 +137,19 @@ section.block{padding:72px 0;border-top:1px solid var(--line)}
 .checklist svg{flex:none;width:22px;height:22px;margin-top:3px;color:var(--harbor)}
 .note{background:var(--paper);border-inline-start:4px solid var(--brass);padding:18px 20px;border-radius:var(--radius-s)}
 
+/* ---------- Ogen price list teaser ---------- */
+.mehiron-teaser{background:radial-gradient(800px 380px at 100% 0%,#d9effc,transparent 65%),#f7fbfe}
+.mt-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+@media (max-width:860px){.mt-grid{grid-template-columns:minmax(0,1fr);gap:28px}}
+.mt-badge{display:inline-block;font:600 13px/1 var(--plex);color:#07507a;background:#fff;border:1px solid #cfe7f6;padding:7px 12px;border-radius:30px;margin-bottom:12px}
+.mt-list{margin:18px 0 0;padding:0;list-style:none}
+.mt-list li{padding:7px 0;border-bottom:1px dashed var(--line)}
+.mt-list li::before{content:"✓";color:var(--ok);font-weight:700;margin-inline-end:10px}
+.mt-box{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border:1px solid #fff;border-radius:20px;padding:26px;box-shadow:0 14px 34px rgba(16,40,70,.1);display:flex;flex-direction:column;gap:14px}
+.mt-box label{font-weight:600;font-size:18px}
+.mt-box .btn{justify-content:center;padding:16px;font-size:18px;background:var(--brass-strong);color:#fff}
+.mt-alt{text-align:center;font-size:15px}
+
 /* ---------- intake form ---------- */
 .intake{background:radial-gradient(900px 400px at 100% 0%,#ffffff1f,transparent 60%),linear-gradient(160deg,#0a77b4 0%,#075c8c 100%);color:#fff;padding:72px 0}
 .intake h2{color:#fff}
@@ -382,6 +395,7 @@ html,body{overflow-x:clip}
     </a>
     <nav aria-label="ניווט ראשי">
       <a href="#services">שירותים</a>
+      <a href="mehiron.html" style="font-weight:600;color:#0a6ea6">מחירון עוגן</a>
       <a href="#process">איך זה עובד</a>
       <a href="#prepare">מה להכין</a>
       <a href="#faq">שאלות</a>
@@ -456,6 +470,31 @@ html,body{overflow-x:clip}
       <div class="service"><h3>אובדן גמור ואובדן להלכה</h3><p>הערכה כשעלות התיקון קרובה לשווי הרכב או עולה עליו.</p></div>
       <div class="service"><h3>גניבה ובדיקה לאחר גניבה</h3><p>בדיקת רכב שנמצא אחרי גניבה, ותיעוד חלקים שנגנבו ממנו.</p></div>
     </div>
+  </div>
+</section>
+
+<section class="block mehiron-teaser" id="mehiron" aria-labelledby="mehironTitle">
+  <div class="wrap mt-grid">
+    <div>
+      <span class="mt-badge">חדש · חינם לשמאים</span>
+      <h2 id="mehironTitle">מחירון <span style="color:var(--brass-strong)">עוגן</span></h2>
+      <p class="lede">מכניסים מספר רכב ומקבלים שווי מוערך, עם פירוט של כל שורה: גיל, קילומטראז', מספר ידיים, והאם הרכב היה בליסינג. הנתונים מגיעים ממאגרי משרד התחבורה ומתעדכנים כל יום.</p>
+      <ul class="mt-list">
+        <li>היסטוריית בעלויות וק"מ בטסט האחרון</li>
+        <li>מחיר יבואן לכל דגם וגרסה</li>
+        <li>ריקולים פתוחים, ואזהרה על שינוי מבנה</li>
+        <li>הדפסה ושמירה כ-PDF לתיק</li>
+      </ul>
+    </div>
+    <form class="mt-box" id="mtForm" action="mehiron.html" method="get">
+      <label for="mtPlate">בדיקת מחיר לפי מספר רכב</label>
+      <div class="plate" style="width:100%">
+        <div class="il" aria-hidden="true"><svg viewBox="0 0 22 16"><rect width="22" height="16" fill="#fff"/><rect y="2" width="22" height="2" fill="#1e4fa3"/><rect y="12" width="22" height="2" fill="#1e4fa3"/><path d="M11 5l2.6 4.5h-5.2zM11 11l-2.6-4.5h5.2z" fill="none" stroke="#1e4fa3" stroke-width=".9"/></svg>IL</div>
+        <input id="mtPlate" name="plate" size="1" inputmode="numeric" autocomplete="off" placeholder="12-345-67" maxlength="10">
+      </div>
+      <button class="btn btn-ink" type="submit">בדוק מחיר</button>
+      <a href="mehiron.html" class="mt-alt">או חיפוש לפי יצרן ודגם</a>
+    </form>
   </div>
 </section>
 
@@ -873,11 +912,25 @@ html,body{overflow-x:clip}
     try { await postToOffice(fields, files, d.plate, ref); }
     catch (_) { btn.disabled = false; btn.textContent = "שליחת הפרטים למשרד"; $("consentMsg").textContent = "השליחה נכשלה. נסו שוב, או התקשרו למשרד."; }
   });
+  // Price list teaser: format the plate and send digits only.
+  const mtPlate = $("mtPlate");
+  mtPlate.addEventListener("input", () => { const d = digits(mtPlate.value).slice(0, 8); mtPlate.value = d.length >= 7 ? fmtPlate(d) : d; });
+  $("mtForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const d = digits(mtPlate.value);
+    location.href = d.length >= 7 ? `mehiron.html?plate=${d}` : "mehiron.html";
+  });
+
   // Back from the mail service: show the confirmation.
   const back = new URLSearchParams(location.search);
   if (back.get("sent")) {
     showDone(back.get("sent"), back.get("p") || "");
     setTimeout(() => $("intake").scrollIntoView(), 50);
+  } else if (/^\d{7,8}$/.test(back.get("plate") || "")) {
+    // Coming from the Ogen price list: fill in the plate number.
+    form.plate.value = fmtPlate(back.get("plate"));
+    heroPlate.value = form.plate.value;
+    saveDraft();
   }
 
   // ---------- draft in this browser ----------
