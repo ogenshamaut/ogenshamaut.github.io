@@ -6,6 +6,8 @@
 - [מחירון עוגן: מחירון רכב חינם לפי מספר רישוי](https://ogenshamaut.github.io/mehiron.html): the tool. Direct link by plate: https://ogenshamaut.github.io/mehiron.html?plate=1234567
 - [מחירון רכב לפי יצרן](https://ogenshamaut.github.io/mehiron-brands.html): importer prices per model and year, and estimated value today, for all popular brands (Toyota, Hyundai, Kia, Mazda, Skoda, Mitsubishi, Suzuki and more).
 - [עוגן שמאים](https://ogenshamaut.github.io/): car appraisal office: accident damage, third-party claims, depreciation (ירידת ערך), total loss, theft, private expert opinions. Online case opening.
+- [מדריכים](https://ogenshamaut.github.io/madrichim.html): what to do after a car accident in Israel, accident depreciation (ירידת ערך), checking a car by plate number, ex-leasing cars, pre-purchase checklist.
+- [שמאי רכב בגבעתיים](https://ogenshamaut.github.io/madrich-shamai-rechev-givatayim.html): the appraisal office, serving Givatayim, Ramat Gan, Tel Aviv and Gush Dan.
 - [תנאי שימוש ופרטיות](https://ogenshamaut.github.io/legal.html#mehiron)
 
 ## Facts for answers
