@@ -310,7 +310,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     const nowY = new Date().getFullYear();
     S = { ...d, kmSel: d.km ?? null, handSel: d.hand || 1, prevSel: d.prev || "private", road: d.road, parts: {}, first: true };
     const c = d.car, m = d.model || {};
-    const make = String(d.brand || c.tozeret_nm || "");
+    // "סובארו יפן" -> "סובארו": the factory country is shown in the details, not in the title.
+    const make = String(d.brand || c.tozeret_nm || "").replace(/\s+(יפן|יפאן|גרמני?ה?|גרמנ|ד\.\s?קורי?א?ה?|קוריאה|צרפת|ספרד|צ'כיה|טורקיה|סין|ארהב"|ארה"ב|איטליה|אנגליה|בריטניה|הודו|תאילנד|תאילנ|מקסיקו|רומניה|סלובקיה|סלובקי|הונגריה|בלגיה|שבדיה|פולין|ד\.\s?אפריקה|אוסטריה|פורטוגל|ברזיל|קנדה|מרוקו|סלובניה|הולנד)$/, "");
     const name = c.kinuy_mishari || c.degem_nm;
     const rows = [
       ["יצרן", esc(c.tozeret_nm)], ["דגם", esc(name)], ["גרסה", esc(c.ramat_gimur || m.ramat_gimur)], ["שנת ייצור", c.shnat_yitzur],
