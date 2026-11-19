@@ -139,7 +139,12 @@ section.block{padding:72px 0;border-top:1px solid var(--line)}
 
 /* ---------- Ogen price list teaser ---------- */
 .mehiron-sec{padding:64px 0;background:radial-gradient(1000px 460px at 100% 0%,#d9effc,transparent 62%),linear-gradient(180deg,#f7fbfe 0%,#eef6fb 100%);border-top:1px solid var(--line)}
-.mehiron-sec .sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.mh-box{max-width:640px;margin:0 auto;text-align:center;padding:30px 26px;border-radius:26px;background:rgba(255,255,255,.82);backdrop-filter:blur(16px);border:1px solid #fff;box-shadow:0 1px 0 #fff inset,0 14px 34px rgba(16,40,70,.1)}
+.mh-plate{margin:22px auto 0;width:min(100%,420px);height:84px}
+.mh-plate input{font-size:52px}
+.mh-go{width:min(100%,420px);margin-top:14px;justify-content:center;padding:17px;font-size:19px;background:linear-gradient(180deg,#14a6ea,#0a7cc0)!important;color:#fff;box-shadow:0 8px 20px rgba(10,110,166,.35)!important;border-radius:14px}
+.mh-alt{font-size:15px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .mehiron-sec .tag{display:inline-block;font:600 13px/1 var(--plex);color:#07507a;background:#fff;border:1px solid #cfe7f6;padding:7px 12px;border-radius:30px;margin-bottom:10px}
 .mehiron-sec h2 em{font-style:normal;color:var(--brass-strong)}
 .hero-alt{display:inline-flex;margin-top:14px;font-weight:600;font-size:16px;color:var(--brass-strong);text-decoration:none;border-bottom:2px solid #9fd6f3;padding-bottom:2px}
@@ -449,15 +454,21 @@ html,body{overflow-x:clip}
 
 <section class="mehiron-sec" id="mehiron" aria-labelledby="mehironTitle">
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="tag">חדש · חינם לשמאים ולציבור</span>
-        <h2 id="mehironTitle">מחירון <em>עוגן</em>: כמה שווה הרכב?</h2>
-        <p class="lede">בוחרים רכב ושנה, ורואים מחיר. אחר כך מסמנים חלקים שנפגעו, ומקבלים ירידת ערך. זה לא פותח תיק: לפתיחת תיק יש טופס נפרד למטה.</p>
-      </div>
-      <a class="btn btn-line" href="mehiron.html">פתיחה במסך מלא</a>
+    <div class="mh-box">
+      <span class="tag">חינם לשמאים</span>
+      <h2 id="mehironTitle">מחירון <em>עוגן</em></h2>
+      <p class="lede" style="margin-inline:auto">מכניסים מספר רכב, ומקבלים את כל המידע.</p>
+      <form id="mhForm" action="mehiron.html" method="get" novalidate>
+        <label class="sr" for="mhPlate">מספר הרכב</label>
+        <div class="plate mh-plate">
+          <div class="il" aria-hidden="true"><svg viewBox="0 0 22 16"><rect width="22" height="16" fill="#fff"/><rect y="2" width="22" height="2" fill="#1e4fa3"/><rect y="12" width="22" height="2" fill="#1e4fa3"/><path d="M11 5l2.6 4.5h-5.2zM11 11l-2.6-4.5h5.2z" fill="none" stroke="#1e4fa3" stroke-width=".9"/></svg>IL</div>
+          <input id="mhPlate" size="1" inputmode="numeric" autocomplete="off" placeholder="12-345-67" maxlength="10">
+        </div>
+        <button class="btn btn-ink mh-go" type="submit">בדוק מחיר</button>
+        <div class="hint" id="mhHint">7 או 8 ספרות, כמו על הלוחית</div>
+      </form>
+      <a class="mh-alt" href="mehiron.html#model">אין מספר רכב? בחירה לפי יצרן ודגם</a>
     </div>
-    <div id="ogenMehiron" data-ogen-mehiron></div>
   </div>
 </section>
 
@@ -897,6 +908,16 @@ html,body{overflow-x:clip}
     try { await postToOffice(fields, files, d.plate, ref); }
     catch (_) { btn.disabled = false; btn.textContent = "שליחת הפרטים למשרד"; $("consentMsg").textContent = "השליחה נכשלה. נסו שוב, או התקשרו למשרד."; }
   });
+  // Ogen price list entry: format the plate, open the full report.
+  const mhPlate = $("mhPlate"), mhHint = $("mhHint");
+  mhPlate.addEventListener("input", () => { const d = digits(mhPlate.value).slice(0, 8); mhPlate.value = d.length >= 7 ? fmtPlate(d) : d; mhHint.classList.remove("bad"); });
+  $("mhForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const d = digits(mhPlate.value);
+    if (d.length < 7) { mhHint.textContent = "צריך 7 או 8 ספרות."; mhHint.classList.add("bad"); mhPlate.focus(); return; }
+    location.href = `mehiron.html?plate=${d}`;
+  });
+
   // Back from the mail service: show the confirmation.
   const back = new URLSearchParams(location.search);
   if (back.get("sent")) {
@@ -963,7 +984,5 @@ html,body{overflow-x:clip}
   }
 })();
 </script>
-<script src="mehiron-core.js"></script>
-<script src="mehiron-widget.js"></script>
 </body>
 </html>
