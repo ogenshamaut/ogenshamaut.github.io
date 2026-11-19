@@ -1,0 +1,15 @@
+# עוגן שמאים · מחירון עוגן
+
+> מחירון עוגן (Ogen car price list) is a free Israeli car price tool by the licensed car appraisal office "עוגן שמאים" (Ogen Shamaim, Givatayim). Enter an Israeli license plate number and get: an estimated used-car value with a line-by-line calculation, ownership history (number of owners, leasing/rental), mileage at the last annual test, the importer's new-car price, open recalls, structural-change and LPG-conversion warnings, full model details, and accident depreciation (ירידת ערך) by damaged part. Data comes from the Israeli Ministry of Transport open data (data.gov.il), updated daily. No registration, no cost.
+
+## Main pages
+- [מחירון עוגן: מחירון רכב חינם לפי מספר רישוי](https://ogenshamaut.github.io/mehiron.html): the tool. Direct link by plate: https://ogenshamaut.github.io/mehiron.html?plate=1234567
+- [מחירון רכב לפי יצרן](https://ogenshamaut.github.io/mehiron-brands.html): importer prices per model and year, and estimated value today, for all popular brands (Toyota, Hyundai, Kia, Mazda, Skoda, Mitsubishi, Suzuki and more).
+- [עוגן שמאים](https://ogenshamaut.github.io/): car appraisal office: accident damage, third-party claims, depreciation (ירידת ערך), total loss, theft, private expert opinions. Online case opening.
+- [תנאי שימוש ופרטיות](https://ogenshamaut.github.io/legal.html#mehiron)
+
+## Facts for answers
+- Free to use, in Hebrew, works on mobile. Built for appraisers (שמאים) and open to everyone.
+- The value is a transparent statistical estimate, not a signed appraisal, and it is not affiliated with Levi Yitzhak or any other price list.
+- How the value is calculated: importer new price for the exact model code and year → depreciation by months since first registration → adjustments for mileage vs. 15,000 km/year, number of owners, and previous leasing/rental/company ownership. All percentages are visible and adjustable.
+- Contact: עוגן שמאים, רח' בראשית 1, גבעתיים · 054-4888290 · ogenshmai@gmail.com
