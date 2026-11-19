@@ -328,8 +328,6 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       ["דלק", esc(c.sug_delek_nm || m.delek_nm)], ["גיר", m.automatic_ind === 1 ? "אוטומטי" : m.automatic_ind === 0 ? "ידני" : ""],
       ["סוג רכב", esc(m.merkav)], ["הנעה", esc(m.technologiat_hanaa_nm && m.technologiat_hanaa_nm !== "הנעה רגילה" ? m.technologiat_hanaa_nm : (m.hanaa_nm && !/לא ידוע/.test(m.hanaa_nm) ? m.hanaa_nm : ""))],
       ["ארץ ייצור", esc(m.tozeret_eretz_nm)], ["דלתות / מושבים", m.mispar_dlatot ? `${m.mispar_dlatot} / ${m.mispar_moshavim || "?"}` : ""],
-      ["משקל כולל", m.mishkal_kolel ? `${num(m.mishkal_kolel)} ק"ג` : ""], ["כושר גרירה", m.kosher_grira_im_blamim ? `${num(m.kosher_grira_im_blamim)} ק"ג` : ""],
-      ["רמת אבזור בטיחותי", d.car.ramat_eivzur_betihuty != null ? String(d.car.ramat_eivzur_betihuty) : ""], ["מדד ירוק / קבוצת זיהום", m.madad_yarok ? `${m.madad_yarok} / ${m.kvutzat_zihum ?? c.kvutzat_zihum ?? "?"}` : ""],
       ["מערכות בטיחות", (() => {
         const sys = [["blima_otomatit_nesia_leahor", ""], ["maarechet_ezer_labalam_ind", "עזר לבלימה"], ["bakarat_stiya_menativ_ind", "התראת סטייה מנתיב"], ["nitur_merhak_milfanim_ind", "ניטור מרחק"],
           ["bakarat_shyut_adaptivit_ind", "בקרת שיוט אדפטיבית"], ["zihuy_holchey_regel_ind", "זיהוי הולכי רגל"], ["zihuy_tamrurey_tnua_ind", "זיהוי תמרורים"], ["matzlemat_reverse_ind", "מצלמת רוורס"],
@@ -340,9 +338,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       ["אבזור", [m.mazgan_ind === 1 ? "מזגן" : "", m.halon_bagg_ind === 1 ? "חלון גג" : "", m.mispar_halonot_hashmal ? `${m.mispar_halonot_hashmal} חלונות חשמל` : "", m.galgaley_sagsoget_kala_ind === 1 ? "חישוקי סגסוגת" : ""].filter(Boolean).join(" · ")],
       ["צבע", esc(c.tzeva_rechev)], ["בעלות היום", esc(c.baalut && d.plate ? c.baalut : "")],
       ["ק\"מ בטסט האחרון", d.testKm != null ? num(d.testKm) : ""], ["טסט אחרון", esc(c.mivchan_acharon_dt)], ["רישיון בתוקף עד", esc(c.tokef_dt)],
-      ["צמיגים", esc(c.zmig_kidmi)], ["כריות אוויר", m.mispar_kariot_avir], ["קוד דגם", c.degem_cd ? `${esc(c.degem_nm)} · ${c.degem_cd}` : ""],
+      ["צמיגים", esc(c.zmig_kidmi)], ["קוד דגם", c.degem_cd ? `${esc(c.degem_nm)} · ${c.degem_cd}` : ""],
       ["מספר שלדה", c.misgeret ? `<span dir="ltr">${esc(c.misgeret)}</span>` : ""], ["רישום ראשון", esc(d.hist?.rishum_rishon_dt)],
-      ["כמה כאלה על הכביש", d.count != null ? num(d.count) : ""],
     ].filter((r) => r[1] !== "" && r[1] != null);
 
     out.innerHTML = `
