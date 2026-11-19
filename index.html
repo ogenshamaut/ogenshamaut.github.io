@@ -149,6 +149,8 @@ section.block{padding:72px 0;border-top:1px solid var(--line)}
 .mh-gets li::before{content:"✓";color:var(--ok);font-weight:700;margin-inline-end:7px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .mehiron-sec .tag{display:inline-block;font:600 13px/1 var(--plex);color:#07507a;background:#fff;border:1px solid #cfe7f6;padding:7px 12px;border-radius:30px;margin-bottom:10px}
+.mehiron-sec .tag{display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(11,155,224,.12)}
+.mehiron-sec .tag .dot{width:8px;height:8px;border-radius:50%;background:#22b35e;box-shadow:0 0 0 4px #22b35e2e}
 .mehiron-sec h2 em{font-style:normal;color:var(--brass-strong)}
 .hero-alt{display:inline-flex;margin-top:14px;font-weight:600;font-size:16px;color:var(--brass-strong);text-decoration:none;border-bottom:2px solid #9fd6f3;padding-bottom:2px}
 .hero-alt:hover{border-color:var(--brass-strong)}
@@ -458,7 +460,7 @@ html,body{overflow-x:clip}
 <section class="mehiron-sec" id="mehiron" aria-labelledby="mehironTitle">
   <div class="wrap">
     <div class="mh-box">
-      <span class="tag">חינם לשמאים</span>
+      <span class="tag"><i class="dot" aria-hidden="true"></i>חינם לשמאים</span>
       <h2 id="mehironTitle">מחירון <em>עוגן</em></h2>
       <p class="lede" style="margin-inline:auto">מכניסים מספר רכב, ומקבלים את כל המידע.</p>
       <form id="mhForm" action="mehiron.html" method="get" novalidate>
