@@ -76,6 +76,9 @@ h1,h2,h3,h4{margin:0;line-height:1.15}
 .f select,.f input{width:100%;font:400 17px/1.4 var(--plex);color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px}
 .f select:focus,.f input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px rgba(11,155,224,.18)}
 .f select:disabled{background:#f1f4f7;color:#9aa5b1}
+.gets{list-style:none;padding:0;margin:22px auto 0;max-width:760px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.gets li{font-size:15px;font-weight:500;padding:8px 14px;border-radius:30px;background:rgba(255,255,255,.85);border:1px solid #d6e9f5;box-shadow:0 2px 8px rgba(16,40,70,.05)}
+.gets li::before{content:"✓";color:var(--ok);font-weight:700;margin-inline-end:7px}
 .trust{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 26px;margin-top:22px;color:var(--muted);font-size:15px}
 .trust b{color:var(--ink);font-weight:600}
 @media (max-width:560px){.wrap{padding:0 16px}.searchbox{padding:18px}.plate{height:80px}.plate input{font-size:48px}.mgrid{grid-template-columns:1fr}}
@@ -231,7 +234,11 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
         <div class="hint" id="modelHint"></div>
       </form>
     </div>
-    <div class="trust"><span><b>4.2 מיליון</b> רכבים</span><span><b>6,000+</b> דגמים</span><span>מקור: <b>משרד התחבורה</b></span></div>
+    <ul class="gets" aria-label="מה מקבלים">
+      <li>שווי מוערך, עם פירוט החישוב</li><li>היסטוריית בעלויות וליסינג</li><li>ק"מ בטסט האחרון</li><li>מחיר יבואן כשהרכב היה חדש</li>
+      <li>ריקולים פתוחים</li><li>כל פרטי הדגם והמנוע</li><li>ירידת ערך לפי חלקים</li><li>דוח להדפסה ו-PDF</li>
+    </ul>
+    <div class="trust"><span><b>4.2 מיליון</b> רכבים</span><span><b>6,000+</b> דגמים</span><span>מקור: <b>משרד התחבורה</b></span><span>מתעדכן <b>כל יום</b></span></div>
   </div>
 </section>
 

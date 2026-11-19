@@ -144,6 +144,9 @@ section.block{padding:72px 0;border-top:1px solid var(--line)}
 .mh-plate input{font-size:52px}
 .mh-go{width:min(100%,420px);margin-top:14px;justify-content:center;padding:17px;font-size:19px;background:linear-gradient(180deg,#14a6ea,#0a7cc0)!important;color:#fff;box-shadow:0 8px 20px rgba(10,110,166,.35)!important;border-radius:14px}
 .mh-alt{font-size:15px}
+.mh-gets{list-style:none;padding:0;margin:22px auto 0;max-width:760px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.mh-gets li{font-size:15px;font-weight:500;padding:8px 14px;border-radius:30px;background:#fff;border:1px solid #d6e9f5;box-shadow:0 2px 8px rgba(16,40,70,.05)}
+.mh-gets li::before{content:"✓";color:var(--ok);font-weight:700;margin-inline-end:7px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .mehiron-sec .tag{display:inline-block;font:600 13px/1 var(--plex);color:#07507a;background:#fff;border:1px solid #cfe7f6;padding:7px 12px;border-radius:30px;margin-bottom:10px}
 .mehiron-sec h2 em{font-style:normal;color:var(--brass-strong)}
@@ -469,6 +472,10 @@ html,body{overflow-x:clip}
       </form>
       <a class="mh-alt" href="mehiron.html#model">אין מספר רכב? בחירה לפי יצרן ודגם</a>
     </div>
+    <ul class="mh-gets" aria-label="מה מקבלים במחירון עוגן">
+      <li>שווי מוערך, עם פירוט החישוב</li><li>היסטוריית בעלויות וליסינג</li><li>ק"מ בטסט האחרון</li><li>מחיר יבואן כשהרכב היה חדש</li>
+      <li>ריקולים פתוחים</li><li>כל פרטי הדגם והמנוע</li><li>ירידת ערך לפי חלקים</li><li>דוח להדפסה ו-PDF</li>
+    </ul>
   </div>
 </section>
 
