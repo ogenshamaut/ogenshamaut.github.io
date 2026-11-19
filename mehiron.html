@@ -63,6 +63,8 @@ h1,h2,h3,h4{margin:0;line-height:1.15}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:14px 22px;font:600 17px/1 var(--plex);cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s}
 .btn-main{color:#fff;background:linear-gradient(180deg,#0a7cc0 0%,#075d91 100%);box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 8px 20px rgba(10,110,166,.35)}
 .btn-main:hover{transform:translateY(-1px);box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 12px 26px rgba(10,110,166,.42)}
+.btn-wa{color:#fff;background:#1a8f4c;box-shadow:0 6px 16px rgba(26,143,76,.3)}
+.btn-wa:hover{background:#157a40}
 .btn-soft{background:#fff;color:var(--ink);box-shadow:0 0 0 1.5px var(--line) inset,0 2px 6px rgba(16,40,70,.05)}
 .top .btn{padding:10px 16px;font-size:15px;border-radius:12px}
 @media (max-width:760px){.top nav{display:none}.top .btn{margin-inline-start:auto}}
@@ -447,6 +449,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
             <div class="actions">
               <button class="btn btn-soft" type="button" id="btnPrint">הדפסה / שמירה כ-PDF</button>
               <button class="btn btn-soft" type="button" id="btnCopy">העתקת סיכום</button>
+              <a class="btn btn-wa" id="btnShare" href="#" target="_blank" rel="noopener">שליחה בוואטסאפ</a>
             </div>
           </div>
         </div>
@@ -463,8 +466,12 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
         </div>
       </div>
       <div class="glass cta fade">
-        <div><h2>צריכים שומה חתומה?</h2><p>ירידת ערך, אובדן גמור או חוות דעת. השמאים של עוגן בודקים את הרכב.</p></div>
-        <a class="btn btn-main" href="index.html${d.plate ? `?plate=${d.plate}` : ""}#intake">פתיחת תיק</a>
+        <div><h2>צריכים שומה חתומה?</h2><p>תאונה, ירידת ערך, אובדן גמור או חוות דעת. השמאים של עוגן בודקים את הרכב ומוציאים דוח חתום לחברת הביטוח.</p></div>
+        <div class="actions" style="margin-top:0">
+          <a class="btn btn-main" href="index.html${d.plate ? `?plate=${d.plate}` : ""}#intake">פתיחת תיק אונליין</a>
+          <a class="btn btn-wa" href="https://wa.me/972544888290?text=${encodeURIComponent(`שלום, אני צריך שמאי לרכב${d.plate ? ` ${fmtPlate(d.plate)}` : ""} (הגעתי ממחירון עוגן)`)}" target="_blank" rel="noopener">וואטסאפ לשמאי</a>
+          <a class="btn btn-soft" href="tel:+972544888290" dir="ltr">054-4888290</a>
+        </div>
       </div>`;
 
     // fill the edit controls
@@ -492,6 +499,13 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     });
     $("btnPrint").addEventListener("click", () => window.print());
     $("btnCopy").addEventListener("click", copySummary);
+    // Share the report on WhatsApp: the link brings the next person back to the price list.
+    $("btnShare").addEventListener("click", () => {
+      const r = S.result; if (!r) return;
+      const link = `https://ogenshamaut.github.io/mehiron.html${S.plate ? `?plate=${S.plate}` : ""}`;
+      const txt = `${c.tozeret_nm} ${name} ${c.shnat_yitzur}${S.plate ? ` (${fmtPlate(S.plate)})` : ""}\nשווי מוערך לפי מחירון עוגן: ${nis(r.v.value)}\nהדוח המלא, בחינם: ${link}`;
+      $("btnShare").href = `https://wa.me/?text=${encodeURIComponent(txt)}`;
+    });
     renderAdv();
     calc();
   }
