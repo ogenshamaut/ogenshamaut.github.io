@@ -236,6 +236,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   #printDoc h2{font-size:13.5px;margin:16px 0 5px;padding:4px 8px;background:#e9f3fa;border-inline-start:4px solid #0a6ea6;break-after:avoid}
   #printDoc table{width:100%;border-collapse:collapse;break-inside:auto}
   #printDoc tr{break-inside:avoid}
+  #printDoc .pkeep{break-inside:avoid}
+  #printDoc .pt tr.tot,#printDoc .pt tr.sub{break-before:avoid}
   #printDoc th,#printDoc td{border:1px solid #b9c4cf;padding:4px 7px;text-align:right;vertical-align:top}
   #printDoc th{background:#f3f6f9;font-weight:600}
   #printDoc .pkv th,#printDoc .pmetaT th,#printDoc .pparam th{width:19%;white-space:nowrap}
@@ -825,13 +827,13 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       <h2>2. נתונים שהשפיעו על השווי</h2>${kv(hist)}
       ${S.plate && S.owners?.length ? `<p class="plist"><b>בעלים לאורך השנים:</b> ${S.owners.map((o, i) => `${i + 1}. ${esc(o.baalut)} מ-${esc(ym(o.baalut_dt))}`).join(" · ")}</p>` : ""}
 
-      <h2>3. הערכת השווי</h2>
+      <div class="pkeep"><h2>3. הערכת השווי</h2>
       ${v ? `<div class="pval"><div><span>שווי מוערך היום</span><b>${nis(v.value)}</b></div><div><span>טווח סביר</span><b class="s">${nis(v.low)} עד ${nis(v.high)}</b></div>${r.dv ? `<div><span>שווי אחרי ירידת ערך</span><b class="s">${nis(v.value - r.dv)}</b></div>` : ""}</div>
       <table class="pt"><thead><tr><th>שלב בחישוב</th><th>הסבר</th><th class="n">סכום</th></tr></thead><tbody>
         ${v.lines.map((l) => `<tr><td>${esc(l.t)}</td><td>${esc(l.sub)}</td><td class="n">${l.base ? nis(l.amt) : (l.amt < 0 ? "−" : "+") + nis(Math.abs(l.amt))}</td></tr>`).join("")}
         <tr class="tot"><td colspan="2">שווי מוערך</td><td class="n">${nis(v.value)}</td></tr></tbody></table>` : `<p>אין במאגר מחיר יבואן לדגם הזה, ולכן לא חושב שווי.</p>`}
 
-      <h2>4. לפי מה נקבע המחיר</h2>
+      </div><div class="pkeep"><h2>4. לפי מה נקבע המחיר</h2>
       <ol class="pol">
         <li><b>נקודת המוצא:</b> מחיר המחירון של הרכב כשהיה חדש, כפי שדיווח היבואן למשרד התחבורה${S.price ? ` (${esc(S.price.shem_yevuan)}, ${S.price.shnat_yitzur}${S.price.exact === false ? ", שנת מחירון קרובה" : ""}: ${nis(S.price.mehir)})` : ""}.</li>
         <li><b>ירידה לפי גיל:</b> מהמחיר הזה מופחת אחוז קבוע על כל שנה מאז שהרכב עלה לכביש, ועוד ירידה חד-פעמית ביציאה מהסוכנות.</li>
@@ -839,7 +841,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
         <li><b>יד ובעלות:</b> כל יד נוספת מפחיתה מהשווי, וכך גם עבר בליסינג, בהשכרה או בבעלות חברה.</li>
         <li><b>טווח:</b> הטווח הסביר הוא 7% מעל ומתחת לשווי המוערך.</li>
       </ol>
-      <table class="pparam"><caption>הפרמטרים שבהם השתמש החישוב</caption><tbody>${Object.keys(M.DEF).reduce((a, k, i) => (i % 2 ? a[a.length - 1].push(k) : a.push([k]), a), []).map((pair) => `<tr>${pair.map((k) => `<th scope="row">${M.LABELS[k]}</th><td>${M.P[k]}${M.P[k] !== M.DEF[k] ? " (שונה ידנית)" : ""}</td>`).join("")}${pair.length === 1 ? "<th></th><td></td>" : ""}</tr>`).join("")}</tbody></table>
+      <table class="pparam"><caption>הפרמטרים שבהם השתמש החישוב</caption><tbody>${Object.keys(M.DEF).reduce((a, k, i) => (i % 2 ? a[a.length - 1].push(k) : a.push([k]), a), []).map((pair) => `<tr>${pair.map((k) => `<th scope="row">${M.LABELS[k]}</th><td>${M.P[k]}${M.P[k] !== M.DEF[k] ? " (שונה ידנית)" : ""}</td>`).join("")}${pair.length === 1 ? "<th></th><td></td>" : ""}</tr>`).join("")}</tbody></table></div>
 
       ${d.rows.length ? `<h2>5. אומדן נזק</h2><p class="psrc">${S.ptype === "alt" ? "לפי חלקים תחליפיים" : "לפי חלקים מקוריים"}. הסכומים בשורות לפני מע"מ.</p>
       <table class="pt"><thead><tr><th>#</th><th>חלק</th><th>פעולה</th><th class="n">חלק</th><th class="n">עבודה</th><th class="n">צבע</th><th class="n">סה"כ</th></tr></thead><tbody>${dmgRows}
@@ -848,16 +850,16 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
         <tr class="tot"><td colspan="6">עלות תיקון משוערת, כולל מע"מ</td><td class="n">${nis(d.total)}</td></tr>
         ${v && r.dv ? `<tr class="sub"><td colspan="6">ירידת ערך: ${r.dvPct.toFixed(1)}% משווי הרכב</td><td class="n">${nis(r.dv)}</td></tr><tr class="tot"><td colspan="6">סך הנזק: תיקון וירידת ערך</td><td class="n">${nis(d.total + r.dv)}</td></tr>` : ""}</tbody></table>
       ${pct ? `<p class="plist"><b>יחס לשווי הרכב:</b> עלות התיקון היא ${pct.toFixed(0)}% משווי הרכב.${pct >= 60 ? " כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור." : ""}</p>` : ""}
-      <h2>6. לפי מה נקבע אומדן הנזק</h2>
+      <div class="pkeep"><h2>6. לפי מה נקבע אומדן הנזק</h2>
       <ol class="pol">
         <li><b>מחיר חלק:</b> חלק שמסומן "מחיר שהוזן" הוקלד על ידי מפיק הדוח. חלק שמסומן "הערכה" חושב מנוסחה: סכום בסיס ועוד אחוז ממחיר הרכב החדש, לפי מחירוני חלפים רשמיים של יבואנים. ${bf[1] ? "ליצרן של הרכב הזה ההערכה הותאמה למחירון החלפים של היבואן שלו." : "ליצרן של הרכב הזה לא נמצא מחירון להשוואה, ולכן ההערכה היא ממוצע של היצרנים שנבדקו, והמחיר בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."}</li>
         <li><b>עבודה:</b> שעות עבודה לכל חלק לפי סוג הפעולה וחומרת הפגיעה, כפול ${nis(DV.rate)} לשעה.</li>
         <li><b>צבע:</b> ${nis(DV.paint)} לצביעת חלק שלם, ובהתאמה לחלק קטן יותר.</li>
         <li><b>ירידת ערך:</b> אחוז לכל חלק שנפגע לפי טבלת המשרד, כפול החלק שחל לפי גיל הרכב${v ? ` (${Math.round(ageShare(v.ageMonths) * 100)}%)` : ""}, עד תקרה של ${DV.cap}%.</li>
-      </ol>` : ""}
+      </ol></div>` : ""}
 
       <div class="pdisc"><b>הבהרה:</b> הדוח הוא הערכה ממוחשבת שהופקה במחירון עוגן לפי הנתונים שלמעלה. הוא אינו שומה, אינו חוות דעת של שמאי ואינו הצעת מחיר, ואין להסתמך עליו בלי בדיקת הרכב. שומה מחייבת ניתנת רק אחרי בדיקה של שמאי רכב מוסמך. ייתכנו טעויות או חוסרים במאגרי משרד התחבורה.</div>
-      <footer class="pfoot"><span>עוגן שמאים · רח' בראשית 1, גבעתיים · 054-4888290</span><span>דוח ${id} · ${date}</span></footer>`;
+      <div class="pfoot"><span>עוגן שמאים · רח' בראשית 1, גבעתיים · 054-4888290</span><span>דוח ${id} · ${date}</span></div>`;
     const t = document.title; document.title = `דוח מחירון עוגן ${S.plate ? fmtPlate(S.plate) : esc(S.title)} ${date.replace(/\./g, "-")}`;
     const back = () => { document.title = t; removeEventListener("afterprint", back); }; addEventListener("afterprint", back);
   }
