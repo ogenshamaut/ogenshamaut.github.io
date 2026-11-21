@@ -389,22 +389,24 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     ["גלגלים, מתלים והיגוי", "", [["wheel", "חישוק (ג'אנט)"], ["tire", "צמיג"], ["arm", "זרוע מתלה"], ["shock", "בולם זעזועים"], ["steering", "תיבת הגה"]]],
     ["חיישנים", "", [["radar", "רדאר / מצלמה קדמית"], ["sensor", "חיישן חניה"]]],
   ];
+  // Body panels, lights, mirrors, radiator, wheels and bumper beams were calibrated in Nov 2026 against an official importer parts price list
+  // (a fixed amount plus a share of the new-car price, fitted on models from 2019 on). Roof, sills, rails, floor, glass, steering, radar and airbags are not yet verified.
   // Cost model per part: [% of the new-car price, minimum ₪, hours to replace, hours to repair, paint panels, max quantity, actions]
   // Actions: p = paint only, f = repair, r = replace. All amounts are before VAT.
   const COST = {
-    bumpF: [1.7, 900, 1.5, 2, 1, 1, "pfr"], bumpR: [1.5, 900, 1.5, 2, 1, 1, "pfr"], hood: [2, 1200, 1.5, 3, 1, 1, "pfr"],
-    fenderF: [0.9, 600, 2, 3, 1, 2, "pfr"], doorF: [2.5, 1500, 3, 4, 1, 2, "pfr"], doorR: [2.3, 1400, 3, 4, 1, 2, "pfr"], trunk: [2.7, 1500, 2, 3, 1, 1, "pfr"],
-    fenderR: [2.3, 1400, 12, 6, 1, 2, "pfr"], roof: [2.7, 1800, 14, 6, 1.5, 1, "pfr"], sill: [1, 700, 8, 5, 0.5, 2, "pfr"], panelF: [1.2, 700, 4, 3, 0.5, 1, "fr"],
+    bumpF: [0.43, 2500, 1.5, 2, 1, 1, "pfr"], bumpR: [1.56, 1850, 1.5, 2, 1, 1, "pfr"], hood: [5.5, 3000, 1.5, 3, 1, 1, "pfr"],
+    fenderF: [0.64, 1600, 2, 3, 1, 2, "pfr"], doorF: [8.1, 2800, 3, 4, 1, 2, "pfr"], doorR: [7.6, 3000, 3, 4, 1, 2, "pfr"], trunk: [2.36, 4700, 2, 3, 1, 1, "pfr"],
+    fenderR: [2.14, 2950, 12, 6, 1, 2, "pfr"], roof: [2.7, 1800, 14, 6, 1.5, 1, "pfr"], sill: [1, 700, 8, 5, 0.5, 2, "pfr"], panelF: [1.14, 2200, 4, 3, 0.5, 1, "fr"],
     panelR: [1.3, 800, 8, 4, 0.5, 1, "fr"], trunkFloor: [1.5, 900, 10, 5, 0.5, 1, "fr"],
-    pillarA: [1.3, 800, 10, 6, 0.5, 2, "fr"], pillarB: [1.5, 900, 10, 6, 0.5, 2, "fr"], pillarC: [1.3, 800, 10, 6, 0.5, 2, "fr"],
+    pillarA: [1.55, 3900, 10, 6, 0.5, 2, "fr"], pillarB: [1.4, 3450, 10, 6, 0.5, 2, "fr"], pillarC: [1.4, 3450, 10, 6, 0.5, 2, "fr"],
     railF: [1.5, 900, 12, 8, 0.3, 2, "fr"], railR: [1.3, 800, 12, 8, 0.3, 2, "fr"], tower: [1, 700, 10, 6, 0.3, 2, "fr"], floor: [2, 1200, 14, 8, 0.3, 1, "fr"],
     airbag: [7, 5000, 4, 0, 0, 1, "r"],
-    headlight: [2, 900, 0.7, 0, 0, 2, "r"], taillight: [0.8, 400, 0.4, 0, 0, 2, "r"], foglight: [0.4, 250, 0.4, 0, 0, 2, "r"],
-    windshield: [1.2, 900, 2, 0, 0, 1, "r"], rearGlass: [1, 700, 2, 0, 0, 1, "r"], doorGlass: [0.4, 300, 1, 0, 0, 4, "r"], mirror: [0.8, 450, 0.5, 0, 0.3, 2, "r"],
-    grille: [0.6, 350, 0.5, 0, 0, 1, "r"], beamF: [0.8, 500, 1, 0, 0, 1, "r"], beamR: [0.7, 450, 1, 0, 0, 1, "r"], radiator: [1, 700, 2, 0, 0, 1, "r"],
-    condenser: [1.2, 800, 2.5, 0, 0, 1, "r"], liner: [0.2, 150, 0.4, 0, 0, 4, "r"],
-    wheel: [1.2, 700, 0.3, 0, 0, 4, "r"], tire: [0.35, 300, 0.3, 0, 0, 4, "r"], arm: [0.6, 400, 1.5, 0, 0, 4, "r"], shock: [0.7, 450, 1.5, 0, 0, 4, "r"], steering: [3, 2500, 4, 0, 0, 1, "r"],
-    radar: [2.3, 1800, 1.5, 0, 0, 1, "r"], sensor: [0.25, 200, 0.3, 0, 0, 8, "r"],
+    headlight: [5.24, 1700, 0.7, 0, 0, 2, "r"], taillight: [0.45, 1750, 0.4, 0, 0, 2, "r"], foglight: [0, 550, 0.4, 0, 0, 2, "r"],
+    windshield: [1.67, 3050, 2, 0, 0, 1, "r"], rearGlass: [1, 700, 2, 0, 0, 1, "r"], doorGlass: [0.4, 300, 1, 0, 0, 4, "r"], mirror: [0.82, 1700, 0.5, 0, 0.3, 2, "r"],
+    grille: [0.6, 350, 0.5, 0, 0, 1, "r"], beamF: [1.33, 1100, 1, 0, 0, 1, "r"], beamR: [0, 1350, 1, 0, 0, 1, "r"], radiator: [0.4, 1950, 2, 0, 0, 1, "r"],
+    condenser: [0.8, 1600, 2.5, 0, 0, 1, "r"], liner: [0.2, 150, 0.4, 0, 0, 4, "r"],
+    wheel: [0.21, 2550, 0.3, 0, 0, 4, "r"], tire: [0.35, 300, 0.3, 0, 0, 4, "r"], arm: [0.33, 650, 1.5, 0, 0, 4, "r"], shock: [0.28, 550, 1.5, 0, 0, 4, "r"], steering: [3, 2500, 4, 0, 0, 1, "r"],
+    radar: [2.3, 1800, 1.5, 0, 0, 1, "r"], sensor: [0, 350, 0.3, 0, 0, 8, "r"],
   };
   // Where on the car each part sits: F front, S side, R rear, T top, U wheels and underbody.
   const ZONE = {
@@ -417,16 +419,22 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   const ZNAME = [["", "הכול"], ["F", "חזית"], ["S", "צד"], ["R", "אחור"], ["T", "גג"], ["U", "גלגלים ומתלים"]];
   // Part versions that change the price a lot: [name, price multiplier]. The first is the default.
   const VARIANT = {
-    headlight: [["הלוגן רגיל", 1], ["LED / קסנון", 2.2]],
-    taillight: [["רגיל", 1], ["LED", 1.6]],
-    windshield: [["רגילה", 1], ["עם חיישן גשם / מצלמה", 1.6]],
-    mirror: [["רגילה", 1], ["עם קיפול חשמלי / מצלמה", 1.8]],
+    headlight: [["הלוגן רגיל", 0.7], ["LED / קסנון", 1.3]],
+    taillight: [["רגיל", 0.6], ["LED", 1.4]],
+    windshield: [["רגילה", 0.8], ["עם חיישן גשם / מצלמה", 1.15]],
+    mirror: [["רגילה", 0.8], ["עם קיפול חשמלי / מצלמה", 1.3]],
     wheel: [["סגסוגת (מגנזיום)", 1], ["פלדה", 0.4]],
-    bumpF: [["רגיל", 1], ["עם חיישנים / מתזים", 1.25]],
-    bumpR: [["רגיל", 1], ["עם חיישנים", 1.2]],
+    bumpF: [["רגיל", 0.9], ["עם חיישנים / מתזים", 1.15]],
+    bumpR: [["רגיל", 0.9], ["עם חיישנים", 1.15]],
   };
+  // Cars from 2019 on usually have LED lights, so that version is the default for them.
+  const defVr = (k) => ((k === "headlight" || k === "taillight") && +(S?.car?.shnat_yitzur || 0) >= 2019 ? 1 : 0);
   // How hard the repair is: [name, labor-hours multiplier].
   const SEV = [["קלה", 0.6], ["בינונית", 1], ["קשה", 1.6]];
+  // Fixed part of the price (₪ before VAT) for the calibrated parts: price = FIT + % of the new-car price.
+  const FIT = { bumpF: 3743, bumpR: 1689, hood: -1450, fenderF: 2084, doorF: -4170, doorR: -3030, trunk: 5694, fenderR: 2986, panelF: 2655, pillarA: 5122, pillarB: 4500, pillarC: 4500, headlight: -1847, taillight: 2500, foglight: 900, mirror: 2117, radiator: 2868, condenser: 1984, wheel: 4066, beamF: 624, beamR: 2290, arm: 819, shock: 690, windshield: 3543, sensor: 600 };
+  // Ceiling for parts whose price stops rising with the car price.
+  const CAP = { doorF: 10500, doorR: 11500, hood: 9000 };
   const GROUPS = [...PARTS, ...XPARTS];
   const NAMES = Object.fromEntries(GROUPS.flatMap((g) => g[2]).map((x) => [x[0], x[1]]));
   const ACT = { paint: "צביעה", fix: "תיקון", rep: "החלפה" };
@@ -440,8 +448,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   // Estimated price of one part, before VAT, from the new-car price.
   const estPart = (k) => {
     const c = COST[k], base = S?.price?.mehir || 0, o = S.parts[k] || {};
-    const vr = VARIANT[k] ? VARIANT[k][o.vr || 0][1] : 1, kind = S.ptype === "alt" ? DV.alt / 100 : 1;
-    return base ? r10(Math.max(c[1], base * c[0] / 100) * vr * kind * DV.plvl / 100) : 0;
+    const vr = VARIANT[k] ? VARIANT[k][o.vr ?? defVr(k)][1] : 1, kind = S.ptype === "alt" ? DV.alt / 100 : 1;
+    return base ? r10(Math.min(CAP[k] || Infinity, Math.max(c[1], (FIT[k] || 0) + base * c[0] / 100)) * vr * kind * DV.plvl / 100) : 0;
   };
   const fixHrs = (k, o) => +(COST[k][3] * SEV[o.sev ?? 1][1]).toFixed(1);
   function damage() {
@@ -450,7 +458,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       const unit = o.a === "rep" ? (o.price ?? est) : 0;
       const hrs = (o.hrs ?? (o.a === "rep" ? c[2] : o.a === "fix" ? fixHrs(k, o) : 0)) * q;
       const part = unit * q, labor = Math.round(hrs * DV.rate), paint = Math.round(c[4] * q * DV.paint);
-      return { k, a: o.a, q, part, labor, paint, hrs, tag: [o.a === "rep" && VARIANT[k] ? VARIANT[k][o.vr || 0][0] : "", o.a === "fix" ? "פגיעה " + SEV[o.sev ?? 1][0] : ""].filter(Boolean).join(", "), manual: o.a === "rep" && o.price != null, noPrice: o.a === "rep" && o.price == null && !est, sum: part + labor + paint };
+      return { k, a: o.a, q, part, labor, paint, hrs, tag: [o.a === "rep" && VARIANT[k] ? VARIANT[k][o.vr ?? defVr(k)][0] : "", o.a === "fix" ? "פגיעה " + SEV[o.sev ?? 1][0] : ""].filter(Boolean).join(", "), manual: o.a === "rep" && o.price != null, noPrice: o.a === "rep" && o.price == null && !est, sum: part + labor + paint };
     });
     const sub = rows.reduce((s, r) => s + r.sum, 0), vat = Math.round(sub * DV.vat / 100);
     return { rows, parts: rows.reduce((s, r) => s + r.part, 0), labor: rows.reduce((s, r) => s + r.labor, 0), paint: rows.reduce((s, r) => s + r.paint, 0), sub, vat, total: sub + vat };
@@ -646,7 +654,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     const o = S.parts[k], c = COST[k], el = $("pd_" + k);
     if (!o) { el.innerHTML = ""; return; }
     const est = estPart(k), hrs = o.a === "rep" ? c[2] : o.a === "fix" ? fixHrs(k, o) : 0;
-    el.innerHTML = `${o.a === "rep" && VARIANT[k] ? `<label>סוג<select data-k="${k}" data-f="vr" aria-label="סוג, ${NAMES[k]}">${VARIANT[k].map(([t], i) => `<option value="${i}"${i === (o.vr || 0) ? " selected" : ""}>${t}</option>`).join("")}</select></label>` : ""}
+    el.innerHTML = `${o.a === "rep" && VARIANT[k] ? `<label>סוג<select data-k="${k}" data-f="vr" aria-label="סוג, ${NAMES[k]}">${VARIANT[k].map(([t], i) => `<option value="${i}"${i === (o.vr ?? defVr(k)) ? " selected" : ""}>${t}</option>`).join("")}</select></label>` : ""}
       ${o.a === "fix" ? `<label>חומרת הפגיעה<select data-k="${k}" data-f="sev" aria-label="חומרת הפגיעה, ${NAMES[k]}">${SEV.map(([t], i) => `<option value="${i}"${i === (o.sev ?? 1) ? " selected" : ""}>${t}</option>`).join("")}</select></label>` : ""}
       ${c[5] > 1 ? `<label>כמות (עד ${c[5]})<input data-k="${k}" data-f="q" inputmode="numeric" value="${o.q}" aria-label="כמות, ${NAMES[k]}"></label>` : ""}
       ${o.a === "rep" ? `<label>מחיר חלק אמיתי, ₪ לפני מע"מ<input data-k="${k}" data-f="price" inputmode="decimal" value="${o.price ?? ""}" placeholder="${est ? "הערכה: " + num(est) : "הקלידו מחיר"}" aria-label="מחיר חלק אמיתי, ${NAMES[k]}"></label>` : ""}
@@ -668,7 +676,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       <tr class="total"><td>סך הנזק: תיקון וירידת ערך</td><td>${nis(d.total + dv)}</td></tr>` : ""}
     </table>
     ${val ? `<p class="dvsum${pct >= 60 ? " hot" : ""}">עלות התיקון היא ${pct.toFixed(0)}% משווי הרכב.${pct >= 60 ? ` כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור. <a href="madrich-ovdan-gamur-ovdan-lehalacha.html">מה זה אומר</a>` : pct >= 50 ? " זה קרוב לסף של אובדן גמור (60%)." : ""}</p>` : ""}
-    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים כאחוז ממחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}, ולא נלקחו ממחירון חלפים. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
+    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים לפי מחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. המחירים של חלקי הפח, הפנסים, המראות והמצננים כוילו מול מחירון חלפים רשמי של יבואן אחד (דגמים מ-2019). ברכב של יצרן אחר, ברכב יוקרה או ברכב ישן המחיר יכול להיות שונה. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
   }
 
   function countUp(el, to) {
