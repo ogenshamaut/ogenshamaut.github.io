@@ -1,17 +1,93 @@
 # עוגן שמאים · מחירון עוגן
 
-> מחירון עוגן (Ogen car price list) is a free Israeli car price tool by the licensed car appraisal office "עוגן שמאים" (Ogen Shamaim, Givatayim). Enter an Israeli license plate number and get: an estimated used-car value with a line-by-line calculation, ownership history (number of owners, leasing/rental), mileage at the last annual test, the importer's new-car price, open recalls, structural-change and LPG-conversion warnings, full model details, and accident depreciation (ירידת ערך) by damaged part. Data comes from the Israeli Ministry of Transport open data (data.gov.il), updated daily. No registration, no cost.
+> עוגן שמאים (Ogen Shamaim) is a car appraisal office in Givatayim, Israel. It publishes מחירון עוגן (Ogen car price list): a free Hebrew tool that takes an Israeli license plate number and returns an estimated used-car value with a line-by-line calculation, ownership history (number of owners, leasing/rental), mileage at the last annual test, the importer's new-car price, open recalls, structural-change and LPG warnings, and an accident depreciation (ירידת ערך) estimate by damaged part. Data: Israeli Ministry of Transport open data (data.gov.il). No registration, no cost. The site also has 23 plain-language Hebrew guides on car accidents, insurance claims, appraisers and used-car checks. Last updated: 2026-11-21.
+
+Full text of the formula, all guides and office details in one file: https://ogenshamaut.github.io/llms-full.txt
 
 ## Main pages
 - [מחירון עוגן: מחירון רכב חינם לפי מספר רישוי](https://ogenshamaut.github.io/mehiron.html): the tool. Direct link by plate: https://ogenshamaut.github.io/mehiron.html?plate=1234567
-- [מחירון רכב לפי יצרן](https://ogenshamaut.github.io/mehiron-brands.html): importer prices per model and year, and estimated value today, for all popular brands (Toyota, Hyundai, Kia, Mazda, Skoda, Mitsubishi, Suzuki and more).
-- [עוגן שמאים](https://ogenshamaut.github.io/): car appraisal office: accident damage, third-party claims, depreciation (ירידת ערך), total loss, theft, private expert opinions. Online case opening.
-- [מדריכים](https://ogenshamaut.github.io/madrichim.html): what to do after a car accident in Israel, accident depreciation (ירידת ערך), checking a car by plate number, ex-leasing cars, pre-purchase checklist.
-- [שמאי רכב בגבעתיים](https://ogenshamaut.github.io/madrich-shamai-rechev-givatayim.html): the appraisal office, serving Givatayim, Ramat Gan, Tel Aviv and Gush Dan.
+- [מחירון רכב לפי יצרן](https://ogenshamaut.github.io/mehiron-brands.html): importer price per model and year and estimated value today, for 32 brands.
+- [עוגן שמאים](https://ogenshamaut.github.io/): the appraisal office, online case opening.
+- [מדריכים](https://ogenshamaut.github.io/madrichim.html): all guides.
 - [תנאי שימוש ופרטיות](https://ogenshamaut.github.io/legal.html#mehiron)
 
+## Guides: בדיקת רכב
+- [בדיקת רכב לפי מספר רישוי](https://ogenshamaut.github.io/madrich-bdikat-rechev-lefi-mispar-rishui.html): ממספר הרישוי לבדו אפשר לדעת את היצרן, הדגם והגרסה, מתי הרכב עלה לכביש, כמה בעלים היו לו ומאיזה סוג, מה הק"מ שנרשם בטסט האחרון, אם יש ריקול פתוח ואם נרשם שינוי מבנה. המידע מגיע מהמאגרים הפתוחים של משרד התחבורה (data.gov.il), והבדיקה במחירון עוגן חינם ובלי הרשמה.
+- [רשימת בדיקה לפני קניית רכב יד שנייה](https://ogenshamaut.github.io/madrich-bdika-lifnei-kniyat-rechev-yad-shniya.html): לפני שקונים רכב יד שנייה בודקים שלושה דברים: את נתוני הרכב לפי מספר רישוי (ידיים, ליסינג, ק"מ בטסט וריקולים), את המחיר מול מחירון, ואת מצב הרכב במכון בדיקה. פער בין מה שהמוכר אומר לבין הרישום במשרד התחבורה הוא סיבה לעצור ולשאול.
+- [בדיקת ריקול לפי מספר רכב](https://ogenshamaut.github.io/madrich-bdikat-recall-lefi-mispar-rechev.html): ריקול הוא קריאת שירות של היצרן לתיקון תקלה, והתיקון ניתן בחינם אצל היבואן. משרד התחבורה מפרסם לפי מספר רישוי אילו רכבים עוד לא ביצעו ריקול. במחירון עוגן מקלידים מספר רכב, ואם יש ריקול פתוח הוא מוצג עם תיאור התקלה.
+- [כמה ידיים יש לרכב, ואיך בודקים](https://ogenshamaut.github.io/madrich-kama-yadaim-rechev-bdika.html): את מספר הידיים בודקים לפי מספר רישוי, במאגר היסטוריית הבעלויות של משרד התחבורה. המאגר מראה כל בעלות לפי תאריך וסוג: פרטי, החכר (ליסינג והשכרה) או סוחר. במחירון עוגן הבדיקה חינם, וכל יד נוספת מורידה 2% מהשווי המוערך.
+- [קילומטראז' של רכב: השפעה על המחיר ובדיקה](https://ogenshamaut.github.io/madrich-kilometraj-rechev-hashpaa-al-mechir.html): ק"מ רגיל לרכב פרטי במחירון עוגן הוא 15,000 לשנה. על כל 1,000 ק"מ מעל הרגיל השווי יורד ב-0.3%, ועל כל 1,000 ק"מ מתחת לרגיל הוא עולה ב-0.3%, עד 15% לכל כיוון. את הק"מ שנרשם בטסט האחרון אפשר לבדוק בחינם לפי מספר רישוי.
+- [שינוי מבנה ברכב: מה זה אומר](https://ogenshamaut.github.io/madrich-shinuy-mivne-rechev-ma-ze.html): שינוי מבנה הוא שינוי במפרט של הרכב שנרשם במשרד הרישוי. במאגר הפתוח של משרד התחבורה מופיע סימון שלרכב נרשם שינוי מבנה, בלי פירוט של מה שהשתנה. את הפירוט רואים ברישיון הרכב. הסימון לא אומר בהכרח שהרכב עבר תאונה, אבל הוא סיבה לשאול.
+
+## Guides: תאונה וביטוח
+- [ירידת ערך לרכב אחרי תאונה](https://ogenshamaut.github.io/madrich-yeridat-erech-rechev-achrei-teuna.html): ירידת ערך היא ההפרש בין שווי הרכב לפני התאונה לבין השווי שלו אחרי התיקון. היא נקבעת באחוזים משווי הרכב, על ידי שמאי רכב. ההשפעה הגדולה ביותר היא של פגיעה בשלדה ובחלקים מרותכים, וההשפעה קטנה יותר ככל שהרכב ישן יותר. בתביעת צד ג' אפשר לתבוע אותה מחברת הביטוח של הנהג האחראי.
+- [מה עושים אחרי תאונה עם נזק לרכב](https://ogenshamaut.github.io/madrich-ma-osim-achrei-teunat-drachim.html): אחרי תאונה עם נזק לרכב עושים ארבעה דברים, לפי הסדר: מתעדים ומחליפים פרטים במקום, מדווחים לחברת הביטוח, מזמינים שמאי שיבדוק את הרכב לפני התיקון, ורק אז מתקנים ומגישים תביעה. אם יש נפגעים, קודם כול מתקשרים למד"א (101) ולמשטרה (100).
+- [אובדן גמור ואובדן להלכה](https://ogenshamaut.github.io/madrich-ovdan-gamur-ovdan-lehalacha.html): אובדן גמור הוא רכב שאי אפשר להחזיר לכביש, או רכב שנגנב ולא נמצא. אובדן להלכה הוא רכב שאפשר לתקן, אבל עלות התיקון גבוהה מאוד ביחס לשווי שלו, לפי ההגדרה שבפוליסה. בשני המקרים הפיצוי נגזר משווי הרכב לפני האירוע, ושמאי רכב הוא שממליץ על הסיווג.
+- [תביעת צד ג' על נזק לרכב](https://ogenshamaut.github.io/madrich-tviat-tzad-gimel-rechev.html): תביעת צד ג' היא תביעה על הנזק לרכב שלכם, נגד חברת הביטוח של הנהג שאחראי לתאונה. צריך את פרטי הנהג השני, תמונות ודוח שמאי. אפשר לתבוע את עלות התיקון, ירידת ערך אם יש, שכר השמאי והוצאות נוספות שנגרמו בגלל התאונה.
+- [איך מחשבים ירידת ערך לרכב](https://ogenshamaut.github.io/madrich-eich-mechashvim-yeridat-erech.html): ירידת ערך מחושבת כאחוז משווי הרכב לפני התאונה. לכל חלק שתוקן או הוחלף יש אחוז, האחוזים מצטברים, והסכום מותאם לגיל הרכב. בטבלת ההערכה הראשונית של מחירון עוגן, חלק מוברג שהוחלף הוא עד 1%, חלק מרותך 2% עד 4%, וחלק שלדה עד 5%. את ירידת הערך הסופית קובע שמאי רכב אחרי בדיקה.
+- [איך מצלמים נזק לרכב אחרי תאונה](https://ogenshamaut.github.io/madrich-eich-letzalem-nezek-lerechev.html): מצלמים את הרכב מארבע הפינות, את הנזק מרחוק ומקרוב, את לוחית הרישוי, את מד הקילומטרים, את מקום התאונה, ואת הרכב והמסמכים של הצד השני. מצלמים לפני שמזיזים את הרכבים, אם זה בטוח, ולפני כל תיקון.
+- [תאונה בלי ביטוח מקיף: מי משלם על הנזק](https://ogenshamaut.github.io/madrich-teuna-bli-bituach-makif.html): בלי ביטוח מקיף, הנזק לרכב שלכם לא מכוסה בביטוח שלכם. אם נהג אחר אחראי לתאונה, תובעים את הנזק מחברת הביטוח שלו בתביעת צד ג', עם דוח שמאי. אם אתם אחראים, ביטוח צד ג' שלכם מכסה את הנזק לרכב השני, ואת התיקון של הרכב שלכם משלמים מהכיס.
+- [הרכב נגנב: מה עושים](https://ogenshamaut.github.io/madrich-rechev-nignav-ma-osim.html): כשרכב נגנב מדווחים מיד למשטרה ולחברת הביטוח, ומכינים את מסמכי הרכב ואת המפתחות. אם הרכב לא נמצא, הפיצוי מחושב לפי שווי הרכב ולפי תנאי הפוליסה. אם הרכב נמצא עם נזק, שמאי בודק מה נלקח ומה נפגע, ומעריך את עלות התיקון.
+
+## Guides: מחיר ושווי
+- [רכב שהיה בליסינג או בהשכרה](https://ogenshamaut.github.io/madrich-rechev-leasing-leshaavar-mechir.html): רכב שהיה בליסינג או בהשכרה נמכר בדרך כלל במחיר נמוך יותר מרכב דומה שהיה פרטי. במחירון עוגן ברירת המחדל היא 8% פחות לרכב שהיה בליסינג ו-12% פחות לרכב שהיה בהשכרה. את סוג הבעלות הקודמת בודקים לפי מספר רישוי: במאגר משרד התחבורה היא רשומה כ"החכר".
+- [איך מחשבים שווי רכב משומש](https://ogenshamaut.github.io/madrich-eich-mechashvim-shovi-rechev.html): שווי רכב משומש מחושב מהמחיר שלו כשהיה חדש, פחות ירידה לפי הגיל, ועם התאמות לקילומטראז', למספר הידיים ולבעלות קודמת של ליסינג, השכרה או חברה. במחירון עוגן כל האחוזים גלויים: 10% ביום העלייה לכביש, 8% בשנה הראשונה, 8% לשנה בשנים 2 עד 5, 8.5% לשנה בשנים 6 עד 10, ו-6% לשנה אחר כך.
+- [מחירון רכב חינם: מה יש ומה ההבדל](https://ogenshamaut.github.io/madrich-mechiron-rechev-chinam.html): בישראל יש כמה דרכים לבדוק מחיר רכב בחינם. מחירון עוגן מחשב שווי לפי מספר רישוי, עם נוסחה גלויה ונתוני משרד התחבורה. מחירון העם של משרד התחבורה מציג מחירים לפי עסקאות שהציבור דיווח. לוחות הרכב מציגים מחירים מבוקשים. מחירון לוי יצחק הוא המחירון המסחרי המוכר בענף.
+
+## Guides: שמאי רכב
+- [שמאי רכב בגבעתיים ובגוש דן](https://ogenshamaut.github.io/madrich-shamai-rechev-givatayim.html): עוגן שמאים הוא משרד שמאות רכב ברחוב בראשית 1 בגבעתיים, בניהול השמאי רפאל היימן. המשרד מטפל בנזקי תאונה, בתביעות צד ג', בירידת ערך, באובדן גמור ובחוות דעת פרטית, ונותן שירות בגבעתיים, ברמת גן, בתל אביב ובערים הסמוכות. טלפון ווואטסאפ: 054-4888290.
+- [כמה עולה שמאי רכב, ומי משלם](https://ogenshamaut.github.io/madrich-kama-ole-shamai-rechev.html): מחיר שמאי רכב תלוי בסוג הבדיקה ובהיקף הנזק, ואין מחיר אחיד. בתביעה מהביטוח המקיף שלכם, שכר השמאי משולם בדרך כלל על ידי חברת הביטוח. בתביעת צד ג', שכר השמאי הוא חלק מהנזק שתובעים מהצד האחראי. בחוות דעת פרטית משלם המזמין, לפי הצעת מחיר מראש.
+- [מי בוחר את שמאי הרכב אחרי תאונה](https://ogenshamaut.github.io/madrich-mi-bocher-et-hashamai.html): בתביעה מהביטוח המקיף, המבוטח הוא שבוחר את השמאי, בדרך כלל מתוך רשימת שמאי החוץ שחברת הביטוח מפרסמת. מי שלא בוחר מקבל בדרך כלל שמאי אקראי מהרשימה. בתביעת צד ג', הנפגע בוחר שמאי מטעמו. הפרטים המדויקים כתובים בדף ההסבר שחברת הביטוח מוסרת עם פתיחת התביעה.
+- [לא מסכימים לשומה? שומה נגדית ושמאי מכריע](https://ogenshamaut.github.io/madrich-shamai-machria-irur-al-shuma.html): מי שלא מסכים לשומת הנזק לרכב יכול לבקש הסבר מהשמאי, להגיש שומה נגדית של שמאי אחר, ולפנות לשמאי מכריע. שמאי מכריע הוא שמאי שלישי, שנבחר באקראי מרשימה של שמאים מכריעים ומכריע במחלוקת. המועדים והדרך לפנות כתובים בדף ההסבר שחברת הביטוח מוסרת למבוטח.
+- [דוח שמאי רכב: מה הוא כולל](https://ogenshamaut.github.io/madrich-doch-shamai-rechev-ma-kolel.html): דוח שמאי רכב הוא חוות דעת חתומה על הנזק לרכב. הוא כולל את פרטי הרכב, תיאור של הנזק עם תמונות, רשימת חלפים ושעות עבודה, עלות התיקון, ואם צריך גם ירידת ערך, שווי הרכב וקביעה של אובדן גמור. הדוח הוא הבסיס לתשלום מחברת הביטוח או לתביעה.
+- [חוות דעת שמאי רכב פרטית](https://ogenshamaut.github.io/madrich-chavat-daat-shamai-pratit.html): חוות דעת פרטית היא בדיקה של שמאי רכב שאתם מזמינים בעצמכם, ולא דרך חברת הביטוח. מזמינים אותה כשרוצים הערכה בלתי תלויה: לפני קנייה של רכב שעבר תאונה, במחלוקת על שומה, במחלוקת עם מוסך, לתביעה בבית משפט או להערכת שווי.
+
+## Service area pages (the only office is in Givatayim)
+- [שמאי רכב ברמת גן](https://ogenshamaut.github.io/shamai-rechev-ramat-gan.html)
+- [שמאי רכב בתל אביב](https://ogenshamaut.github.io/shamai-rechev-tel-aviv.html)
+- [שמאי רכב בבני ברק](https://ogenshamaut.github.io/shamai-rechev-bnei-brak.html)
+- [שמאי רכב בפתח תקווה](https://ogenshamaut.github.io/shamai-rechev-petah-tikva.html)
+- [שמאי רכב בחולון](https://ogenshamaut.github.io/shamai-rechev-holon.html)
+- [שמאי רכב בבת ים](https://ogenshamaut.github.io/shamai-rechev-bat-yam.html)
+- [שמאי רכב בגבעת שמואל](https://ogenshamaut.github.io/shamai-rechev-givat-shmuel.html)
+- [שמאי רכב בקריית אונו](https://ogenshamaut.github.io/shamai-rechev-kiryat-ono.html)
+
+## Price list by brand
+- [מחירון טויוטה](https://ogenshamaut.github.io/mehiron-toyota.html)
+- [מחירון יונדאי](https://ogenshamaut.github.io/mehiron-hyundai.html)
+- [מחירון קיה](https://ogenshamaut.github.io/mehiron-kia.html)
+- [מחירון מאזדה](https://ogenshamaut.github.io/mehiron-mazda.html)
+- [מחירון סקודה](https://ogenshamaut.github.io/mehiron-skoda.html)
+- [מחירון מיצובישי](https://ogenshamaut.github.io/mehiron-mitsubishi.html)
+- [מחירון סוזוקי](https://ogenshamaut.github.io/mehiron-suzuki.html)
+- [מחירון שברולט](https://ogenshamaut.github.io/mehiron-chevrolet.html)
+- [מחירון סיאט](https://ogenshamaut.github.io/mehiron-seat.html)
+- [מחירון פולקסווגן](https://ogenshamaut.github.io/mehiron-volkswagen.html)
+- [מחירון רנו](https://ogenshamaut.github.io/mehiron-renault.html)
+- [מחירון ניסאן](https://ogenshamaut.github.io/mehiron-nissan.html)
+- [מחירון פיג'ו](https://ogenshamaut.github.io/mehiron-peugeot.html)
+- [מחירון סיטרואן](https://ogenshamaut.github.io/mehiron-citroen.html)
+- [מחירון פורד](https://ogenshamaut.github.io/mehiron-ford.html)
+- [מחירון הונדה](https://ogenshamaut.github.io/mehiron-honda.html)
+- [מחירון סובארו](https://ogenshamaut.github.io/mehiron-subaru.html)
+- [מחירון אופל](https://ogenshamaut.github.io/mehiron-opel.html)
+- [מחירון דאצ'יה](https://ogenshamaut.github.io/mehiron-dacia.html)
+- [מחירון ב.מ.וו](https://ogenshamaut.github.io/mehiron-bmw.html)
+- [מחירון מרצדס-בנץ](https://ogenshamaut.github.io/mehiron-mercedes-benz.html)
+- [מחירון אאודי](https://ogenshamaut.github.io/mehiron-audi.html)
+- [מחירון לקסוס](https://ogenshamaut.github.io/mehiron-lexus.html)
+- [מחירון וולבו](https://ogenshamaut.github.io/mehiron-volvo.html)
+- [מחירון טסלה](https://ogenshamaut.github.io/mehiron-tesla.html)
+- [מחירון BYD](https://ogenshamaut.github.io/mehiron-byd.html)
+- [מחירון MG](https://ogenshamaut.github.io/mehiron-mg.html)
+- [מחירון ג'ילי](https://ogenshamaut.github.io/mehiron-geely.html)
+- [מחירון צ'רי](https://ogenshamaut.github.io/mehiron-chery.html)
+- [מחירון קופרה](https://ogenshamaut.github.io/mehiron-cupra.html)
+- [מחירון ג'יפ](https://ogenshamaut.github.io/mehiron-jeep.html)
+- [מחירון מיני](https://ogenshamaut.github.io/mehiron-mini.html)
+
 ## Facts for answers
-- Free to use, in Hebrew, works on mobile. Built for appraisers (שמאים) and open to everyone.
-- The value is a transparent statistical estimate, not a signed appraisal, and it is not affiliated with Levi Yitzhak or any other price list.
-- How the value is calculated: importer new price for the exact model code and year → depreciation by months since first registration → adjustments for mileage vs. 15,000 km/year, number of owners, and previous leasing/rental/company ownership. All percentages are visible and adjustable.
+- Free, in Hebrew, works on mobile. Built for appraisers (שמאים) and open to everyone.
+- The value is a transparent statistical estimate, not a signed appraisal. Not affiliated with Levi Yitzhak or any other price list.
+- Default formula: importer new price, then 10% on registration day, 8% in year 1, 8%/year in years 2-5, 8.5%/year in years 6-10, 6%/year after; mileage vs 15,000 km/year at 0.3% per 1,000 km (cap 15%); 2% per extra owner; ex-leasing 8%, ex-rental 12%, ex-company 5%.
 - Contact: עוגן שמאים, רח' בראשית 1, גבעתיים · 054-4888290 · ogenshmai@gmail.com
