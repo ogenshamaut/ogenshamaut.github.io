@@ -437,8 +437,8 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   const CAP = { doorF: 10500, doorR: 11500, hood: 10000, headlight: 9500 };
   // Importers price the same part very differently. Factor per make, measured against each importer's official parts price list
   // (Nov 2026; the formula itself is fitted on Kia). A make that was not measured gets the middle of the measured range.
-  const BRAND = [["קיה", 1], ["סובארו", 1.05], ["מזדה", 0.6], ["מאזדה", 0.6], ["סמארט", 1.5]];
-  const BRAND_DEF = 0.85;
+  const BRAND = [["קיה", 1], ["סובארו", 1.05], ["מזדה", 0.6], ["מאזדה", 0.6], ["טויוטה", 1.2], ["לקסוס", 1.5], ["הונדה", 1.05], ["סמארט", 1.5]];
+  const BRAND_DEF = 1;
   const brandF = () => { const n = String(S?.car?.tozeret_nm || S?.brand || ""); const b = BRAND.find(([t]) => n.includes(t)); return b ? [b[1], true] : [BRAND_DEF, false]; };
   const GROUPS = [...PARTS, ...XPARTS];
   const NAMES = Object.fromEntries(GROUPS.flatMap((g) => g[2]).map((x) => [x[0], x[1]]));
@@ -681,7 +681,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       <tr class="total"><td>סך הנזק: תיקון וירידת ערך</td><td>${nis(d.total + dv)}</td></tr>` : ""}
     </table>
     ${val ? `<p class="dvsum${pct >= 60 ? " hot" : ""}">עלות התיקון היא ${pct.toFixed(0)}% משווי הרכב.${pct >= 60 ? ` כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור. <a href="madrich-ovdan-gamur-ovdan-lehalacha.html">מה זה אומר</a>` : pct >= 50 ? " זה קרוב לסף של אובדן גמור (60%)." : ""}</p>` : ""}
-    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים לפי מחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. הנוסחה של חלקי הפח, הפנסים, המראות והמצננים כוילה מול מחירוני חלפים רשמיים של יבואנים. ${brandF()[1] ? "ליצרן של הרכב הזה ההערכה הותאמה לפי מחירון החלפים של היבואן שלו." : "ליצרן של הרכב הזה לא מצאנו מחירון חלפים להשוואה, ולכן ההערכה היא ממוצע של היצרנים שנבדקו. מחיר החלק בפועל יכול להיות נמוך בכשליש או גבוה בכרבע."} ברכב ישן או ברכב יוקרה הפער יכול להיות גדול יותר. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
+    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים לפי מחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. הנוסחה של חלקי הפח, הפנסים, המראות והמצננים כוילה מול מחירוני חלפים רשמיים של יבואנים. ${brandF()[1] ? "ליצרן של הרכב הזה ההערכה הותאמה לפי מחירון החלפים של היבואן שלו." : "ליצרן של הרכב הזה לא מצאנו מחירון חלפים להשוואה, ולכן ההערכה היא ממוצע של היצרנים שנבדקו. מחיר החלק בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."} ברכב ישן או ברכב יוקרה הפער יכול להיות גדול יותר. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
   }
 
   function countUp(el, to) {
