@@ -226,39 +226,42 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
 @media print{
   body>*{display:none!important}
   body>#printDoc{display:block!important}
-  #printDoc{font:400 11.5px/1.5 "IBM Plex Sans Hebrew",system-ui,sans-serif;color:#000;direction:rtl}
-  #printDoc .phead{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:3px solid #0a6ea6;padding-bottom:10px}
+  #printDoc{font:400 10.5px/1.4 "IBM Plex Sans Hebrew",system-ui,sans-serif;color:#000;direction:rtl}
+  #printDoc .phead{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:3px solid #0a6ea6;padding-bottom:7px}
   #printDoc .pbrand{display:flex;align-items:center;gap:10px}
   #printDoc .pbrand b{display:block;font-size:22px;line-height:1.1;color:#0a6ea6}
   #printDoc .pbrand span{font-size:11px;color:#444}
   #printDoc .pcontact{font-size:10.5px;color:#333;text-align:left;line-height:1.45}
-  #printDoc h1{font-size:19px;margin:14px 0 8px;text-align:center}
-  #printDoc h2{font-size:13.5px;margin:16px 0 5px;padding:4px 8px;background:#e9f3fa;border-inline-start:4px solid #0a6ea6;break-after:avoid}
+  #printDoc h1{font-size:17px;margin:9px 0 6px;text-align:center}
+  #printDoc h2{font-size:12.5px;margin:10px 0 4px;padding:3px 8px;background:#e9f3fa;border-inline-start:4px solid #0a6ea6;break-after:avoid}
   #printDoc table{width:100%;border-collapse:collapse;break-inside:auto}
   #printDoc tr{break-inside:avoid}
   #printDoc .pkeep{break-inside:avoid}
   #printDoc .pt tr.tot,#printDoc .pt tr.sub{break-before:avoid}
-  #printDoc th,#printDoc td{border:1px solid #b9c4cf;padding:4px 7px;text-align:right;vertical-align:top}
+  #printDoc th,#printDoc td{border:1px solid #b9c4cf;padding:2.5px 6px;text-align:right;vertical-align:top}
   #printDoc th{background:#f3f6f9;font-weight:600}
-  #printDoc .pkv th,#printDoc .pmetaT th,#printDoc .pparam th{width:19%;white-space:nowrap}
-  #printDoc .pkv td,#printDoc .pmetaT td,#printDoc .pparam td{width:31%}
+  #printDoc .pkv th{width:12%;white-space:nowrap}
+  #printDoc .pkv td{width:21%}
+  #printDoc .pnote{margin:5px 0 0}
+  #printDoc .pparams{margin:3px 0 0;font-size:9.5px;color:#333}
+  #printDoc .pp{unicode-bidi:isolate;white-space:nowrap}
   #printDoc .pparam{font-size:10px;margin-top:6px}
   #printDoc .pparam caption{text-align:right;font-weight:600;padding:4px 0;font-size:11px}
   #printDoc .n{text-align:left;direction:ltr;white-space:nowrap;font-variant-numeric:tabular-nums}
-  #printDoc td small{display:block;color:#555;font-size:9.5px}
+  #printDoc td small{display:inline;color:#555;font-size:9px;margin-inline-start:5px}
   #printDoc .tot td{font-weight:700;font-size:12.5px;background:#e9f3fa;border-top:2px solid #000}
   #printDoc .sub td{background:#fafbfc}
-  #printDoc .psrc{margin:0 0 5px;color:#444;font-size:10.5px}
-  #printDoc .plist{margin:6px 0 0}
-  #printDoc .pval{display:flex;gap:10px;margin:4px 0 8px;break-inside:avoid}
-  #printDoc .pval>div{flex:1;border:1.5px solid #0a6ea6;border-radius:6px;padding:7px 10px}
+  #printDoc .psrc{margin:3px 0 0;color:#444;font-size:9.5px}
+  #printDoc .plist{margin:4px 0 0}
+  #printDoc .pval{display:flex;gap:8px;margin:3px 0 6px;break-inside:avoid}
+  #printDoc .pval>div{flex:1;border:1.5px solid #0a6ea6;border-radius:6px;padding:4px 10px}
   #printDoc .pval span{display:block;font-size:10.5px;color:#444}
-  #printDoc .pval b{font-size:22px;direction:ltr;display:block;text-align:right}
-  #printDoc .pval b.s{font-size:14px;direction:rtl}
+  #printDoc .pval b{font-size:19px;direction:ltr;display:block;text-align:right}
+  #printDoc .pval b.s{font-size:13px;direction:rtl}
   #printDoc .pol{margin:4px 0 0;padding-inline-start:18px}
   #printDoc .pol li{margin-bottom:3px}
-  #printDoc .pdisc{margin-top:14px;border:1px solid #888;padding:8px 10px;font-size:10.5px;break-inside:avoid}
-  #printDoc .pfoot{display:flex;justify-content:space-between;margin-top:10px;padding-top:6px;border-top:1px solid #888;font-size:10px;color:#444}
+  #printDoc .pdisc{margin-top:9px;border:1px solid #888;padding:5px 8px;font-size:9.5px;break-inside:avoid}
+  #printDoc .pfoot{display:flex;justify-content:space-between;margin-top:6px;padding-top:4px;border-top:1px solid #888;font-size:10px;color:#444}
 }
 @media print{
   @page{size:A4;margin:13mm 12mm}
@@ -799,7 +802,11 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     const date = now.toLocaleDateString("he-IL"), time = now.toLocaleTimeString("he-IL", { hour: "2-digit", minute: "2-digit" });
     const id = `${S.plate || "M"}-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}`;
     const who = esc(($("pName")?.value || "").trim()), note = esc(($("pNote")?.value || "").trim());
-    const kv = (rows) => `<table class="pkv"><tbody>${rows.reduce((a, x, i) => (i % 2 ? a[a.length - 1].push(x) : a.push([x]), a), []).map((pair) => `<tr>${pair.map(([k, val]) => `<th scope="row">${k}</th><td>${val}</td>`).join("")}${pair.length === 1 ? "<th></th><td></td>" : ""}</tr>`).join("")}</tbody></table>`;
+    const kv = (rows) => {
+      const long = rows.filter(([, val]) => String(val).replace(/<[^>]+>/g, "").length > 34), short = rows.filter((x) => !long.includes(x));
+      const tr = short.reduce((acc, x, i) => (i % 3 ? acc[acc.length - 1].push(x) : acc.push([x]), acc), []).map((g) => `<tr>${g.map(([k, val]) => `<th scope="row">${k}</th><td>${val}</td>`).join("")}${"<th></th><td></td>".repeat(3 - g.length)}</tr>`).join("");
+      return `<table class="pkv"><tbody>${tr}${long.map(([k, val]) => `<tr><th scope="row">${k}</th><td colspan="5">${val}</td></tr>`).join("")}</tbody></table>`;
+    };
     const hist = [
       ["יד", S.handKnown === false ? `${S.handSel} (הוזן ידנית, אין רישום במאגר)` : String(S.handSel)],
       ["ק\"מ", S.kmSel != null ? `${num(S.kmSel)}${S.km != null && S.kmSel === S.km ? " (הערכה לפי הטסט האחרון)" : " (הוזן ידנית)"}` : "לא ידוע"],
@@ -815,50 +822,35 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     const pct = v && v.value ? d.total / v.value * 100 : 0;
     let el = $("printDoc");
     if (!el) { el = document.createElement("div"); el.id = "printDoc"; document.body.appendChild(el); }
+    const params = Object.keys(M.DEF).map((k) => `<span class="pp">${M.LABELS[k]}: <b>${M.P[k]}</b>${M.P[k] !== M.DEF[k] ? " (שונה ידנית)" : ""}</span>`).join(" · ");
     el.innerHTML = `
-      <header class="phead"><div class="pbrand"><img src="favicon.svg" alt="" width="34" height="40"><div><b>עוגן שמאים</b><span>שמאות רכב · מחירון עוגן</span></div></div>
-        <div class="pcontact">רח' בראשית 1, גבעתיים<br><span dir="ltr">054-4888290</span> · ogenshmai@gmail.com<br>ogenshamaut.github.io</div></header>
+      <header class="phead"><div class="pbrand"><img src="favicon.svg" alt="" width="30" height="36"><div><b>עוגן שמאים</b><span>שמאות רכב · מחירון עוגן</span></div></div>
+        <div class="pcontact">רח' בראשית 1, גבעתיים · <span dir="ltr">054-4888290</span><br>ogenshmai@gmail.com · ogenshamaut.github.io</div></header>
       <h1>${d.rows.length ? "דוח הערכת שווי רכב ואומדן נזק" : "דוח הערכת שווי רכב"}</h1>
-      <table class="pmetaT"><tbody><tr><th>מספר דוח</th><td dir="ltr">${id}</td><th>תאריך הפקה</th><td>${date}, ${time}</td></tr>
-        <tr><th>רכב</th><td>${esc(S.title)} ${c.shnat_yitzur}</td><th>מספר רישוי</th><td>${S.plate ? `<b dir="ltr">${fmtPlate(S.plate)}</b>` : "לא הוזן (נבחר לפי דגם)"}</td></tr>
-        ${who || note ? `<tr><th>הופק על ידי</th><td>${who || "—"}</td><th>הערות</th><td>${note || "—"}</td></tr>` : ""}</tbody></table>
+      <table class="pkv pmetaT"><tbody><tr><th>רכב</th><td>${esc(S.title)} ${c.shnat_yitzur}</td><th>מספר רישוי</th><td>${S.plate ? `<b dir="ltr">${fmtPlate(S.plate)}</b>` : "נבחר לפי דגם"}</td><th>הופק</th><td>${date}, ${time}</td></tr>
+        <tr><th>מספר דוח</th><td dir="ltr">${id}</td><th>הופק על ידי</th><td>${who || "—"}</td><th>הערות</th><td>${note || "—"}</td></tr></tbody></table>
 
-      <h2>1. פרטי הרכב</h2><p class="psrc">מקור: רישומי משרד התחבורה (data.gov.il), נכון ל-${date}.</p>${kv(S.rows)}
-      <h2>2. נתונים שהשפיעו על השווי</h2>${kv(hist)}
-      ${S.plate && S.owners?.length ? `<p class="plist"><b>בעלים לאורך השנים:</b> ${S.owners.map((o, i) => `${i + 1}. ${esc(o.baalut)} מ-${esc(ym(o.baalut_dt))}`).join(" · ")}</p>` : ""}
+      <h2>1. פרטי הרכב</h2>${kv([...S.rows, ...hist.filter(([k]) => k !== "עלה לכביש")])}
+      ${S.plate && S.owners?.length ? `<p class="plist"><b>בעלים:</b> ${S.owners.map((o, i) => `${i + 1}. ${esc(o.baalut)} מ-${esc(ym(o.baalut_dt))}`).join(" · ")}</p>` : ""}
+      <p class="psrc">מקור: רישומי משרד התחבורה (data.gov.il), נכון ל-${date}. יד, ק"מ ובעלות קודמת הם הערכים שלפיהם חושב השווי.</p>
 
-      <div class="pkeep"><h2>3. הערכת השווי</h2>
+      <div class="pkeep"><h2>2. הערכת השווי</h2>
       ${v ? `<div class="pval"><div><span>שווי מוערך היום</span><b>${nis(v.value)}</b></div><div><span>טווח סביר</span><b class="s">${nis(v.low)} עד ${nis(v.high)}</b></div>${r.dv ? `<div><span>שווי אחרי ירידת ערך</span><b class="s">${nis(v.value - r.dv)}</b></div>` : ""}</div>
-      <table class="pt"><thead><tr><th>שלב בחישוב</th><th>הסבר</th><th class="n">סכום</th></tr></thead><tbody>
+      <table class="pt"><thead><tr><th>שלב בחישוב</th><th>לפי מה</th><th class="n">סכום</th></tr></thead><tbody>
         ${v.lines.map((l) => `<tr><td>${esc(l.t)}</td><td>${esc(l.sub)}</td><td class="n">${l.base ? nis(l.amt) : (l.amt < 0 ? "−" : "+") + nis(Math.abs(l.amt))}</td></tr>`).join("")}
-        <tr class="tot"><td colspan="2">שווי מוערך</td><td class="n">${nis(v.value)}</td></tr></tbody></table>` : `<p>אין במאגר מחיר יבואן לדגם הזה, ולכן לא חושב שווי.</p>`}
+        <tr class="tot"><td colspan="2">שווי מוערך</td><td class="n">${nis(v.value)}</td></tr></tbody></table>
+      <p class="pnote"><b>לפי מה נקבע המחיר:</b> נקודת המוצא היא מחיר המחירון של הרכב כשהיה חדש, כפי שדיווח היבואן למשרד התחבורה. ממנו יורד אחוז קבוע לכל שנה מאז העלייה לכביש, ואז השווי מותאם לקילומטראז' מול הנסועה הרגילה לגיל הרכב, למספר הידיים ולסוג הבעלות. הטווח הסביר הוא 7% לכל כיוון.</p>
+      <p class="pparams"><b>פרמטרים:</b> ${params}</p>` : `<p>אין במאגר מחיר יבואן לדגם הזה, ולכן לא חושב שווי.</p>`}</div>
 
-      </div><div class="pkeep"><h2>4. לפי מה נקבע המחיר</h2>
-      <ol class="pol">
-        <li><b>נקודת המוצא:</b> מחיר המחירון של הרכב כשהיה חדש, כפי שדיווח היבואן למשרד התחבורה${S.price ? ` (${esc(S.price.shem_yevuan)}, ${S.price.shnat_yitzur}${S.price.exact === false ? ", שנת מחירון קרובה" : ""}: ${nis(S.price.mehir)})` : ""}.</li>
-        <li><b>ירידה לפי גיל:</b> מהמחיר הזה מופחת אחוז קבוע על כל שנה מאז שהרכב עלה לכביש, ועוד ירידה חד-פעמית ביציאה מהסוכנות.</li>
-        <li><b>התאמה לקילומטראז':</b> הק"מ של הרכב מושווה לנסועה הממוצעת לגילו. נסועה גבוהה מפחיתה מהשווי ונסועה נמוכה מוסיפה, עד תקרה.</li>
-        <li><b>יד ובעלות:</b> כל יד נוספת מפחיתה מהשווי, וכך גם עבר בליסינג, בהשכרה או בבעלות חברה.</li>
-        <li><b>טווח:</b> הטווח הסביר הוא 7% מעל ומתחת לשווי המוערך.</li>
-      </ol>
-      <table class="pparam"><caption>הפרמטרים שבהם השתמש החישוב</caption><tbody>${Object.keys(M.DEF).reduce((a, k, i) => (i % 2 ? a[a.length - 1].push(k) : a.push([k]), a), []).map((pair) => `<tr>${pair.map((k) => `<th scope="row">${M.LABELS[k]}</th><td>${M.P[k]}${M.P[k] !== M.DEF[k] ? " (שונה ידנית)" : ""}</td>`).join("")}${pair.length === 1 ? "<th></th><td></td>" : ""}</tr>`).join("")}</tbody></table></div>
-
-      ${d.rows.length ? `<h2>5. אומדן נזק</h2><p class="psrc">${S.ptype === "alt" ? "לפי חלקים תחליפיים" : "לפי חלקים מקוריים"}. הסכומים בשורות לפני מע"מ.</p>
+      ${d.rows.length ? `<h2>3. אומדן נזק</h2>
       <table class="pt"><thead><tr><th>#</th><th>חלק</th><th>פעולה</th><th class="n">חלק</th><th class="n">עבודה</th><th class="n">צבע</th><th class="n">סה"כ</th></tr></thead><tbody>${dmgRows}
         <tr class="sub"><td colspan="3">סה"כ לפני מע"מ</td><td class="n">${nis(d.parts)}</td><td class="n">${nis(d.labor)}</td><td class="n">${nis(d.paint)}</td><td class="n">${nis(d.sub)}</td></tr>
         <tr class="sub"><td colspan="6">מע"מ ${DV.vat}%</td><td class="n">${nis(d.vat)}</td></tr>
-        <tr class="tot"><td colspan="6">עלות תיקון משוערת, כולל מע"מ</td><td class="n">${nis(d.total)}</td></tr>
+        <tr class="tot"><td colspan="6">עלות תיקון משוערת, כולל מע"מ${pct ? ` (${pct.toFixed(0)}% משווי הרכב)` : ""}</td><td class="n">${nis(d.total)}</td></tr>
         ${v && r.dv ? `<tr class="sub"><td colspan="6">ירידת ערך: ${r.dvPct.toFixed(1)}% משווי הרכב</td><td class="n">${nis(r.dv)}</td></tr><tr class="tot"><td colspan="6">סך הנזק: תיקון וירידת ערך</td><td class="n">${nis(d.total + r.dv)}</td></tr>` : ""}</tbody></table>
-      ${pct ? `<p class="plist"><b>יחס לשווי הרכב:</b> עלות התיקון היא ${pct.toFixed(0)}% משווי הרכב.${pct >= 60 ? " כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור." : ""}</p>` : ""}
-      <div class="pkeep"><h2>6. לפי מה נקבע אומדן הנזק</h2>
-      <ol class="pol">
-        <li><b>מחיר חלק:</b> חלק שמסומן "מחיר שהוזן" הוקלד על ידי מפיק הדוח. חלק שמסומן "הערכה" חושב מנוסחה: סכום בסיס ועוד אחוז ממחיר הרכב החדש, לפי מחירוני חלפים רשמיים של יבואנים. ${bf[1] ? "ליצרן של הרכב הזה ההערכה הותאמה למחירון החלפים של היבואן שלו." : "ליצרן של הרכב הזה לא נמצא מחירון להשוואה, ולכן ההערכה היא ממוצע של היצרנים שנבדקו, והמחיר בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."}</li>
-        <li><b>עבודה:</b> שעות עבודה לכל חלק לפי סוג הפעולה וחומרת הפגיעה, כפול ${nis(DV.rate)} לשעה.</li>
-        <li><b>צבע:</b> ${nis(DV.paint)} לצביעת חלק שלם, ובהתאמה לחלק קטן יותר.</li>
-        <li><b>ירידת ערך:</b> אחוז לכל חלק שנפגע לפי טבלת המשרד, כפול החלק שחל לפי גיל הרכב${v ? ` (${Math.round(ageShare(v.ageMonths) * 100)}%)` : ""}, עד תקרה של ${DV.cap}%.</li>
-      </ol></div>` : ""}
+      <p class="pnote"><b>לפי מה נקבע האומדן:</b> ${S.ptype === "alt" ? "חלקים תחליפיים" : "חלקים מקוריים"}, סכומים בשורות לפני מע"מ. חלק שמסומן "מחיר שהוזן" הוקלד על ידי מפיק הדוח. חלק שמסומן "הערכה" חושב לפי מחיר הרכב החדש ומחירוני חלפים רשמיים של יבואנים. ${bf[1] ? "ההערכה הותאמה למחירון של יבואן הרכב הזה." : "ליצרן הזה לא נמצא מחירון להשוואה, ולכן המחיר בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."} עבודה: שעות לפי הפעולה וחומרת הפגיעה, ${nis(DV.rate)} לשעה. צבע: ${nis(DV.paint)} לחלק שלם. ירידת ערך: אחוז לכל חלק שנפגע${v ? `, ${Math.round(ageShare(v.ageMonths) * 100)}% ממנו לפי גיל הרכב` : ""}, עד ${DV.cap}%.${pct >= 60 ? " כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור." : ""}</p>` : ""}
 
-      <div class="pdisc"><b>הבהרה:</b> הדוח הוא הערכה ממוחשבת שהופקה במחירון עוגן לפי הנתונים שלמעלה. הוא אינו שומה, אינו חוות דעת של שמאי ואינו הצעת מחיר, ואין להסתמך עליו בלי בדיקת הרכב. שומה מחייבת ניתנת רק אחרי בדיקה של שמאי רכב מוסמך. ייתכנו טעויות או חוסרים במאגרי משרד התחבורה.</div>
+      <div class="pdisc"><b>הבהרה:</b> הערכה ממוחשבת שהופקה במחירון עוגן לפי הנתונים שבדוח. היא אינה שומה, אינה חוות דעת של שמאי ואינה הצעת מחיר, ואין להסתמך עליה בלי בדיקת הרכב על ידי שמאי רכב מוסמך. ייתכנו טעויות או חוסרים במאגרי משרד התחבורה.</div>
       <div class="pfoot"><span>עוגן שמאים · רח' בראשית 1, גבעתיים · 054-4888290</span><span>דוח ${id} · ${date}</span></div>`;
     const t = document.title; document.title = `דוח מחירון עוגן ${S.plate ? fmtPlate(S.plate) : esc(S.title)} ${date.replace(/\./g, "-")}`;
     const back = () => { document.title = t; removeEventListener("afterprint", back); }; addEventListener("afterprint", back);
