@@ -434,7 +434,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   // Fixed part of the price (₪ before VAT) for the calibrated parts: price = FIT + % of the new-car price.
   const FIT = { bumpF: 3743, bumpR: 1689, hood: -1450, fenderF: 2084, doorF: -4170, doorR: -3030, trunk: 5694, fenderR: 2986, panelF: 2655, pillarA: 5122, pillarB: 4500, pillarC: 4500, headlight: -1847, taillight: 2500, foglight: 900, mirror: 2117, radiator: 2868, condenser: 1984, wheel: 4066, beamF: 624, beamR: 2290, arm: 819, shock: 690, windshield: 3543, sensor: 600 };
   // Ceiling for parts whose price stops rising with the car price.
-  const CAP = { doorF: 10500, doorR: 11500, hood: 9000 };
+  const CAP = { doorF: 10500, doorR: 11500, hood: 10000, headlight: 9500 };
   const GROUPS = [...PARTS, ...XPARTS];
   const NAMES = Object.fromEntries(GROUPS.flatMap((g) => g[2]).map((x) => [x[0], x[1]]));
   const ACT = { paint: "צביעה", fix: "תיקון", rep: "החלפה" };
@@ -676,7 +676,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       <tr class="total"><td>סך הנזק: תיקון וירידת ערך</td><td>${nis(d.total + dv)}</td></tr>` : ""}
     </table>
     ${val ? `<p class="dvsum${pct >= 60 ? " hot" : ""}">עלות התיקון היא ${pct.toFixed(0)}% משווי הרכב.${pct >= 60 ? ` כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור. <a href="madrich-ovdan-gamur-ovdan-lehalacha.html">מה זה אומר</a>` : pct >= 50 ? " זה קרוב לסף של אובדן גמור (60%)." : ""}</p>` : ""}
-    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים לפי מחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. המחירים של חלקי הפח, הפנסים, המראות והמצננים כוילו מול מחירון חלפים רשמי של יבואן אחד (דגמים מ-2019). ברכב של יצרן אחר, ברכב יוקרה או ברכב ישן המחיר יכול להיות שונה. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
+    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים לפי מחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. המחירים של חלקי הפח, הפנסים, המראות והמצננים כוילו מול מחירון חלפים רשמי של יבואן אחד (דגמים מ-2019) ונבדקו מול יבואן שני. ברכב של יצרן אחר, ברכב יוקרה או ברכב ישן המחיר יכול להיות שונה. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
   }
 
   function countUp(el, to) {
