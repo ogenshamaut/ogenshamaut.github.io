@@ -482,7 +482,18 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   // (Nov 2026; the formula itself is fitted on Kia). A make that was not measured gets the middle of the measured range.
   const BRAND = [["קיה", 1], ["סובארו", 1.05], ["מזדה", 0.6], ["מאזדה", 0.6], ["טויוטה", 1.2], ["לקסוס", 1.5], ["הונדה", 1.05], ["סמארט", 1.5]];
   const BRAND_DEF = 1;
-  const brandF = () => { const n = String(S?.car?.tozeret_nm || S?.brand || ""); const b = BRAND.find(([t]) => n.includes(t)); return b ? [b[1], true] : [BRAND_DEF, false]; };
+  const brandF = () => { const n = String(S?.car?.tozeret_nm || S?.brand || ""); const b = BRAND.find(([t]) => n.trim().startsWith(t)); return b ? [b[1], true] : [BRAND_DEF, false]; };
+  // Real part prices from the importers' official parts price lists (built by tools/build_parts.py): make -> model -> generation -> part.
+  let PDB = null;
+  fetch("parts-prices.json?v=1").then((r) => (r.ok ? r.json() : null)).then((d) => { PDB = d; if (d && S && $("dvBox")) { Object.keys(S.parts).forEach(partDetail); calc(); } }).catch(() => {});
+  const dbPrice = (k) => {
+    if (!PDB || !S?.car) return null;
+    const make = String(S.car.tozeret_nm || ""), b = Object.entries(PDB.brands).find(([t]) => make.trim().startsWith(t)); if (!b) return null;
+    const model = String(S.car.kinuy_mishari || "").toUpperCase(), fam = Object.values(b[1].fam).find((f) => new RegExp(f.m, "i").test(model)); if (!fam) return null;
+    const y = +S.car.shnat_yitzur, g = Object.keys(fam.g).map(Number).filter((gy) => gy <= y && y - gy <= 8 && fam.g[gy][k]).sort((a, c) => c - a)[0];
+    return g ? { q: fam.g[g][k], gen: g, src: b[1].src } : null;
+  };
+  const DBL = () => (S.ptype === "alt" ? "תחליפי, לפי מחירון יבואן" : "מחירון יבואן");
   const GROUPS = [...PARTS, ...XPARTS];
   const NAMES = Object.fromEntries(GROUPS.flatMap((g) => g[2]).map((x) => [x[0], x[1]]));
   const ACT = { paint: "צביעה", fix: "תיקון", rep: "החלפה" };
@@ -496,7 +507,14 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   // Estimated price of one part, before VAT, from the new-car price.
   const estPart = (k) => {
     const c = COST[k], base = S?.price?.mehir || 0, o = S.parts[k] || {};
-    const vr = VARIANT[k] ? VARIANT[k][o.vr ?? defVr(k)][1] : 1, kind = S.ptype === "alt" ? DV.alt / 100 : 1;
+    const vi = o.vr ?? defVr(k), vr = VARIANT[k] ? VARIANT[k][vi][1] : 1, kind = S.ptype === "alt" ? DV.alt / 100 : 1;
+    const db = dbPrice(k);
+    if (db) {
+      // The list has several versions of the part: the cheaper version of a pair takes the low quartile, the dearer one the high quartile.
+      const [lo, mid, hi] = db.q, v = VARIANT[k];
+      const price = !v ? mid : Math.min(...v.map((x) => x[1])) < 0.5 ? mid * vr : (vr >= Math.max(...v.map((x) => x[1])) ? hi : lo);
+      return r10(price * kind * DV.plvl / 100);
+    }
     return base ? r10(Math.min(CAP[k] || Infinity, Math.max(c[1], (FIT[k] || 0) + base * c[0] / 100)) * (FIT[k] != null ? brandF()[0] : 1) * vr * kind * DV.plvl / 100) : 0;
   };
   const fixHrs = (k, o) => +(COST[k][3] * SEV[o.sev ?? 1][1]).toFixed(1);
@@ -506,7 +524,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       const unit = o.a === "rep" ? (o.price ?? est) : 0;
       const hrs = (o.hrs ?? (o.a === "rep" ? c[2] : o.a === "fix" ? fixHrs(k, o) : 0)) * q;
       const part = unit * q, labor = Math.round(hrs * DV.rate), paint = Math.round(c[4] * q * DV.paint);
-      return { k, a: o.a, q, part, labor, paint, hrs, tag: [o.a === "rep" && VARIANT[k] ? VARIANT[k][o.vr ?? defVr(k)][0] : "", o.a === "fix" ? "פגיעה " + SEV[o.sev ?? 1][0] : ""].filter(Boolean).join(", "), manual: o.a === "rep" && o.price != null, noPrice: o.a === "rep" && o.price == null && !est, sum: part + labor + paint };
+      return { k, a: o.a, q, part, labor, paint, hrs, tag: [o.a === "rep" && VARIANT[k] ? VARIANT[k][o.vr ?? defVr(k)][0] : "", o.a === "fix" ? "פגיעה " + SEV[o.sev ?? 1][0] : ""].filter(Boolean).join(", "), manual: o.a === "rep" && o.price != null, db: o.a === "rep" && o.price == null && !!dbPrice(k), noPrice: o.a === "rep" && o.price == null && !est, sum: part + labor + paint };
     });
     const sub = rows.reduce((s, r) => s + r.sum, 0), vat = Math.round(sub * DV.vat / 100);
     return { rows, parts: rows.reduce((s, r) => s + r.part, 0), labor: rows.reduce((s, r) => s + r.labor, 0), paint: rows.reduce((s, r) => s + r.paint, 0), sub, vat, total: sub + vat };
@@ -710,17 +728,17 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     el.innerHTML = `${o.a === "rep" && VARIANT[k] ? `<label>סוג<select data-k="${k}" data-f="vr" aria-label="סוג, ${NAMES[k]}">${VARIANT[k].map(([t], i) => `<option value="${i}"${i === (o.vr ?? defVr(k)) ? " selected" : ""}>${t}</option>`).join("")}</select></label>` : ""}
       ${o.a === "fix" ? `<label>חומרת הפגיעה<select data-k="${k}" data-f="sev" aria-label="חומרת הפגיעה, ${NAMES[k]}">${SEV.map(([t], i) => `<option value="${i}"${i === (o.sev ?? 1) ? " selected" : ""}>${t}</option>`).join("")}</select></label>` : ""}
       ${c[5] > 1 ? `<label>כמות (עד ${c[5]})<input data-k="${k}" data-f="q" inputmode="numeric" value="${o.q}" aria-label="כמות, ${NAMES[k]}"></label>` : ""}
-      ${o.a === "rep" ? `<label>מחיר חלק אמיתי, ₪ לפני מע"מ<input data-k="${k}" data-f="price" inputmode="decimal" value="${o.price ?? ""}" placeholder="${est ? "הערכה: " + num(est) : "הקלידו מחיר"}" aria-label="מחיר חלק אמיתי, ${NAMES[k]}"></label>` : ""}
+      ${o.a === "rep" ? `<label>מחיר חלק אמיתי, ₪ לפני מע"מ<input data-k="${k}" data-f="price" inputmode="decimal" value="${o.price ?? ""}" placeholder="${est ? (dbPrice(k) ? DBL() + ": " : "הערכה: ") + num(est) : "הקלידו מחיר"}" aria-label="מחיר חלק אמיתי, ${NAMES[k]}"></label>` : ""}
       ${o.a !== "paint" ? `<label>שעות עבודה<input data-k="${k}" data-f="hrs" inputmode="decimal" value="${o.hrs ?? ""}" placeholder="${hrs}" aria-label="שעות עבודה, ${NAMES[k]}"></label>` : ""}`;
   }
 
   function dmgHtml(v) {
     if (!Object.keys(S.parts).length) return "";
     const d = S.result.dmg, dv = S.result.dv, val = v ? v.value : 0, pct = val ? d.total / val * 100 : 0;
-    const anyEst = d.rows.some((r) => r.a === "rep" && !r.manual && !r.noPrice), anyMissing = d.rows.some((r) => r.noPrice);
+    const anyEst = d.rows.some((r) => r.a === "rep" && !r.manual && !r.db && !r.noPrice), anyDb = d.rows.some((r) => r.db), anyMissing = d.rows.some((r) => r.noPrice);
     return `<h3 class="dmgh">דוח נזק</h3><p class="sub">${S.ptype === "alt" ? "לפי חלקים תחליפיים" : "לפי חלקים מקוריים"} · ${new Date().toLocaleDateString("he-IL")}</p><table class="calc">
       ${d.rows.map((r) => `<tr><td>${NAMES[r.k]}${r.q > 1 ? ` ×${r.q}` : ""} · ${ACT[r.a]}<small>${[r.tag,
-        r.a === "rep" ? (r.noPrice ? "חלק: חסר מחיר" : `חלק ${nis(r.part)} (${r.manual ? "מחיר שהוזן" : "הערכה"})`) : "",
+        r.a === "rep" ? (r.noPrice ? "חלק: חסר מחיר" : `חלק ${nis(r.part)} (${r.manual ? "מחיר שהוזן" : r.db ? DBL() : "הערכה"})`) : "",
         r.labor ? `עבודה ${+r.hrs.toFixed(1)} ש' ${nis(r.labor)}` : "", r.paint ? `צבע ${nis(r.paint)}` : ""].filter(Boolean).join(" · ")}</small></td><td>${nis(r.sum)}</td></tr>`).join("")}
       <tr><td>סה"כ לפני מע"מ<small>חלקים ${nis(d.parts)} · עבודה ${nis(d.labor)} · צבע ${nis(d.paint)}</small></td><td>${nis(d.sub)}</td></tr>
       <tr><td>מע"מ ${DV.vat}%</td><td>${nis(d.vat)}</td></tr>
@@ -729,7 +747,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       <tr class="total"><td>סך הנזק: תיקון וירידת ערך</td><td>${nis(d.total + dv)}</td></tr>` : ""}
     </table>
     ${val ? `<p class="dvsum${pct >= 60 ? " hot" : ""}">עלות התיקון היא ${pct.toFixed(0)}% משווי הרכב.${pct >= 60 ? ` כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור. <a href="madrich-ovdan-gamur-ovdan-lehalacha.html">מה זה אומר</a>` : pct >= 50 ? " זה קרוב לסף של אובדן גמור (60%)." : ""}</p>` : ""}
-    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים לפי מחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. הנוסחה של חלקי הפח, הפנסים, המראות והמצננים כוילה מול מחירוני חלפים רשמיים של יבואנים. ${brandF()[1] ? "ליצרן של הרכב הזה ההערכה הותאמה לפי מחירון החלפים של היבואן שלו." : "ליצרן של הרכב הזה לא מצאנו מחירון חלפים להשוואה, ולכן ההערכה היא ממוצע של היצרנים שנבדקו. מחיר החלק בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."} ברכב ישן או ברכב יוקרה הפער יכול להיות גדול יותר. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
+    <p class="disc">${anyMissing ? "לחלק מהחלקים אין מחיר, כי אין במאגר מחיר יבואן לרכב הזה. הקלידו מחיר ידנית. " : ""}${anyDb ? `מחירים שמסומנים "${DBL()}" מבוססים על המחיר במחירון החלפים הרשמי של היבואן לדגם ולדור של הרכב הזה (חציון הגרסאות, לפני מע"מ), נכון ל-${PDB.asOf.split("-").reverse().join(".")}${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. המחיר יכול להשתנות לפי רמת הגימור. ` : ""}${anyEst ? `מחירי החלקים שמסומנים "הערכה" מחושבים לפי מחיר הרכב החדש${S.ptype === "alt" ? `, פחות ${100 - DV.alt}% לחלק תחליפי` : ""}. הנוסחה של חלקי הפח, הפנסים, המראות והמצננים כוילה מול מחירוני חלפים רשמיים של יבואנים. ${brandF()[1] ? "ליצרן של הרכב הזה ההערכה הותאמה לפי מחירון החלפים של היבואן שלו." : "ליצרן של הרכב הזה לא מצאנו מחירון חלפים להשוואה, ולכן ההערכה היא ממוצע של היצרנים שנבדקו. מחיר החלק בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."} ברכב ישן או ברכב יוקרה הפער יכול להיות גדול יותר. המחיר המדויק מופיע במחירון החלפים שהיבואן${S.price?.shem_yevuan ? ` (${esc(S.price.shem_yevuan)})` : ""} מפרסם. ` : ""}שעת עבודה ${nis(DV.rate)}, צביעת חלק ${nis(DV.paint)}, לפני מע"מ. אפשר לשנות ב"הגדרות לשמאי". זו הערכה ראשונית ולא שומה.</p>`;
   }
 
   function countUp(el, to) {
@@ -817,7 +835,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     ];
     const bf = brandF();
     const dmgRows = d.rows.map((x, i) => `<tr><td>${i + 1}</td><td>${NAMES[x.k]}${x.q > 1 ? ` ×${x.q}` : ""}${x.tag ? `<small>${x.tag}</small>` : ""}</td><td>${ACT[x.a]}</td>
-      <td class="n">${x.a === "rep" ? (x.noPrice ? "חסר" : nis(x.part)) : "—"}${x.a === "rep" && !x.noPrice ? `<small>${x.manual ? "מחיר שהוזן" : "הערכה"}</small>` : ""}</td>
+      <td class="n">${x.a === "rep" ? (x.noPrice ? "חסר" : nis(x.part)) : "—"}${x.a === "rep" && !x.noPrice ? `<small>${x.manual ? "מחיר שהוזן" : x.db ? DBL() : "הערכה"}</small>` : ""}</td>
       <td class="n">${x.labor ? nis(x.labor) : "—"}${x.labor ? `<small>${+x.hrs.toFixed(1)} שעות</small>` : ""}</td><td class="n">${x.paint ? nis(x.paint) : "—"}</td><td class="n"><b>${nis(x.sum)}</b></td></tr>`).join("");
     const pct = v && v.value ? d.total / v.value * 100 : 0;
     let el = $("printDoc");
@@ -848,7 +866,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
         <tr class="sub"><td colspan="6">מע"מ ${DV.vat}%</td><td class="n">${nis(d.vat)}</td></tr>
         <tr class="tot"><td colspan="6">עלות תיקון משוערת, כולל מע"מ${pct ? ` (${pct.toFixed(0)}% משווי הרכב)` : ""}</td><td class="n">${nis(d.total)}</td></tr>
         ${v && r.dv ? `<tr class="sub"><td colspan="6">ירידת ערך: ${r.dvPct.toFixed(1)}% משווי הרכב</td><td class="n">${nis(r.dv)}</td></tr><tr class="tot"><td colspan="6">סך הנזק: תיקון וירידת ערך</td><td class="n">${nis(d.total + r.dv)}</td></tr>` : ""}</tbody></table>
-      <p class="pnote"><b>לפי מה נקבע האומדן:</b> ${S.ptype === "alt" ? "חלקים תחליפיים" : "חלקים מקוריים"}, סכומים בשורות לפני מע"מ. חלק שמסומן "מחיר שהוזן" הוקלד על ידי מפיק הדוח. חלק שמסומן "הערכה" חושב לפי מחיר הרכב החדש ומחירוני חלפים רשמיים של יבואנים. ${bf[1] ? "ההערכה הותאמה למחירון של יבואן הרכב הזה." : "ליצרן הזה לא נמצא מחירון להשוואה, ולכן המחיר בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."} עבודה: שעות לפי הפעולה וחומרת הפגיעה, ${nis(DV.rate)} לשעה. צבע: ${nis(DV.paint)} לחלק שלם. ירידת ערך: אחוז לכל חלק שנפגע${v ? `, ${Math.round(ageShare(v.ageMonths) * 100)}% ממנו לפי גיל הרכב` : ""}, עד ${DV.cap}%.${pct >= 60 ? " כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור." : ""}</p>` : ""}
+      <p class="pnote"><b>לפי מה נקבע האומדן:</b> ${S.ptype === "alt" ? "חלקים תחליפיים" : "חלקים מקוריים"}, סכומים בשורות לפני מע"מ. חלק שמסומן "מחיר שהוזן" הוקלד על ידי מפיק הדוח.${d.rows.some((x) => x.db) ? ` חלק שמסומן "${DBL()}" מבוסס על מחירון החלפים הרשמי של היבואן לדגם ולדור של הרכב (חציון הגרסאות), נכון ל-${PDB.asOf.split("-").reverse().join(".")}.` : ""}${d.rows.some((x) => x.a === "rep" && !x.manual && !x.db && !x.noPrice) ? ` חלק שמסומן "הערכה" חושב לפי מחיר הרכב החדש ומחירוני חלפים רשמיים של יבואנים. ${bf[1] ? "ההערכה הותאמה למחירון של יבואן הרכב הזה." : "ליצרן הזה לא נמצא מחירון להשוואה, ולכן המחיר בפועל יכול להיות נמוך בכ-40% או גבוה בכ-20%."}` : ""} עבודה: שעות לפי הפעולה וחומרת הפגיעה, ${nis(DV.rate)} לשעה. צבע: ${nis(DV.paint)} לחלק שלם. ירידת ערך: אחוז לכל חלק שנפגע${v ? `, ${Math.round(ageShare(v.ageMonths) * 100)}% ממנו לפי גיל הרכב` : ""}, עד ${DV.cap}%.${pct >= 60 ? " כשהנזק מגיע ל-60% משווי הרכב, הרכב מוגדר בדרך כלל אובדן גמור." : ""}</p>` : ""}
 
       <div class="pdisc"><b>הבהרה:</b> הערכה ממוחשבת שהופקה במחירון עוגן לפי הנתונים שבדוח. היא אינה שומה, אינה חוות דעת של שמאי ואינה הצעת מחיר, ואין להסתמך עליה בלי בדיקת הרכב על ידי שמאי רכב מוסמך. ייתכנו טעויות או חוסרים במאגרי משרד התחבורה.</div>
       <div class="pfoot"><span>עוגן שמאים · רח' בראשית 1, גבעתיים · 054-4888290</span><span>דוח ${id} · ${date}</span></div>`;
