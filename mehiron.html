@@ -496,7 +496,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   const brandF = (k) => { const n = String(S?.car?.tozeret_nm || S?.brand || "").trim(); const b = BRAND.find(([t]) => n.startsWith(t)), bk = k && BRANDK.find(([t]) => n.startsWith(t)); return bk && bk[1][k] != null ? [bk[1][k], true] : b ? [b[1], true] : [BRAND_DEF, false]; };
   // Real part prices from the importers' official parts price lists (built by tools/build_parts.py): make -> model -> generation -> part.
   let PDB = null;
-  fetch("parts-prices.json?v=7").then((r) => (r.ok ? r.json() : null)).then((d) => { PDB = d; if (d && S && $("dvBox")) { Object.keys(S.parts).forEach(partDetail); calc(); } }).catch(() => {});
+  fetch("parts-prices.json?v=8").then((r) => (r.ok ? r.json() : null)).then((d) => { PDB = d; if (d && S && $("dvBox")) { Object.keys(S.parts).forEach(partDetail); calc(); } }).catch(() => {});
   const dbPrice = (k) => {
     if (!PDB || !S?.car) return null;
     const make = String(S.car.tozeret_nm || ""), b = Object.entries(PDB.brands).find(([t, v]) => [t, ...(v.alt || [])].some((x) => make.trim().startsWith(x))); if (!b) return null;
