@@ -485,12 +485,12 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   const brandF = () => { const n = String(S?.car?.tozeret_nm || S?.brand || ""); const b = BRAND.find(([t]) => n.trim().startsWith(t)); return b ? [b[1], true] : [BRAND_DEF, false]; };
   // Real part prices from the importers' official parts price lists (built by tools/build_parts.py): make -> model -> generation -> part.
   let PDB = null;
-  fetch("parts-prices.json?v=3").then((r) => (r.ok ? r.json() : null)).then((d) => { PDB = d; if (d && S && $("dvBox")) { Object.keys(S.parts).forEach(partDetail); calc(); } }).catch(() => {});
+  fetch("parts-prices.json?v=4").then((r) => (r.ok ? r.json() : null)).then((d) => { PDB = d; if (d && S && $("dvBox")) { Object.keys(S.parts).forEach(partDetail); calc(); } }).catch(() => {});
   const dbPrice = (k) => {
     if (!PDB || !S?.car) return null;
     const make = String(S.car.tozeret_nm || ""), b = Object.entries(PDB.brands).find(([t, v]) => [t, ...(v.alt || [])].some((x) => make.trim().startsWith(x))); if (!b) return null;
     const model = String(S.car.kinuy_mishari || "").toUpperCase(), fam = Object.values(b[1].fam).find((f) => new RegExp(f.m, "i").test(model)); if (!fam) return null;
-    const y = +S.car.shnat_yitzur, g = Object.keys(fam.g).map(Number).filter((gy) => gy <= y && y <= (fam.g[gy]._e || gy + 8) && fam.g[gy][k]).sort((a, c) => c - a)[0];
+    const y = +S.car.shnat_yitzur, g = Object.keys(fam.g).map(Number).filter((gy) => gy <= y && y <= (fam.g[gy]._e || gy + 8) && fam.g[gy][k] && (!fam.g[gy]._d || !S.car.degem_nm || new RegExp(fam.g[gy]._d).test(S.car.degem_nm))).sort((a, c) => c - a)[0];
     return g ? { q: fam.g[g][k], gen: g, src: b[1].src } : null;
   };
   const DBL = () => (S.ptype === "alt" ? "תחליפי, לפי מחירון יבואן" : "מחירון יבואן");
