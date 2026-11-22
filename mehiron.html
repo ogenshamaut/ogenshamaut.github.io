@@ -480,9 +480,17 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   const CAP = { doorF: 10500, doorR: 11500, hood: 10000, headlight: 9500 };
   // Importers price the same part very differently. Factor per make, measured against each importer's official parts price list
   // (Nov 2026; the formula itself is fitted on Kia). A make that was not measured gets the middle of the measured range.
-  const BRAND = [["קיה", 1], ["סובארו", 1.05], ["מזדה", 0.6], ["מאזדה", 0.6], ["טויוטה", 1.2], ["לקסוס", 1.5], ["הונדה", 1.05], ["סמארט", 1.5], ["סקודה", 1], ["פולקסווגן", 1], ["סיאט", 1], ["אאודי", 1.35], ["אודי", 1.35], ["בי ווי די", 0.7], ["שברולט", 0.75], ["סוזוקי", 0.75], ["מרוטי סוזוקי", 0.75], ["סיטרואן", 1]];
+  const BRAND = [["קיה", 1], ["סובארו", 1.05], ["מזדה", 0.6], ["מאזדה", 0.6], ["טויוטה", 1.2], ["לקסוס", 1.5], ["הונדה", 1.05], ["סמארט", 1.5], ["סקודה", 1], ["פולקסווגן", 1], ["סיאט", 1], ["אאודי", 1.35], ["אודי", 1.35], ["בי ווי די", 0.7], ["שברולט", 0.75], ["סוזוקי", 0.75], ["מרוטי סוזוקי", 0.75], ["סיטרואן", 1], ["יונדאי", 1], ["מרצדס", 1.35]];
   // Per-part factors for makes whose list was compared part by part (list price / formula price, median over sample cars).
-  const BRANDK = [["סקודה", { bumpF: 1.24, bumpR: 1.09, hood: 0.83, fenderF: 0.68, fenderR: 0.73, doorF: 1.07, doorR: 1.07, trunk: 0.98, headlight: 0.76, taillight: 0.44, foglight: 1.07, wheel: 0.78, windshield: 0.58 }],
+  const BRANDK = [["יונדאי", { bumpF: 0.77, hood: 0.86, fenderF: 0.63, fenderR: 0.98, doorF: 0.84, doorR: 0.65, trunk: 0.72, headlight: 1.05, taillight: 0.65, foglight: 1.12, mirror: 1.29, radiator: 0.6, condenser: 0.76, wheel: 1.13, grille: 3.4, rearGlass: 2.17, liner: 3.23, shock: 1.09, arm: 0.92, steering: 0.96, sensor: 1.23, bumpR: 0.8 }],
+    ["מרצדס", { hood: 1.57, fenderF: 1.23, doorF: 1.77, doorR: 1.63, trunk: 1.02, headlight: 1.31, taillight: 0.67, windshield: 0.77, liner: 2.14, shock: 2.68, steering: 1.66 }],
+    ["לקסוס", { bumpF: 1.62, bumpR: 0.98, fenderR: 1.42, headlight: 1.2, taillight: 1.24, mirror: 1.51, radiator: 1.12, windshield: 0.95, grille: 4.03, steering: 1.67, sensor: 1.96, condenser: 1.43, rearGlass: 2.16, doorGlass: 1.04 }],
+    ["קיה", { bumpF: 0.83, bumpR: 0.93, hood: 0.87, fenderF: 0.99, fenderR: 0.91, doorF: 0.87, doorR: 0.85, trunk: 0.61, headlight: 0.71, taillight: 0.92, foglight: 0.71, mirror: 1.07, radiator: 0.78, condenser: 0.89, wheel: 0.73, windshield: 0.69, grille: 3.08, rearGlass: 1.42, doorGlass: 1.69, shock: 1.13, arm: 0.84, steering: 0.79, sensor: 0.9 }],
+    ["טויוטה", { bumpF: 1.55, hood: 0.88, headlight: 1.0, taillight: 0.63, mirror: 1.23, windshield: 1.09, grille: 3.55, rearGlass: 2.96, sensor: 1.61, bumpR: 1.4, fenderF: 0.92, radiator: 0.97, condenser: 0.97, doorGlass: 1.88, steering: 1.38, foglight: 1.04 }],
+    ["הונדה", { bumpF: 1.25, bumpR: 1.88, hood: 1.0, fenderF: 1.1, fenderR: 1.05, doorF: 0.91, doorR: 0.94, headlight: 0.94, mirror: 1.44, wheel: 1.01, windshield: 1.07, grille: 2.44, rearGlass: 2.8, doorGlass: 3.21, shock: 1.22, arm: 2.07, trunk: 0.8, taillight: 0.86, liner: 4.76, steering: 3.0, sensor: 0.92 }],
+    ["מזדה", { bumpF: 0.61, bumpR: 0.68, hood: 0.47, fenderR: 0.7, doorR: 0.35, trunk: 0.34, headlight: 0.78, taillight: 0.58, mirror: 0.42, wheel: 0.69, windshield: 0.9, grille: 1.32, rearGlass: 1.35, doorGlass: 1.23, liner: 0.97, shock: 0.66, arm: 0.95, fenderF: 0.34, doorF: 0.41, condenser: 0.84, steering: 1.06, sensor: 0.76 }],
+    ["מאזדה", { bumpF: 0.61, bumpR: 0.68, hood: 0.47, fenderR: 0.7, doorR: 0.35, trunk: 0.34, headlight: 0.78, taillight: 0.58, mirror: 0.42, wheel: 0.69, windshield: 0.9, grille: 1.32, rearGlass: 1.35, doorGlass: 1.23, liner: 0.97, shock: 0.66, arm: 0.95, fenderF: 0.34, doorF: 0.41, condenser: 0.84, steering: 1.06, sensor: 0.76 }],
+    ["סקודה", { bumpF: 1.24, bumpR: 1.09, hood: 0.83, fenderF: 0.68, fenderR: 0.73, doorF: 1.07, doorR: 1.07, trunk: 0.98, headlight: 0.76, taillight: 0.44, foglight: 1.07, wheel: 0.78, windshield: 0.58 }],
     ["פולקסווגן", { bumpF: 1.17, bumpR: 1.15, hood: 0.57, fenderF: 0.66, doorF: 1.07, trunk: 0.85, headlight: 0.59, taillight: 0.37, foglight: 0.72, wheel: 1.1, windshield: 0.86, fenderR: 1.35, doorR: 0.96 }],
     ["סיאט", { bumpF: 1.27, bumpR: 1.09, hood: 0.63, fenderF: 0.7, fenderR: 1.94, doorF: 1.03, doorR: 0.97, trunk: 0.85, headlight: 0.99, taillight: 0.49, foglight: 1.37, wheel: 0.87, windshield: 0.61 }],
     ["אאודי", { bumpF: 1.92, bumpR: 1.28, headlight: 1.86, taillight: 0.54, hood: 1.39, fenderF: 1.29, fenderR: 2.0, doorF: 1.55, doorR: 1.26, trunk: 1.14, wheel: 1.58, windshield: 0.58 }],
@@ -493,6 +501,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     ["מרוטי סוזוקי", { bumpF: 0.92, bumpR: 0.99, hood: 0.74, fenderF: 0.65, doorF: 1.02, doorR: 0.88, trunk: 0.55, headlight: 1.13, taillight: 0.71, mirror: 0.51, radiator: 1.46, condenser: 0.9, wheel: 0.68 }],
     ["סיטרואן", { bumpF: 1.08, bumpR: 1.37, hood: 0.8, fenderF: 0.89, doorF: 0.93, headlight: 0.53, taillight: 0.39, mirror: 1.32, wheel: 0.69, windshield: 0.96, doorR: 0.75, trunk: 0.84 }]];
   const BRAND_DEF = 1;
+  const brandK = (k) => { const n = String(S?.car?.tozeret_nm || S?.brand || "").trim(); return BRANDK.some(([t, o]) => o[k] != null && n.startsWith(t)); };
   const brandF = (k) => { const n = String(S?.car?.tozeret_nm || S?.brand || "").trim(); const b = BRAND.find(([t]) => n.startsWith(t)), bk = k && BRANDK.find(([t]) => n.startsWith(t)); return bk && bk[1][k] != null ? [bk[1][k], true] : b ? [b[1], true] : [BRAND_DEF, false]; };
   // Real part prices from the importers' official parts price lists (built by tools/build_parts.py): make -> model -> generation -> part.
   let PDB = null;
@@ -526,7 +535,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       const price = !v ? mid : Math.min(...v.map((x) => x[1])) < 0.5 ? mid * vr : (vr >= Math.max(...v.map((x) => x[1])) ? hi : lo);
       return r10(price * kind * DV.plvl / 100);
     }
-    return base ? r10(Math.min(CAP[k] || Infinity, Math.max(c[1], (FIT[k] || 0) + base * c[0] / 100)) * (FIT[k] != null ? brandF(k)[0] : 1) * vr * kind * DV.plvl / 100) : 0;
+    return base ? r10(Math.min(CAP[k] || Infinity, Math.max(c[1], (FIT[k] || 0) + base * c[0] / 100)) * (FIT[k] != null || brandK(k) ? brandF(k)[0] : 1) * vr * kind * DV.plvl / 100) : 0;
   };
   const fixHrs = (k, o) => +(COST[k][3] * SEV[o.sev ?? 1][1]).toFixed(1);
   function damage() {
