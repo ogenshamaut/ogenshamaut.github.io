@@ -480,9 +480,20 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   const CAP = { doorF: 10500, doorR: 11500, hood: 10000, headlight: 9500 };
   // Importers price the same part very differently. Factor per make, measured against each importer's official parts price list
   // (Nov 2026; the formula itself is fitted on Kia). A make that was not measured gets the middle of the measured range.
-  const BRAND = [["קיה", 1], ["סובארו", 1.05], ["מזדה", 0.6], ["מאזדה", 0.6], ["טויוטה", 1.2], ["לקסוס", 1.5], ["הונדה", 1.05], ["סמארט", 1.5]];
+  const BRAND = [["קיה", 1], ["סובארו", 1.05], ["מזדה", 0.6], ["מאזדה", 0.6], ["טויוטה", 1.2], ["לקסוס", 1.5], ["הונדה", 1.05], ["סמארט", 1.5], ["סקודה", 1], ["פולקסווגן", 1], ["סיאט", 1], ["אאודי", 1.35], ["אודי", 1.35], ["בי ווי די", 0.7], ["שברולט", 0.75], ["סוזוקי", 0.75], ["מרוטי סוזוקי", 0.75], ["סיטרואן", 1]];
+  // Per-part factors for makes whose list was compared part by part (list price / formula price, median over sample cars).
+  const BRANDK = [["סקודה", { bumpF: 1.24, bumpR: 1.09, hood: 0.83, fenderF: 0.68, fenderR: 0.73, doorF: 1.07, doorR: 1.07, trunk: 0.98, headlight: 0.76, taillight: 0.44, foglight: 1.07, wheel: 0.78, windshield: 0.58 }],
+    ["פולקסווגן", { bumpF: 1.17, bumpR: 1.15, hood: 0.57, fenderF: 0.66, doorF: 1.07, trunk: 0.85, headlight: 0.59, taillight: 0.37, foglight: 0.72, wheel: 1.1, windshield: 0.86, fenderR: 1.35, doorR: 0.96 }],
+    ["סיאט", { bumpF: 1.27, bumpR: 1.09, hood: 0.63, fenderF: 0.7, fenderR: 1.94, doorF: 1.03, doorR: 0.97, trunk: 0.85, headlight: 0.99, taillight: 0.49, foglight: 1.37, wheel: 0.87, windshield: 0.61 }],
+    ["אאודי", { bumpF: 1.92, bumpR: 1.28, headlight: 1.86, taillight: 0.54, hood: 1.39, fenderF: 1.29, fenderR: 2.0, doorF: 1.55, doorR: 1.26, trunk: 1.14, wheel: 1.58, windshield: 0.58 }],
+    ["אודי", { bumpF: 1.92, bumpR: 1.28, headlight: 1.86, taillight: 0.54, hood: 1.39, fenderF: 1.29, fenderR: 2.0, doorF: 1.55, doorR: 1.26, trunk: 1.14, wheel: 1.58, windshield: 0.58 }],
+    ["בי ווי די", { bumpF: 0.6, bumpR: 1.0, hood: 0.87, fenderF: 0.82, fenderR: 0.88, doorR: 0.74, headlight: 0.56, taillight: 0.54, mirror: 0.75, wheel: 0.57, windshield: 0.5, doorF: 0.96, trunk: 0.63 }],
+    ["שברולט", { hood: 0.89, fenderF: 0.89, doorF: 1.07, doorR: 0.77, taillight: 0.55, mirror: 0.54, wheel: 0.45, windshield: 0.76, bumpF: 0.74, bumpR: 0.81, trunk: 0.54, headlight: 0.53, foglight: 0.72, condenser: 0.76 }],
+    ["סוזוקי", { bumpF: 0.92, bumpR: 0.99, hood: 0.74, fenderF: 0.65, doorF: 1.02, doorR: 0.88, trunk: 0.55, headlight: 1.13, taillight: 0.71, mirror: 0.51, radiator: 1.46, condenser: 0.9, wheel: 0.68 }],
+    ["מרוטי סוזוקי", { bumpF: 0.92, bumpR: 0.99, hood: 0.74, fenderF: 0.65, doorF: 1.02, doorR: 0.88, trunk: 0.55, headlight: 1.13, taillight: 0.71, mirror: 0.51, radiator: 1.46, condenser: 0.9, wheel: 0.68 }],
+    ["סיטרואן", { bumpF: 1.08, bumpR: 1.37, hood: 0.8, fenderF: 0.89, doorF: 0.93, headlight: 0.53, taillight: 0.39, mirror: 1.32, wheel: 0.69, windshield: 0.96, doorR: 0.75, trunk: 0.84 }]];
   const BRAND_DEF = 1;
-  const brandF = () => { const n = String(S?.car?.tozeret_nm || S?.brand || ""); const b = BRAND.find(([t]) => n.trim().startsWith(t)); return b ? [b[1], true] : [BRAND_DEF, false]; };
+  const brandF = (k) => { const n = String(S?.car?.tozeret_nm || S?.brand || "").trim(); const b = BRAND.find(([t]) => n.startsWith(t)), bk = k && BRANDK.find(([t]) => n.startsWith(t)); return bk && bk[1][k] != null ? [bk[1][k], true] : b ? [b[1], true] : [BRAND_DEF, false]; };
   // Real part prices from the importers' official parts price lists (built by tools/build_parts.py): make -> model -> generation -> part.
   let PDB = null;
   fetch("parts-prices.json?v=5").then((r) => (r.ok ? r.json() : null)).then((d) => { PDB = d; if (d && S && $("dvBox")) { Object.keys(S.parts).forEach(partDetail); calc(); } }).catch(() => {});
@@ -515,7 +526,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       const price = !v ? mid : Math.min(...v.map((x) => x[1])) < 0.5 ? mid * vr : (vr >= Math.max(...v.map((x) => x[1])) ? hi : lo);
       return r10(price * kind * DV.plvl / 100);
     }
-    return base ? r10(Math.min(CAP[k] || Infinity, Math.max(c[1], (FIT[k] || 0) + base * c[0] / 100)) * (FIT[k] != null ? brandF()[0] : 1) * vr * kind * DV.plvl / 100) : 0;
+    return base ? r10(Math.min(CAP[k] || Infinity, Math.max(c[1], (FIT[k] || 0) + base * c[0] / 100)) * (FIT[k] != null ? brandF(k)[0] : 1) * vr * kind * DV.plvl / 100) : 0;
   };
   const fixHrs = (k, o) => +(COST[k][3] * SEV[o.sev ?? 1][1]).toFixed(1);
   function damage() {
