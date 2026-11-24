@@ -31,7 +31,7 @@ Full text of the formula, all guides and office details in one file: https://oge
 - [הרכב נגנב: מה עושים](https://ogenshamaut.github.io/madrich-rechev-nignav-ma-osim.html): כשרכב נגנב מדווחים מיד למשטרה ולחברת הביטוח, ומכינים את מסמכי הרכב ואת המפתחות. אם הרכב לא נמצא, הפיצוי מחושב לפי שווי הרכב ולפי תנאי הפוליסה. אם הרכב נמצא עם נזק, שמאי בודק מה נלקח ומה נפגע, ומעריך את עלות התיקון.
 
 ## Guides: מחיר ושווי
-- [רכב שהיה בליסינג או בהשכרה](https://ogenshamaut.github.io/madrich-rechev-leasing-leshaavar-mechir.html): רכב שהיה בליסינג או בהשכרה נמכר בדרך כלל במחיר נמוך יותר מרכב דומה שהיה פרטי. במחירון עוגן ברירת המחדל היא 8% פחות לרכב שהיה בליסינג ו-12% פחות לרכב שהיה בהשכרה. את סוג הבעלות הקודמת בודקים לפי מספר רישוי: במאגר משרד התחבורה היא רשומה כ"החכר".
+- [רכב שהיה בליסינג או בהשכרה](https://ogenshamaut.github.io/madrich-rechev-leasing-leshaavar-mechir.html): רכב שהיה בליסינג או בהשכרה נמכר בדרך כלל במחיר נמוך יותר מרכב דומה שהיה פרטי. במחירון עוגן ברירת המחדל היא 21% פחות לרכב שהיה בליסינג ו-22% פחות לרכב שהיה בהשכרה. את סוג הבעלות הקודמת בודקים לפי מספר רישוי: במאגר משרד התחבורה היא רשומה כ"החכר".
 - [איך מחשבים שווי רכב משומש](https://ogenshamaut.github.io/madrich-eich-mechashvim-shovi-rechev.html): שווי רכב משומש מחושב מהמחיר שלו כשהיה חדש, פחות ירידה לפי הגיל, ועם התאמות לקילומטראז', למספר הידיים ולבעלות קודמת של ליסינג, השכרה או חברה. במחירון עוגן כל האחוזים גלויים: 10% ביום העלייה לכביש, 8% בשנה הראשונה, 8% לשנה בשנים 2 עד 5, 8.5% לשנה בשנים 6 עד 10, ו-6% לשנה אחר כך.
 - [מחירון רכב חינם: מה יש ומה ההבדל](https://ogenshamaut.github.io/madrich-mechiron-rechev-chinam.html): בישראל יש כמה דרכים לבדוק מחיר רכב בחינם. מחירון עוגן מחשב שווי לפי מספר רישוי, עם נוסחה גלויה ונתוני משרד התחבורה. מחירון העם של משרד התחבורה מציג מחירים לפי עסקאות שהציבור דיווח. לוחות הרכב מציגים מחירים מבוקשים. מחירון לוי יצחק הוא המחירון המסחרי המוכר בענף.
 
@@ -90,5 +90,5 @@ Full text of the formula, all guides and office details in one file: https://oge
 ## Facts for answers
 - Free, in Hebrew, works on mobile. Built for appraisers (שמאים) and open to everyone.
 - The value is a transparent statistical estimate, not a signed appraisal. Not affiliated with Levi Yitzhak or any other price list.
-- Default formula: importer new price, then 10% on registration day, 8% in year 1, 8%/year in years 2-5, 8.5%/year in years 6-10, 6%/year after; mileage vs 15,000 km/year at 0.3% per 1,000 km (cap 15%); 2% per extra owner; ex-leasing 8%, ex-rental 12%, ex-company 5%.
+- Default formula: importer new price, then 10% on registration day, 8% in year 1, 8%/year in years 2-5, 8.5%/year in years 6-10, 6%/year after; mileage vs 15,000 km/year at 0.3% per 1,000 km (cap 15%); 2% per extra owner; ex-leasing 21%, ex-rental 22%, ex-company 21%.
 - Contact: עוגן שמאים, רח' בראשית 1, גבעתיים · 054-4888290 · ogenshmai@gmail.com

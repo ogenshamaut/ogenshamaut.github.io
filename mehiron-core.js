@@ -47,22 +47,28 @@
 
   // ---------- parameters (appraisers can change them; saved per browser) ----------
   // Defaults are tuned in the calibration step (tools/calib). Keep the keys stable.
-  const DEF = { newIdx: 0, initialDrop: 10, year1: 8, y2to5: 8, y6to10: 8.5, y11plus: 6, kmPerYear: 15000, kmPct: 0.3, kmCap: 15, handPct: 2, leasing: 8, rental: 12, company: 5 };
+  const DEF = { newIdx: 0, initialDrop: 10, year1: 8, y2to5: 8, y6to10: 8.5, y11plus: 6, kmPerYear: 15000, kmPct: 0.3, kmCap: 15, handPct: 2, leasing: 21, leasing1: 17, rental: 22, company: 21, public: 26, defense: 30, school: 26, taxi: 35, seq: 1 };
   const LABELS = {
     newIdx: "עדכון מחיר חדש להיום, לכל שנה (%)", initialDrop: "ירידה ביום העלייה לכביש (%)", year1: "ירידה בשנה הראשונה (%)",
     y2to5: "ירידה לשנה, שנים 2–5 (%)", y6to10: "ירידה לשנה, שנים 6–10 (%)", y11plus: "ירידה לשנה, משנה 11 (%)",
     kmPerYear: "ק\"מ רגיל לשנה", kmPct: "% לכל 1,000 ק\"מ חריגה", kmCap: "מקסימום התאמת ק\"מ (%)", handPct: "% לכל יד נוספת",
-    leasing: "היה בליסינג (%)", rental: "היה בהשכרה (%)", company: "היה בחברה (%)",
+    leasing: "היה בליסינג / החכר (%)", leasing1: "ליסינג, נהג יחיד (%)", rental: "היה בהשכרה (%)", company: "היה בחברה או בעמותה (%)",
+    public: "רשות ציבורית: עירייה, מועצה, קיבוץ, משטרה (%)", defense: "משרד הביטחון / צה\"ל (%)", school: "לימוד נהיגה (%)", taxi: "מונית לשעבר (%)",
+    seq: "הפחתות מצטברות: כל הפחתה מהמחיר שנותר (1 כן, 0 לא)",
   };
-  const PKEY = "ogen-mehiron-params-v3";
+  const PKEY = "ogen-mehiron-params-v4";
   const P = { ...DEF };
   try { Object.assign(P, JSON.parse(localStorage.getItem(PKEY) || "{}")); } catch {}
   const saveP = () => { try { localStorage.setItem(PKEY, JSON.stringify(P)); } catch {} };
   const resetP = () => { Object.assign(P, DEF); saveP(); };
 
-  const KIND = { private: "פרטית", leasing: "ליסינג / החכר", rental: "השכרה", company: "חברה" };
+  const KIND = { private: "פרטית", leasing: "ליסינג / החכר", leasing1: "ליסינג, נהג יחיד", rental: "השכרה", company: "חברה / עמותה", public: "רשות ציבורית", defense: "משרד הביטחון / צה\"ל", school: "לימוד נהיגה", taxi: "מונית" };
   function kindOf(s) {
     s = String(s || "");
+    if (s.includes("מונית")) return "taxi";
+    if (s.includes("נהיגה")) return "school";
+    if (/בטחון|ביטחון|צה"ל|צהל/.test(s)) return "defense";
+    if (/ממשל|עירי|מועצ|קיבוץ|משטר/.test(s)) return "public";
     if (s.includes("השכר")) return "rental";
     if (s.includes("ליסינג") || s.includes("החכר")) return "leasing";
     if (s.includes("חברה")) return "company";
@@ -94,10 +100,10 @@
     const ageVal = base * ageFactor(ageMonths);
     lines.push({ t: "ירידה לפי גיל", sub: `${Math.floor(ageMonths / 12)} שנים ו-${ageMonths % 12} חודשים מהעלייה לכביש`, amt: ageVal - base });
     // List price for this car's age, before personal adjustments. Then the adjustments, in the order appraisers work:
-    // previous ownership, mileage, number of owners. Each is a percent of the list price; "run" is the price after the step.
+    // previous ownership, mileage, number of owners. With P.seq each percent is taken from the price left after the step before it (the usual practice); "run" is the price after the step.
     lines.push({ t: "מחיר מחירון", sub: `לרכב שעלה לכביש ב-${ym(v.road)}, לפני התאמות`, amt: ageVal, base: true, list: true });
     let value = ageVal;
-    const step = (t, sub, pct) => { const d = ageVal * pct / 100; value += d; lines.push({ t, sub, amt: d, pct, run: value }); };
+    const step = (t, sub, pct) => { const d = (P.seq ? value : ageVal) * pct / 100; value += d; lines.push({ t, sub, amt: d, pct, run: value }); };
     if (v.prev && v.prev !== "private" && P[v.prev] != null) step("בעלות קודמת", KIND[v.prev], -P[v.prev]);
     if (v.km != null && v.km !== "" && +v.km >= 0) {
       const expected = P.kmPerYear * Math.max(ageMonths, 1) / 12;
@@ -105,6 +111,7 @@
       step("קילומטראז'", `${num(+v.km)} ק"מ, לעומת ${num(expected)} רגיל לגיל הזה`, pct);
     }
     if (v.hand > 1) step(`מספר בעלויות: יד ${v.hand}`, `${v.hand - 1} בעלים קודמים`, -(v.hand - 1) * P.handPct);
+    if (v.adj) step("התאמה ידנית", v.adjNote || "מצב הרכב, תוספות ואבזור", +v.adj);
     value = Math.max(value, v.newPrice * 0.05);
     return { value: r100(value), low: r100(value * 0.93), high: r100(value * 1.07), lines, ageMonths };
   }
@@ -160,7 +167,7 @@
     const own = owners.filter((o) => !String(o.baalut).includes("סוחר"));
     const hand = Math.max(1, own.length);
     const past = own.slice(0, -1).map((o) => kindOf(o.baalut));
-    const prev = ["rental", "leasing", "company"].find((k) => past.includes(k)) || (own.length <= 1 ? kindOf(car.baalut) : "private");
+    const prev = ["taxi", "school", "defense", "public", "rental", "leasing", "company"].find((k) => past.includes(k)) || (own.length <= 1 ? kindOf(car.baalut) : "private");
     // 0 km means "no test yet" (new cars), not a real reading.
     const testKm = hist?.kilometer_test_aharon ? hist.kilometer_test_aharon : null;
     let km = testKm;
