@@ -1,12 +1,13 @@
 # עוגן שמאים · מחירון עוגן
 
-> עוגן שמאים (Ogen Shamaim) is a car appraisal office in Givatayim, Israel. It publishes מחירון עוגן (Ogen car price list): a free Hebrew tool that takes an Israeli license plate number and returns an estimated used-car value with a line-by-line calculation, ownership history (number of owners, leasing/rental), mileage at the last annual test, the importer's new-car price, open recalls, structural-change and LPG warnings, and an accident depreciation (ירידת ערך) estimate by damaged part. Data: Israeli Ministry of Transport open data (data.gov.il). No registration, no cost. The site also has 23 plain-language Hebrew guides on car accidents, insurance claims, appraisers and used-car checks. Last updated: 2026-11-21.
+> עוגן שמאים (Ogen Shamaim) is a car appraisal office in Givatayim, Israel. It publishes מחירון עוגן (Ogen car price list): a free Hebrew tool that takes an Israeli license plate number and returns an estimated used-car value with a line-by-line calculation, ownership history (number of owners, leasing/rental), mileage at the last annual test, the importer's new-car price, open recalls, structural-change and LPG warnings, and an accident depreciation (ירידת ערך) estimate by damaged part. Data: Israeli Ministry of Transport open data (data.gov.il). No registration, no cost. The site also has 23 plain-language Hebrew guides on car accidents, insurance claims, appraisers and used-car checks. Last updated: 2026-11-24.
 
 Full text of the formula, all guides and office details in one file: https://ogenshamaut.github.io/llms-full.txt
 
 ## Main pages
 - [מחירון עוגן: מחירון רכב חינם לפי מספר רישוי](https://ogenshamaut.github.io/mehiron.html): the tool. Direct link by plate: https://ogenshamaut.github.io/mehiron.html?plate=1234567
 - [מחירון רכב לפי יצרן](https://ogenshamaut.github.io/mehiron-brands.html): importer price per model and year and estimated value today, for 32 brands.
+- [מחירון חלפים לפי יצרן ודגם](https://ogenshamaut.github.io/halafim.html): real prices of original body parts (bumpers, hood, doors, lamps, glass, mirrors) per model generation, medians of the importers' official parts price lists, before and including VAT. One page per model: https://ogenshamaut.github.io/halafim-<make>-<model>.html
 - [עוגן שמאים](https://ogenshamaut.github.io/): the appraisal office, online case opening.
 - [מדריכים](https://ogenshamaut.github.io/madrichim.html): all guides.
 - [תנאי שימוש ופרטיות](https://ogenshamaut.github.io/legal.html#mehiron)
