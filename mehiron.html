@@ -106,6 +106,11 @@ h1,h2,h3,h4{margin:0;line-height:1.15}
 .alt{margin-top:6px;background:none;border:0;color:var(--brand-strong);font:500 15px/1.4 var(--plex);text-decoration:underline;cursor:pointer}
 .modelbox{display:none;margin-top:18px;text-align:start}
 .modelbox.on{display:block}
+.stabs{display:flex;gap:4px;background:rgba(16,24,35,.06);border-radius:12px;padding:4px;margin-bottom:16px}
+.stabs button{flex:1;border:0;background:none;border-radius:9px;padding:10px 6px;font:600 15px/1.2 var(--plex);color:var(--ink2,#2b3644);cursor:pointer}
+.stabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(16,40,70,.15)}
+#plateForm.off{display:none}.mgrid3{grid-template-columns:1fr 1fr 1fr}
+#codeBox input{width:100%;height:48px;border:1.5px solid var(--line);border-radius:12px;padding:0 12px;font:600 20px/1 var(--plex);direction:ltr;text-align:center;background:#fff}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .f label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
 .f select,.f input{width:100%;font:400 17px/1.4 var(--plex);color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px}
@@ -152,6 +157,10 @@ h1,h2,h3,h4{margin:0;line-height:1.15}
 .calc{width:100%;border-collapse:collapse;font-size:17px}
 .calc td{padding:11px 0;border-bottom:1px solid var(--line);vertical-align:top}
 .calc td:last-child{text-align:left;direction:ltr;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600;padding-inline-start:12px}
+.calc4{width:100%}.calc4 th{font:600 13px/1.3 var(--plex);color:var(--muted);text-align:start;padding:0 0 6px;border-bottom:1px solid var(--line)}.calc4 th:not(:first-child){text-align:left}
+.calc4 td:not(:first-child){text-align:left;direction:ltr;font-variant-numeric:tabular-nums;white-space:nowrap;padding-inline-start:10px}.calc4 td:nth-child(2),.calc4 td:nth-child(3){font-weight:500;font-size:15px}
+.calc4 tr.list td{background:rgba(11,155,224,.07);font-weight:700}.calc4 tr.list td:first-child{padding-inline-start:8px;border-radius:0 8px 8px 0}
+@media (max-width:560px){.calc4 th:nth-child(2),.calc4 tr:not(.total) td:nth-child(2){display:none}}
 .calc small{display:block;color:var(--muted);font-size:14px}
 .calc tr.total td{border-bottom:0;border-top:2px solid var(--ink);font-size:20px;font-weight:700;padding-top:14px}
 .neg{color:var(--bad)}.pos{color:var(--ok)}
@@ -330,6 +339,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       </ul>
     </div>
     <div class="searchbox">
+      <div class="stabs" role="tablist" aria-label="דרך החיפוש"><button type="button" role="tab" class="on" data-tab="plate" aria-selected="true">מספר רישוי</button><button type="button" role="tab" data-tab="model" aria-selected="false">יצרן ודגם</button><button type="button" role="tab" data-tab="code" aria-selected="false">קוד דגם</button></div>
       <form id="plateForm" novalidate>
         <label class="big" for="plateInput">בדיקת מחיר לפי מספר רכב</label>
         <div class="plate">
@@ -339,16 +349,24 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
         <button class="btn btn-main go" type="submit">בדוק מחיר</button>
         <div class="hint" id="plateHint">7 או 8 ספרות, כמו על הלוחית</div>
       </form>
-      <button class="alt" type="button" id="altBtn" aria-expanded="false" aria-controls="modelBox">אין מספר רכב? בחירה לפי יצרן ודגם</button>
       <form class="modelbox" id="modelBox" novalidate>
         <div class="mgrid">
           <div class="f"><label for="selMake">יצרן</label><select id="selMake"><option value="">טוען...</option></select></div>
           <div class="f"><label for="selName">דגם</label><select id="selName" disabled><option value="">קודם בוחרים יצרן</option></select></div>
-          <div class="f"><label for="selYear">שנה</label><select id="selYear" disabled><option value="">קודם בוחרים דגם</option></select></div>
-          <div class="f"><label for="selTrim">גרסה</label><select id="selTrim" disabled><option value="">קודם בוחרים שנה</option></select></div>
+          <div class="f"><label for="selYear">שנת ייצור</label><select id="selYear" disabled><option value="">קודם בוחרים דגם</option></select></div>
+          <div class="f"><label for="selTrim">דגם משנה / רמת גימור</label><select id="selTrim" disabled><option value="">קודם בוחרים שנה</option></select></div>
         </div>
         <button class="btn btn-main" type="submit" style="width:100%;margin-top:14px">בדוק מחיר</button>
         <div class="hint" id="modelHint"></div>
+      </form>
+      <form class="modelbox" id="codeBox" novalidate>
+        <div class="mgrid mgrid3">
+          <div class="f"><label for="codeMake">קוד תוצר</label><input id="codeMake" inputmode="numeric" maxlength="4" placeholder="0413" autocomplete="off"></div>
+          <div class="f"><label for="codeModel">קוד דגם</label><input id="codeModel" inputmode="numeric" maxlength="4" placeholder="0345" autocomplete="off"></div>
+          <div class="f"><label for="codeYear">שנת ייצור</label><input id="codeYear" inputmode="numeric" maxlength="4" placeholder="2021" autocomplete="off"></div>
+        </div>
+        <button class="btn btn-main" type="submit" style="width:100%;margin-top:14px">בדוק מחיר</button>
+        <div class="hint" id="codeHint">קוד הדגם של משרד התחבורה, בשני חלקים: קוד תוצר וקוד דגם. הוא מופיע בתוצאת כל חיפוש כאן, בשורה "קוד דגם".</div>
       </form>
     </div>
   </div>
@@ -398,7 +416,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
 
 <footer><div class="wrap">© עוגן שמאים · רח' בראשית 1, גבעתיים · <a href="tel:+972544888290" dir="ltr">054-4888290</a> · <a href="mehiron-brands.html">מחירון לפי יצרן</a> · <a href="halafim.html">מחירי חלפים</a> · <a href="madrichim.html">מדריכים</a> · <a href="madrich-shamai-rechev-givatayim.html">שמאי רכב בגבעתיים</a> · <a href="legal.html">נגישות ופרטיות</a></div></footer>
 
-<script src="mehiron-core.js?v=4"></script>
+<script src="mehiron-core.js?v=5"></script>
 <script>
 (() => {
   "use strict";
@@ -597,7 +615,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       ["אבזור", [m.mazgan_ind === 1 ? "מזגן" : "", m.halon_bagg_ind === 1 ? "חלון גג" : "", m.mispar_halonot_hashmal ? `${m.mispar_halonot_hashmal} חלונות חשמל` : "", m.galgaley_sagsoget_kala_ind === 1 ? "חישוקי סגסוגת" : ""].filter(Boolean).join(" · ")],
       ["צבע", esc(c.tzeva_rechev)], ["בעלות היום", esc(c.baalut && d.plate ? c.baalut : "")],
       ["ק\"מ בטסט האחרון", d.testKm != null ? num(d.testKm) : ""], ["טסט אחרון", esc(c.mivchan_acharon_dt)], ["רישיון בתוקף עד", esc(c.tokef_dt)],
-      ["צמיגים", esc(c.zmig_kidmi)], ["קוד דגם", c.degem_cd ? `${esc(c.degem_nm)} · ${c.degem_cd}` : ""],
+      ["צמיגים", esc(c.zmig_kidmi)], ["קוד דגם", c.degem_cd ? `<span dir="ltr">${c.tozeret_cd != null ? String(c.tozeret_cd).padStart(4, "0") + "-" : ""}${String(c.degem_cd).padStart(4, "0")}</span> · ${esc(c.degem_nm)}` : ""],
       ["מספר שלדה", c.misgeret ? `<span dir="ltr">${esc(c.misgeret)}</span>` : ""], ["רישום ראשון", esc(d.hist?.rishum_rishon_dt)],
     ].filter((r) => r[1] !== "" && r[1] != null);
     S.rows = rows; S.title = `${make} ${name}`;
@@ -802,10 +820,12 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
       ${dv ? `<div class="after">אחרי ירידת ערך של ${dvPct.toFixed(1)}% (−${nis(dv)})<b>${nis(v.value - dv)}</b></div>` : ""}
       <div class="note">הערכה לפי מאגרי משרד התחבורה, נכון ל-${new Date().toLocaleDateString("he-IL")}. לא שומה.</div>`;
     if (S.first) { countUp($("bigPrice"), v.value); S.first = false; }
-    $("calcTable").innerHTML = `<table class="calc">
-      ${v.lines.map((l) => `<tr><td>${esc(l.t)}<small>${esc(l.sub)}</small></td><td class="${l.base ? "" : l.amt < 0 ? "neg" : "pos"}">${l.base ? nis(l.amt) : (l.amt < 0 ? "−" : "+") + nis(Math.abs(l.amt))}</td></tr>`).join("")}
-      <tr class="total"><td>שווי מוערך</td><td>${nis(v.value)}</td></tr>
-      ${dv ? `<tr><td>ירידת ערך אחרי תאונה<small>${dvPct.toFixed(1)}%</small></td><td class="neg">−${nis(dv)}</td></tr><tr class="total"><td>שווי אחרי התיקון</td><td>${nis(v.value - dv)}</td></tr>` : ""}
+    const pc = (x) => (x < 0 ? "−" : "+") + Math.abs(x).toFixed(Math.abs(x) % 1 ? 1 : 0) + "%";
+    $("calcTable").innerHTML = `<table class="calc calc4">
+      <thead><tr><th>שלב</th><th>אחוז</th><th>סכום</th><th>מחיר</th></tr></thead>
+      ${v.lines.map((l) => `<tr class="${l.list ? "list" : ""}"><td>${esc(l.t)}<small>${esc(l.sub)}</small></td><td class="${l.pct == null ? "" : l.pct < 0 ? "neg" : "pos"}">${l.pct == null ? "" : pc(l.pct)}</td><td class="${l.base ? "" : l.amt < 0 ? "neg" : "pos"}">${l.base ? "" : (l.amt < 0 ? "−" : "+") + nis(Math.abs(l.amt))}</td><td>${l.base ? nis(l.amt) : l.run != null ? nis(l.run) : ""}</td></tr>`).join("")}
+      <tr class="total"><td colspan="3">שווי מוערך</td><td>${nis(v.value)}</td></tr>
+      ${dv ? `<tr><td>ירידת ערך אחרי תאונה</td><td class="neg">−${dvPct.toFixed(1)}%</td><td class="neg">−${nis(dv)}</td><td>${nis(v.value - dv)}</td></tr><tr class="total"><td colspan="3">שווי אחרי התיקון</td><td>${nis(v.value - dv)}</td></tr>` : ""}
     </table>`;
     $("dmgReport").innerHTML = dmgHtml(v);
     dvBar();
@@ -878,10 +898,10 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
 
       <div class="pkeep"><h2>2. הערכת השווי</h2>
       ${v ? `<div class="pval"><div><span>שווי מוערך היום</span><b>${nis(v.value)}</b></div><div><span>טווח סביר</span><b class="s">${nis(v.low)} עד ${nis(v.high)}</b></div>${r.dv ? `<div><span>שווי אחרי ירידת ערך</span><b class="s">${nis(v.value - r.dv)}</b></div>` : ""}</div>
-      <table class="pt"><thead><tr><th>שלב בחישוב</th><th>לפי מה</th><th class="n">סכום</th></tr></thead><tbody>
-        ${v.lines.map((l) => `<tr><td>${esc(l.t)}</td><td>${esc(l.sub)}</td><td class="n">${l.base ? nis(l.amt) : (l.amt < 0 ? "−" : "+") + nis(Math.abs(l.amt))}</td></tr>`).join("")}
-        <tr class="tot"><td colspan="2">שווי מוערך</td><td class="n">${nis(v.value)}</td></tr></tbody></table>
-      <p class="pnote"><b>לפי מה נקבע המחיר:</b> נקודת המוצא היא מחיר המחירון של הרכב כשהיה חדש, כפי שדיווח היבואן למשרד התחבורה. ממנו יורד אחוז קבוע לכל שנה מאז העלייה לכביש, ואז השווי מותאם לקילומטראז' מול הנסועה הרגילה לגיל הרכב, למספר הידיים ולסוג הבעלות. הטווח הסביר הוא 7% לכל כיוון.</p>
+      <table class="pt"><thead><tr><th>שלב בחישוב</th><th>לפי מה</th><th class="n">אחוז</th><th class="n">סכום</th><th class="n">מחיר</th></tr></thead><tbody>
+        ${v.lines.map((l) => `<tr${l.list ? ' class="sub"' : ""}><td>${esc(l.t)}</td><td>${esc(l.sub)}</td><td class="n">${l.pct == null ? "" : (l.pct < 0 ? "−" : "+") + Math.abs(l.pct).toFixed(Math.abs(l.pct) % 1 ? 1 : 0) + "%"}</td><td class="n">${l.base ? "" : (l.amt < 0 ? "−" : "+") + nis(Math.abs(l.amt))}</td><td class="n">${l.base ? nis(l.amt) : l.run != null ? nis(l.run) : ""}</td></tr>`).join("")}
+        <tr class="tot"><td colspan="4">שווי מוערך</td><td class="n">${nis(v.value)}</td></tr></tbody></table>
+      <p class="pnote"><b>לפי מה נקבע המחיר:</b> נקודת המוצא היא מחיר המחירון של הרכב כשהיה חדש, כפי שדיווח היבואן למשרד התחבורה. ממנו יורד אחוז קבוע לכל שנה מאז העלייה לכביש, וכך מתקבל מחיר המחירון. ממחיר המחירון מחושבות ההתאמות, כל אחת באחוז ממנו: בעלות קודמת, קילומטראז' מול הנסועה הרגילה לגיל הרכב, ומספר הבעלויות. הטווח הסביר הוא 7% לכל כיוון.</p>
       <p class="pparams"><b>פרמטרים:</b> ${params}</p>` : `<p>אין במאגר מחיר יבואן לדגם הזה, ולכן לא חושב שווי.</p>`}</div>
 
       ${d.rows.length ? `<h2>3. אומדן נזק</h2>
@@ -903,7 +923,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     const c = S.car, r = S.result; if (!r || !r.v) return;
     const txt = [`מחירון עוגן · ${new Date().toLocaleDateString("he-IL")}`,
       `${S.plate ? fmtPlate(S.plate) + " · " : ""}${c.tozeret_nm} ${c.kinuy_mishari || c.degem_nm} ${c.ramat_gimur || ""} ${c.shnat_yitzur}`,
-      ...r.v.lines.map((l) => `${l.t} (${l.sub}): ${nis(l.amt)}`), `שווי מוערך: ${nis(r.v.value)} (בין ${nis(r.v.low)} ל-${nis(r.v.high)})`,
+      ...r.v.lines.map((l) => `${l.t} (${l.sub}): ${l.base ? nis(l.amt) : (l.amt < 0 ? "−" : "+") + nis(Math.abs(l.amt))}`), `שווי מוערך: ${nis(r.v.value)} (בין ${nis(r.v.low)} ל-${nis(r.v.high)})`,
       ...(r.chosen.length ? ["", "דוח נזק:", ...r.dmg.rows.map((x) => `${NAMES[x.k]}${x.q > 1 ? ` ×${x.q}` : ""}, ${ACT[x.a]}${x.tag ? ` (${x.tag})` : ""}: ${nis(x.sum)}`),
         `עלות תיקון משוערת כולל מע"מ: ${nis(r.dmg.total)}`, ...(r.dv ? [`ירידת ערך ${r.dvPct.toFixed(1)}%: ${nis(r.dv)}`, `שווי אחרי התיקון: ${nis(r.v.value - r.dv)}`] : [])] : []),
       "מקור: מאגרי משרד התחבורה. הערכה, לא שומה."].join("\n");
@@ -933,17 +953,50 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
   const opt = (v, t) => `<option value="${esc(v)}">${esc(t)}</option>`;
   const lock = (s, t) => { s.disabled = true; s.innerHTML = opt("", t); };
   let cat = null, trims = [];
-  async function openModel() {
-    const box = $("modelBox"), on = !box.classList.contains("on");
-    box.classList.toggle("on", on); $("altBtn").setAttribute("aria-expanded", String(on));
-    if (!on || cat) return;
+  async function loadCat() {
+    if (cat) return;
     try {
       cat = await M.loadCatalog();
       const rest = cat.brands.filter((b) => !cat.popular.includes(b));
       selMake.innerHTML = opt("", "בחרו יצרן") + `<optgroup label="הנפוצים">${cat.popular.map((b) => opt(b, b)).join("")}</optgroup><optgroup label="כל היצרנים">${rest.map((b) => opt(b, b)).join("")}</optgroup>`;
     } catch { selMake.innerHTML = opt("", "שגיאה, רעננו את הדף"); cat = null; }
   }
-  $("altBtn").addEventListener("click", openModel);
+  function setTab(tab) {
+    document.querySelectorAll(".stabs button").forEach((b) => { const on = b.dataset.tab === tab; b.classList.toggle("on", on); b.setAttribute("aria-selected", String(on)); });
+    $("plateForm").classList.toggle("off", tab !== "plate"); $("modelBox").classList.toggle("on", tab === "model"); $("codeBox").classList.toggle("on", tab === "code");
+    if (tab === "model") loadCat();
+    try { localStorage.setItem("ogen-mehiron-tab", tab); } catch {}
+  }
+  const openModel = () => setTab("model");
+  document.querySelectorAll(".stabs button").forEach((b) => b.addEventListener("click", () => setTab(b.dataset.tab)));
+  // One price-list row (make code, model code, year) -> the result screen. Used by the model search and by the code search.
+  async function showTrim(t, brand) {
+    loading("טוענים את נתוני הדגם..."); toResults();
+    const f = { tozeret_cd: t.tozeret_cd, degem_cd: t.degem_cd, shnat_yitzur: t.shnat_yitzur };
+    const [model, count] = await Promise.all([
+      M.ds(M.R.model, { filters: f, limit: 1 }).then((r) => r.records[0] || null).catch(() => null),
+      M.ds(M.R.active, { filters: f, limit: 0 }).then((r) => r.total).catch(() => null),
+    ]);
+    const car = { tozeret_nm: t.tozeret_nm, tozeret_cd: t.tozeret_cd, kinuy_mishari: t.kinuy_mishari, degem_nm: t.degem_nm, degem_cd: t.degem_cd, shnat_yitzur: t.shnat_yitzur, ramat_gimur: model?.ramat_gimur, sug_delek_nm: model?.delek_nm };
+    render({ plate: "", brand: brand || t.tozeret_nm, car, source: "model", owners: [], hist: null, price: { ...t, exact: true }, model, recall: [], count,
+      road: `${t.shnat_yitzur}-06`, hand: 1, prev: "private", km: null, testKm: null });
+  }
+  $("codeBox").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const hint = $("codeHint"), a = digits($("codeMake").value), b = digits($("codeModel").value), y = digits($("codeYear").value);
+    const bad = (t) => { hint.textContent = t; hint.classList.add("bad"); };
+    if (!a || !b || y.length !== 4) return bad("צריך קוד תוצר, קוד דגם ושנת ייצור בארבע ספרות.");
+    hint.classList.remove("bad"); hint.textContent = "מחפשים את הקוד במאגר משרד התחבורה...";
+    let rows = [], other = [];
+    try {
+      rows = (await M.ds(M.R.price, { filters: { tozeret_cd: +a, degem_cd: +b, shnat_yitzur: +y }, limit: 5 })).records;
+      if (!rows.length) other = (await M.ds(M.R.price, { filters: { tozeret_cd: +a, degem_cd: +b }, fields: "shnat_yitzur", limit: 100 })).records;
+    } catch { return bad("אין חיבור למאגר של משרד התחבורה כרגע. נסו שוב בעוד רגע."); }
+    if (!rows.length) return bad(other.length ? `הקוד קיים במאגר, אבל לא לשנת ${y}. שנים שקיימות: ${[...new Set(other.map((r) => r.shnat_yitzur))].sort().join(", ")}.` : "הקוד לא נמצא במאגר מחירי היבואנים של משרד התחבורה. בדקו את הספרות.");
+    hint.textContent = "";
+    history.replaceState(null, "", `?code=${+a}-${+b}-${y}`);
+    showTrim(rows[0]);
+  });
   selMake.addEventListener("change", () => {
     lock(selYear, "קודם בוחרים דגם"); lock(selTrim, "קודם בוחרים שנה");
     if (!selMake.value) return lock(selName, "קודם בוחרים יצרן");
@@ -966,21 +1019,16 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
     const t = trims[+selTrim.value];
     if (!t || selTrim.disabled) { $("modelHint").textContent = "צריך לבחור יצרן, דגם, שנה וגרסה."; $("modelHint").classList.add("bad"); return; }
     $("modelHint").textContent = ""; $("modelHint").classList.remove("bad");
-    loading("טוענים את נתוני הדגם..."); toResults();
-    const f = { tozeret_cd: t.tozeret_cd, degem_cd: t.degem_cd, shnat_yitzur: t.shnat_yitzur };
-    const [model, count] = await Promise.all([
-      M.ds(M.R.model, { filters: f, limit: 1 }).then((r) => r.records[0] || null).catch(() => null),
-      M.ds(M.R.active, { filters: f, limit: 0 }).then((r) => r.total).catch(() => null),
-    ]);
-    const car = { tozeret_nm: t.tozeret_nm, kinuy_mishari: t.kinuy_mishari, degem_nm: t.degem_nm, degem_cd: t.degem_cd, shnat_yitzur: t.shnat_yitzur, ramat_gimur: model?.ramat_gimur, sug_delek_nm: model?.delek_nm };
-    render({ plate: "", brand: selMake.value, car, source: "model", owners: [], hist: null, price: { ...t, exact: true }, model, recall: [], count,
-      road: `${t.shnat_yitzur}-06`, hand: 1, prev: "private", km: null, testKm: null });
+    showTrim(t, selMake.value);
   });
 
   // ---------- open with ?plate= ----------
   const q = new URLSearchParams(location.search).get("plate");
   if (q && /^\d{7,8}$/.test(q)) { plateInput.value = fmtPlate(q); lookupPlate(q); }
-  if (location.hash === "#model") openModel();
+  const qc = (new URLSearchParams(location.search).get("code") || "").match(/^(\d{1,4})-(\d{1,4})-(\d{4})$/);
+  if (qc) { setTab("code"); $("codeMake").value = qc[1].padStart(4, "0"); $("codeModel").value = qc[2].padStart(4, "0"); $("codeYear").value = qc[3]; $("codeBox").requestSubmit(); }
+  else if (location.hash === "#model") openModel();
+  else if (!q) { try { const t = localStorage.getItem("ogen-mehiron-tab"); if (t === "model" || t === "code") setTab(t); } catch {} }
 })();
 </script>
 </body>

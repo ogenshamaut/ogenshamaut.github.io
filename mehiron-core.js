@@ -93,16 +93,18 @@
     }
     const ageVal = base * ageFactor(ageMonths);
     lines.push({ t: "ירידה לפי גיל", sub: `${Math.floor(ageMonths / 12)} שנים ו-${ageMonths % 12} חודשים מהעלייה לכביש`, amt: ageVal - base });
+    // List price for this car's age, before personal adjustments. Then the adjustments, in the order appraisers work:
+    // previous ownership, mileage, number of owners. Each is a percent of the list price; "run" is the price after the step.
+    lines.push({ t: "מחיר מחירון", sub: `לרכב שעלה לכביש ב-${ym(v.road)}, לפני התאמות`, amt: ageVal, base: true, list: true });
     let value = ageVal;
+    const step = (t, sub, pct) => { const d = ageVal * pct / 100; value += d; lines.push({ t, sub, amt: d, pct, run: value }); };
+    if (v.prev && v.prev !== "private" && P[v.prev] != null) step("בעלות קודמת", KIND[v.prev], -P[v.prev]);
     if (v.km != null && v.km !== "" && +v.km >= 0) {
       const expected = P.kmPerYear * Math.max(ageMonths, 1) / 12;
-      let pct = -((+v.km - expected) / 1000) * P.kmPct;
-      pct = Math.max(-P.kmCap, Math.min(P.kmCap, pct));
-      const d = ageVal * pct / 100; value += d;
-      lines.push({ t: "קילומטראז'", sub: `${num(+v.km)} ק"מ, לעומת ${num(expected)} רגיל לגיל הזה`, amt: d });
+      const pct = Math.max(-P.kmCap, Math.min(P.kmCap, -((+v.km - expected) / 1000) * P.kmPct));
+      step("קילומטראז'", `${num(+v.km)} ק"מ, לעומת ${num(expected)} רגיל לגיל הזה`, pct);
     }
-    if (v.hand > 1) { const d = ageVal * -(v.hand - 1) * P.handPct / 100; value += d; lines.push({ t: `יד ${v.hand}`, sub: `${v.hand - 1} בעלים קודמים`, amt: d }); }
-    if (v.prev && v.prev !== "private" && P[v.prev] != null) { const d = ageVal * -P[v.prev] / 100; value += d; lines.push({ t: "בעלות קודמת", sub: KIND[v.prev], amt: d }); }
+    if (v.hand > 1) step(`מספר בעלויות: יד ${v.hand}`, `${v.hand - 1} בעלים קודמים`, -(v.hand - 1) * P.handPct);
     value = Math.max(value, v.newPrice * 0.05);
     return { value: r100(value), low: r100(value * 0.93), high: r100(value * 1.07), lines, ageMonths };
   }
